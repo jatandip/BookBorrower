@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/LOGIN__logo" />
+        app:srcCompat="@drawable/login__logo" />
 
     <ImageView
         android:id="@+id/LOGIN_IVbox"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/LOGIN_box" />
+        app:srcCompat="@drawable/login_box" />
 
     <EditText
         android:id="@+id/LOGIN_ETusername"
@@ -71,7 +71,6 @@
         android:layout_marginBottom="56dp"
         android:text="LOG IN"
         android:background="@drawable/login_loginbuttonround"
-        android:srcCompat="@drawable/G1narrow"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/LOGIN_IVbox"
         app:layout_constraintEnd_toEndOf="@+id/LOGIN_IVbox"

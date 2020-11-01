@@ -66,12 +66,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETfirstName"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="64dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,12 +80,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETlastName"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,12 +94,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETusername"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="68dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,12 +108,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETemail"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="18dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,12 +122,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETphone"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="phone"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,12 +136,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETpassword"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="72dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,12 +150,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETrepassword"
-        android:layout_width="294dp"
+        android:layout_width="280dp"
         android:layout_height="35dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"

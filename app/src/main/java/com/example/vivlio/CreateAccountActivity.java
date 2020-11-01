@@ -19,13 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private EditText firstNameET = findViewById(R.id.CREACC_ETfirstName);
-    private EditText lastNameET = findViewById(R.id.CREACC_ETlastName);
-    private EditText usernameET = findViewById(R.id.CREACC_ETusername);
-    private EditText emailET = findViewById(R.id.CREACC_ETemail);
-    private EditText phoneET = findViewById(R.id.CREACC_ETphone);
-    private EditText passwordET = findViewById(R.id.CREACC_ETpassword);
-    private EditText repasswordET = findViewById(R.id.CREACC_ETrepassword);
+    private EditText firstNameET;
+    private EditText lastNameET;
+    private EditText usernameET;
+    private EditText emailET;
+    private EditText phoneET;
+    private EditText passwordET;
+    private EditText repasswordET;
     private FirebaseAuth mAuth;
 
     @Override
@@ -33,8 +33,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-
         ImageButton createBTN = findViewById(R.id.CREACC_BTNcreate);
+        firstNameET = findViewById(R.id.CREACC_ETfirstName);
+        lastNameET = findViewById(R.id.CREACC_ETlastName);
+        usernameET = findViewById(R.id.CREACC_ETusername);
+        emailET = findViewById(R.id.CREACC_ETemail);
+        phoneET = findViewById(R.id.CREACC_ETphone);
+        passwordET = findViewById(R.id.CREACC_ETpassword);
+        repasswordET = findViewById(R.id.CREACC_ETrepassword);
 
         mAuth = FirebaseAuth.getInstance();
 

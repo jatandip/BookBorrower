@@ -31,10 +31,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstances);
         setContentView(R.layout.activity_login_page);
 
+        //USERNAME IS ACTUALLY EMAIL
+
         loginBTN = findViewById(R.id.LOGIN_BTNlogin);
         usernameET = findViewById(R.id.LOGIN_ETusername);
         passwordET = findViewById(R.id.LOGIN_ETpassword);
         createAccountTV = findViewById(R.id.LOGIN_TVcreateAccount);
+
         mAuth = FirebaseAuth.getInstance();
 
         createAccountTV.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +74,6 @@ public class LoginActivity extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
-
-
                             });
                 }
             }

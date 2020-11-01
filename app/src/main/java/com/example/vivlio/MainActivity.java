@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new MyBookListFragment()).commit();
                         return true;
                     case R.id.navigation_profile:
+
+                        User user =new User("NAME", "USERNAME", "EMAIL", "PHONE", "PASSWORD");
+                        getIntent().putExtra("User", user);
+
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).commit();
                         return true;
 

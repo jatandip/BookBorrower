@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "931449416229",
+    "firebase_url": "https://vivlio-14a4a.firebaseio.com",
+    "project_id": "vivlio-14a4a",
+    "storage_bucket": "vivlio-14a4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931449416229:android:9c97b670bfee098c23edcc",
+        "android_client_info": {
+          "package_name": "com.example.vivlio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931449416229-s8tr78j0n2b8usr2s0u27q0d74voinqc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vivlio",
+            "certificate_hash": "2b4fdb923364eb674b2e29135d27fbf54b6731c0"
+          }
+        },
+        {
+          "client_id": "931449416229-ogc0nmv0rtsqbeoo665e9n0lbmk1rljq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyFv6VbMeKUyeDmKA5T5ZjU2mhtKNfXdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931449416229-ogc0nmv0rtsqbeoo665e9n0lbmk1rljq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

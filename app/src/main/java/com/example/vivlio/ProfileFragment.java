@@ -1,10 +1,12 @@
 package com.example.vivlio;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class ProfileFragment extends Fragment {
     private TextView phoneNumTextView;
     private FloatingActionButton editProfile;
     private ArrayList<String> profileInfo;
-    private ArrayList<String> userInfo;
+    private User user;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,43 +65,87 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
-
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
 
-        nameTextView = view.findViewById(R.id.nameView);
-        usernameTextView = view.findViewById(R.id.actualName);
-        phoneNumTextView = view.findViewById(R.id.actualMobile);
-        emailTextView = view.findViewById(R.id.actualEmail);
-        editProfile = view.findViewById(R.id.editButton);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        if (requestCode == 0) {
+            if(resultCode == Activity.RESULT_OK){
+                ArrayList<String> result=data.getStringArrayListExtra("result");
+
+                phoneNumTextView.setText(result.get(0));
+                emailTextView.setText(result.get(1));
+                user.setPhonenumber(result.get(0));
+                user.setEmail(result.get(1));
+
+
+
+
+
+
 
 
             }
-        });
+
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }//
 
 
-
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
 
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
+
+        nameTextView = view.findViewById(R.id.nameView);
+        usernameTextView = view.findViewById(R.id.usernameView);
+        phoneNumTextView = view.findViewById(R.id.mobileView);
+        emailTextView = view.findViewById(R.id.emailView);
+        editProfile = view.findViewById(R.id.editButton);
+
+
+        Intent intent = getActivity().getIntent();
+        user = (User) intent.getSerializableExtra("User");
+
+        nameTextView.setText(user.getName());
+        usernameTextView.setText(user.getUsername());
+        phoneNumTextView.setText(user.getPhonenumber());
+        emailTextView.setText(user.getEmail());
+
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<String> userInfo = new ArrayList<String>();
+
+                Intent editIntent = new Intent(ProfileFragment.this.getActivity(), EditProfileActivity.class);
+
+                userInfo.add(user.getEmail());
+                userInfo.add(user.getPhonenumber());
+
+                editIntent.putStringArrayListExtra("userInfo",userInfo);
+                startActivityForResult(editIntent, 0);
+
+            }
+        });
 
     }
+
+
 }

@@ -19,7 +19,6 @@
         app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647"
         app:srcCompat="@drawable/creacc_fields" />
 
     <ImageView
@@ -68,8 +67,8 @@
     <EditText
         android:id="@+id/CREACC_ETfirstName"
         android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="64dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
@@ -81,8 +80,8 @@
     <EditText
         android:id="@+id/CREACC_ETlastName"
         android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
@@ -94,7 +93,7 @@
     <EditText
         android:id="@+id/CREACC_ETusername"
         android:layout_width="294dp"
-        android:layout_height="44dp"
+        android:layout_height="35dp"
         android:layout_marginTop="68dp"
         android:background="@android:color/transparent"
         android:ems="10"
@@ -107,8 +106,8 @@
     <EditText
         android:id="@+id/CREACC_ETemail"
         android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
@@ -120,8 +119,8 @@
     <EditText
         android:id="@+id/CREACC_ETphone"
         android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="phone"
@@ -133,7 +132,7 @@
     <EditText
         android:id="@+id/CREACC_ETpassword"
         android:layout_width="294dp"
-        android:layout_height="44dp"
+        android:layout_height="35dp"
         android:layout_marginTop="72dp"
         android:background="@android:color/transparent"
         android:ems="10"
@@ -146,8 +145,8 @@
     <EditText
         android:id="@+id/CREACC_ETrepassword"
         android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPassword"

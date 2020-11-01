@@ -37,10 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         createAccountTV = findViewById(R.id.LOGIN_TVcreateAccount);
         mAuth = FirebaseAuth.getInstance();
 
-
-
-
-
         createAccountTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO handle authentication
                 String username = usernameET.getText().toString().trim();
                 String password = passwordET.getText().toString().trim();
                 Log.e("USERNAME", "username is:" + username);
@@ -68,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("login Success", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        openMyBooks();
+                                        openMainActivity();
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("Login Failed", "signInWithEmail:failure", task.getException());
@@ -90,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openMyBooks(){
+    private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

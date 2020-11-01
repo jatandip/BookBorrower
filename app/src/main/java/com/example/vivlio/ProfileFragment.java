@@ -66,8 +66,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //final View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_profile, null);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -86,7 +84,16 @@ public class ProfileFragment extends Fragment {
                 emailTextView.setText(result.get(1));
                 user.setPhonenumber(result.get(0));
                 user.setEmail(result.get(1));
+
+
+
+
+
+
+
+
             }
+
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }
@@ -105,6 +112,8 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
+
         nameTextView = view.findViewById(R.id.nameView);
         usernameTextView = view.findViewById(R.id.usernameView);
         phoneNumTextView = view.findViewById(R.id.mobileView);

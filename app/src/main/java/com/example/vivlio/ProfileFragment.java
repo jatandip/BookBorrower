@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private ArrayList<String> profileInfo;
     private User user;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
 
 
@@ -59,15 +60,6 @@ public class ProfileFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -101,7 +93,12 @@ public class ProfileFragment extends Fragment {
                 user.setEmail(result.get(1));
 
                 db = FirebaseFirestore.getInstance();
-                DocumentReference userRef = db.collection("users").document(user.getUsername());
+
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser Curruser = mAuth.getCurrentUser();
+
+
+                DocumentReference userRef = db.collection("users").document(Curruser.getUid());
                 userRef
                         .update("phone", user.getPhonenumber())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -117,7 +114,7 @@ public class ProfileFragment extends Fragment {
                             }
                         });
 
-                DocumentReference userRef2 = db.collection("users").document(user.getUsername());
+                DocumentReference userRef2 = db.collection("users").document(Curruser.getUid());
                 userRef2
                         .update("email", user.getEmail())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -160,6 +157,9 @@ public class ProfileFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         user = (User) intent.getSerializableExtra("User");
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
 
         nameTextView.setText(user.getName());
         usernameTextView.setText(user.getUsername());

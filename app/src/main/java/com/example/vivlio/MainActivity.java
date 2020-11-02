@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_profile:
 
-                        User user =new User("NAME", "USERNAME", "EMAIL", "PHONE", "PASSWORD");
+                        User user =new User("NAME", "test", "EMAIL", "PHONE", "PASSWORD");
                         getIntent().putExtra("User", user);
 
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).commit();

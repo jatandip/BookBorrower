@@ -8,6 +8,16 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/fg1"
+        app:layout_constraintBottom_toBottomOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/searchTermEditText"
+        app:layout_constraintTop_toTopOf="@+id/searchTermEditText" />
+
     <Switch
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
@@ -38,6 +48,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_search"
+        app:backgroundTint="#ffeb3b"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +56,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch1" />

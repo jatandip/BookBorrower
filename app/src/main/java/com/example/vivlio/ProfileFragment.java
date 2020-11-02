@@ -43,6 +43,7 @@ public class ProfileFragment extends Fragment {
     private ArrayList<String> profileInfo;
     private User user;
     private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
 
 
 
@@ -92,7 +93,12 @@ public class ProfileFragment extends Fragment {
                 user.setEmail(result.get(1));
 
                 db = FirebaseFirestore.getInstance();
-                DocumentReference userRef = db.collection("users").document(user.getUsername());
+
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser Curruser = mAuth.getCurrentUser();
+
+
+                DocumentReference userRef = db.collection("users").document(Curruser.getUid());
                 userRef
                         .update("phone", user.getPhonenumber())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -108,7 +114,7 @@ public class ProfileFragment extends Fragment {
                             }
                         });
 
-                DocumentReference userRef2 = db.collection("users").document(user.getUsername());
+                DocumentReference userRef2 = db.collection("users").document(Curruser.getUid());
                 userRef2
                         .update("email", user.getEmail())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -151,6 +157,9 @@ public class ProfileFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         user = (User) intent.getSerializableExtra("User");
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currUser = mAuth.getCurrentUser();
 
         nameTextView.setText(user.getName());
         usernameTextView.setText(user.getUsername());

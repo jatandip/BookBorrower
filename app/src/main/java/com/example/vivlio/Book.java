@@ -26,6 +26,11 @@ public class Book {
         this.photoURL = photoURL;
     }
 
+
+
+
+
+
     /**
      * getter for Title
      * @return String

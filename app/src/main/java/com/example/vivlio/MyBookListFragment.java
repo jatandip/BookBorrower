@@ -125,13 +125,11 @@ public class MyBookListFragment extends Fragment {
                 {
                     User user = new User("NAME", "test", "EMAIL", "PHONE");
                     String city = doc.getId();
+
                     Log.i("asdasd", String. valueOf(doc.getData().get("author")));
-                    Log.i("asdas", city);
+
                     Book book = new Book(doc.getData().get("title").toString(),doc.getData().get("author").toString(),doc.getId().toString(),doc.getData().get("status").toString(), user, user, "link");
-
-
-
-                    //bookDataList.add(new Book());
+                    bookDataList.add(book);
                 }
                 bookAdapter.notifyDataSetChanged();
             }

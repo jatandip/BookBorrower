@@ -149,32 +149,35 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        nameTextView = view.findViewById(R.id.nameView);
-        usernameTextView = view.findViewById(R.id.usernameView);
-        phoneNumTextView = view.findViewById(R.id.mobileView);
-        emailTextView = view.findViewById(R.id.emailView);
-        editProfile = view.findViewById(R.id.editButton);
+                    nameTextView = view.findViewById(R.id.nameView);
+                    usernameTextView = view.findViewById(R.id.usernameView);
+                    phoneNumTextView = view.findViewById(R.id.mobileView);
+                    emailTextView = view.findViewById(R.id.emailView);
+                    editProfile = view.findViewById(R.id.editButton);
 
-        Intent intent = getActivity().getIntent();
-        user = (User) intent.getSerializableExtra("User");
+                    Intent intent = getActivity().getIntent();
+                    user = (User) intent.getSerializableExtra("User");
 
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currUser = mAuth.getCurrentUser();
+                    mAuth = FirebaseAuth.getInstance();
+                    FirebaseUser currUser = mAuth.getCurrentUser();
 
-        nameTextView.setText(user.getName());
-        usernameTextView.setText(user.getUsername());
-        phoneNumTextView.setText(user.getPhonenumber());
-        emailTextView.setText(user.getEmail());
+                    //LoginActivity.currentUser.getName();
 
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ArrayList<String> userInfo = new ArrayList<String>();
 
-                Intent editIntent = new Intent(ProfileFragment.this.getActivity(), EditProfileActivity.class);
+                    nameTextView.setText(user.getName());
+                    usernameTextView.setText(user.getUsername());
+                    phoneNumTextView.setText(user.getPhonenumber());
+                    emailTextView.setText(user.getEmail());
 
-                userInfo.add(user.getEmail());
-                userInfo.add(user.getPhonenumber());
+                    editProfile.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ArrayList<String> userInfo = new ArrayList<String>();
+
+                            Intent editIntent = new Intent(ProfileFragment.this.getActivity(), EditProfileActivity.class);
+
+                            userInfo.add(user.getEmail());
+                            userInfo.add(user.getPhonenumber());
 
                 editIntent.putStringArrayListExtra("userInfo",userInfo);
                 startActivityForResult(editIntent, 0);

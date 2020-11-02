@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,21 @@ public class BookList extends ArrayAdapter<Book> {
             view = LayoutInflater.from(context).inflate(R.layout.content, parent, false);
 
         }
+
+        Book book = books.get(position);
+
+        TextView author = view.findViewById(R.id.maker_View);
+        TextView title = view.findViewById(R.id.bookName_View);
+        TextView request = view.findViewById(R.id.request_View);
+
+
+
+        author.setText(book.getAuthor());
+        title.setText(book.getTitle());
+        request.setText(book.getStatus());
+
+        //Log.i("asda", author.getText().toString());
+
         //return the view
         return view;
     }

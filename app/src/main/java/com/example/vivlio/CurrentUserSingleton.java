@@ -1,12 +1,16 @@
-package com.example.vivlio;
+
+/**
+ package com.example.vivlio;
+
+ import java.util.ArrayList;
 
 public class CurrentUserSingleton {
 
     public User user;
-    public BookList currentBooks;
+    public ArrayList<Book> currentBooks;
 
 
-    public CurrentUserSingleton(User user, BookList currentBooks) {
+    public CurrentUserSingleton(User user, ArrayList<Book> currentBooks) {
         this.user = user;
         this.currentBooks = currentBooks;
     }
@@ -32,3 +36,4 @@ public class CurrentUserSingleton {
         this.currentBooks = currentBooks;
     }
 }
+ */

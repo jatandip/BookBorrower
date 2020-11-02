@@ -33,10 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     private String emailN;
     private String phoneN;
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public FirebaseUser user;
-    private User cUser;
-    public static CurrentUserSingleton currentUser;
+    public static User currentUser;
     private FirebaseFirestore db;
 
     @Override
@@ -52,9 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.LOGIN_ETpassword);
         createAccountTV = findViewById(R.id.LOGIN_TVcreateAccount);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
 
         createAccountTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,17 +63,17 @@ public class LoginActivity extends AppCompatActivity {
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String[] username = {usernameET.getText().toString().trim()};
+                final String username = usernameET.getText().toString().trim();
                 String password = passwordET.getText().toString().trim();
-                Log.e("USERNAME", "username is:" + username[0]);
-                if (TextUtils.isEmpty(username[0])) {
+                Log.e("USERNAME", "username is:" + username);
+                if (TextUtils.isEmpty(username)) {
                     Toast.makeText(LoginActivity.this, "Please enter a username!",
                             Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
                     Toast.makeText(LoginActivity.this, "Please enter a password!",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(username[0], password)
+                    mAuth.signInWithEmailAndPassword(username, password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("login Success", "signInWithEmail:success");
                                         user = mAuth.getCurrentUser();
-
                                         DocumentReference docRef = db.collection("users")
                                                 .document(user.getUid());
                                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -98,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     phoneN = document.getData().get("phone").toString();
                                             }
                                         });
-                                        cUser = new User(nameN, usernameN, emailN, phoneN);
+                                        currentUser = new User(nameN, usernameN, emailN, phoneN);
 
                                         openMainActivity();
                                     } else {
@@ -112,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void loginUser(){
+        //TODO authenticate user
+        //TODO set currentUser
+
     }
 
     private void openCreateAccount(){

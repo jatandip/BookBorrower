@@ -87,14 +87,21 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                 DocumentSnapshot document = task.getResult();
-                                                    nameN = document.getData().get("fname").toString() +
+                                                    nameN = document.getData().get("fname").toString() + " " +
                                                      document.getData().get("lname");
                                                     usernameN = document.getData().get("username").toString();
                                                     emailN = document.getData().get("email").toString();
                                                     phoneN = document.getData().get("phone").toString();
+                                                    currentUser = new User(nameN, usernameN, emailN, phoneN);
                                             }
+
                                         });
-                                        currentUser = new User(nameN, usernameN, emailN, phoneN);
+
+                                        //Log.i("testingLog", usernameN);
+
+                                       // currentUser = new User(nameN, usernameN, emailN, phoneN);
+
+                                        //Log.i("testingLog", currentUser.getEmail().toString());
 
                                         openMainActivity();
                                     } else {

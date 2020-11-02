@@ -89,8 +89,14 @@ public class ProfileFragment extends Fragment {
 
                 phoneNumTextView.setText(result.get(0));
                 emailTextView.setText(result.get(1));
-                user.setPhonenumber(result.get(0));
-                user.setEmail(result.get(1));
+
+                //user.setPhonenumber(result.get(0));
+                //user.setEmail(result.get(1));
+
+                LoginActivity.currentUser.setPhonenumber(result.get(0));
+                LoginActivity.currentUser.setEmail(result.get(1));
+
+
 
                 db = FirebaseFirestore.getInstance();
 
@@ -100,7 +106,7 @@ public class ProfileFragment extends Fragment {
 
                 DocumentReference userRef = db.collection("users").document(Curruser.getUid());
                 userRef
-                        .update("phone", user.getPhonenumber())
+                        .update("phone", LoginActivity.currentUser.getPhonenumber())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -116,7 +122,7 @@ public class ProfileFragment extends Fragment {
 
                 DocumentReference userRef2 = db.collection("users").document(Curruser.getUid());
                 userRef2
-                        .update("email", user.getEmail())
+                        .update("email", LoginActivity.currentUser.getEmail())
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -164,10 +170,11 @@ public class ProfileFragment extends Fragment {
                     //LoginActivity.currentUser.getName();
 
 
-                    nameTextView.setText(user.getName());
-                    usernameTextView.setText(user.getUsername());
-                    phoneNumTextView.setText(user.getPhonenumber());
-                    emailTextView.setText(user.getEmail());
+                    Log.i("is empty? ", LoginActivity.currentUser.getName().toString());
+                    nameTextView.setText( LoginActivity.currentUser.getName());
+                    usernameTextView.setText( LoginActivity.currentUser.getUsername());
+                    phoneNumTextView.setText(LoginActivity.currentUser.getPhonenumber());
+                    emailTextView.setText(LoginActivity.currentUser.getEmail());
 
                     editProfile.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -176,8 +183,8 @@ public class ProfileFragment extends Fragment {
 
                             Intent editIntent = new Intent(ProfileFragment.this.getActivity(), EditProfileActivity.class);
 
-                            userInfo.add(user.getEmail());
-                            userInfo.add(user.getPhonenumber());
+                            userInfo.add(LoginActivity.currentUser.getEmail());
+                            userInfo.add(LoginActivity.currentUser.getPhonenumber());
 
                 editIntent.putStringArrayListExtra("userInfo",userInfo);
                 startActivityForResult(editIntent, 0);

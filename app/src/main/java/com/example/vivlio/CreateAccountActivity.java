@@ -56,7 +56,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO Handle valid parameters
-                //TODO Create new user in database
                 final String firstName = firstNameET.getText().toString().trim();
                 final String lastName = lastNameET.getText().toString().trim();
                 final String username = usernameET.getText().toString().trim();
@@ -76,46 +75,39 @@ public class CreateAccountActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    mAuth.signInWithEmailAndPassword(email, password)
-                                            .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    if (task.isSuccessful()) {
-                                                        // Sign in success, update UI with the signed-in user's information
-                                                        Log.d("login Success", "signInWithEmail:success");
-                                                        Map<String, Object> userInfo = new HashMap<>();
-                                                        userInfo.put("email", email);
-                                                        userInfo.put("fname", firstName);
-                                                        userInfo.put("lname", lastName);
-                                                        userInfo.put("phone", phone);
-                                                        userInfo.put("username", username);
-                                                        db.collection("users")
-                                                                .document(mAuth.getCurrentUser().getUid())
-                                                                .set(userInfo);
-                                                        openMainActivity();
-                                                    } else {
-                                                        // If sign in fails, display a message to the user.
-                                                        Log.w("Login Failed", "signInWithEmail:failure", task.getException());
-                                                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
-                                                                Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-                                            });
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("login Success", "signInWithEmail:success");
+                                    Map<String, Object> userInfo = new HashMap<>();
+                                    userInfo.put("email", email);
+                                    userInfo.put("fname", firstName);
+                                    userInfo.put("lname", lastName);
+                                    userInfo.put("phone", phone);
+                                    userInfo.put("username", username);
+                                    db.collection("users")
+                                            .document(mAuth.getCurrentUser().getUid())
+                                            .set(userInfo);
+                                    openLoginActivity();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
                                     Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+                } else {
+                    // If sign in fails, display a message to the user.
+                    //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void openMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+
+    private void openLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

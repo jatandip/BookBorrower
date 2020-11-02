@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageButton loginBTN;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordET;
     private TextView createAccountTV;
     private FirebaseAuth mAuth;
+    public FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstances) {
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_page);
 
         //USERNAME IS ACTUALLY EMAIL
+        //TODO Update currentUser with logged in user
 
         loginBTN = findViewById(R.id.LOGIN_BTNlogin);
         usernameET = findViewById(R.id.LOGIN_ETusername);
@@ -64,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("login Success", "signInWithEmail:success");
-                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        user = mAuth.getCurrentUser();
                                         openMainActivity();
                                     } else {
                                         // If sign in fails, display a message to the user.

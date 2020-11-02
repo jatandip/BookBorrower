@@ -44,7 +44,7 @@
         android:inputType="textPersonName"
         android:singleLine="true"
         android:textColor="#606060"
-        android:textColorHint="#B1B1B1"
+        android:textColorHint="#707274"
         app:layout_constraintEnd_toEndOf="@+id/LOGIN_IVbox"
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="@+id/LOGIN_IVbox"

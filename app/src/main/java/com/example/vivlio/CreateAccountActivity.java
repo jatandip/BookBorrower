@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private EditText firstNameET;
@@ -27,6 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText passwordET;
     private EditText repasswordET;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +49,21 @@ public class CreateAccountActivity extends AppCompatActivity {
         repasswordET = findViewById(R.id.CREACC_ETrepassword);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         createBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO Handle valid parameters
-                String firstName = firstNameET.getText().toString().trim();
-                String lastName = lastNameET.getText().toString().trim();
-                String username = usernameET.getText().toString().trim();
-                String email = emailET.getText().toString().trim();
-                String phone = phoneET.getText().toString().trim();
-                String password = passwordET.getText().toString().trim();
+                //TODO Create new user in database
+                final String firstName = firstNameET.getText().toString().trim();
+                final String lastName = lastNameET.getText().toString().trim();
+                final String username = usernameET.getText().toString().trim();
+                final String email = emailET.getText().toString().trim();
+                final String phone = phoneET.getText().toString().trim();
+                final String password = passwordET.getText().toString().trim();
                 String repassword = repasswordET.getText().toString().trim();
-
+                //tester
                 if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(username) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) ||
                         TextUtils.isEmpty(repassword)){
@@ -67,10 +75,31 @@ public class CreateAccountActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    //Log.d(TAG, "createUserWithEmail:success");
-                                    //FirebaseUser user = mAuth.getCurrentUser();
-                                    openMainActivity();
+                                    mAuth.signInWithEmailAndPassword(email, password)
+                                            .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Sign in success, update UI with the signed-in user's information
+                                                        Log.d("login Success", "signInWithEmail:success");
+                                                        Map<String, Object> userInfo = new HashMap<>();
+                                                        userInfo.put("email", email);
+                                                        userInfo.put("fname", firstName);
+                                                        userInfo.put("lname", lastName);
+                                                        userInfo.put("phone", phone);
+                                                        userInfo.put("username", username);
+                                                        db.collection("users")
+                                                                .document(mAuth.getCurrentUser().getUid())
+                                                                .set(userInfo);
+                                                        openMainActivity();
+                                                    } else {
+                                                        // If sign in fails, display a message to the user.
+                                                        Log.w("Login Failed", "signInWithEmail:failure", task.getException());
+                                                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                                                Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     //Log.w(TAG, "createUserWithEmail:failure", task.getException());

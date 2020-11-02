@@ -16,7 +16,6 @@ public class CurrentUserSingleton {
         this.user = user;
     }
 
-
     public User getUser() {
         return user;
     }

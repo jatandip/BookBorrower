@@ -18,14 +18,26 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
     private ImageButton loginBTN;
     private EditText usernameET;
     private EditText passwordET;
     private TextView createAccountTV;
+
+    private String nameN;
+    private String usernameN;
+    private String emailN;
+    private String phoneN;
+
     private FirebaseAuth mAuth;
     public FirebaseUser user;
+    private User cUser;
+    public static CurrentUserSingleton currentUser;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstances) {
@@ -41,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         createAccountTV = findViewById(R.id.LOGIN_TVcreateAccount);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
 
         createAccountTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,15 +66,17 @@ public class LoginActivity extends AppCompatActivity {
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameET.getText().toString().trim();
+                final String[] username = {usernameET.getText().toString().trim()};
                 String password = passwordET.getText().toString().trim();
-                Log.e("USERNAME", "username is:" + username);
-                if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(LoginActivity.this, "Please enter a username!", Toast.LENGTH_SHORT).show();
+                Log.e("USERNAME", "username is:" + username[0]);
+                if (TextUtils.isEmpty(username[0])) {
+                    Toast.makeText(LoginActivity.this, "Please enter a username!",
+                            Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(LoginActivity.this, "Please enter a password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please enter a password!",
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    mAuth.signInWithEmailAndPassword(username, password)
+                    mAuth.signInWithEmailAndPassword(username[0], password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -68,6 +84,22 @@ public class LoginActivity extends AppCompatActivity {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("login Success", "signInWithEmail:success");
                                         user = mAuth.getCurrentUser();
+
+                                        DocumentReference docRef = db.collection("users")
+                                                .document(user.getUid());
+                                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                DocumentSnapshot document = task.getResult();
+                                                    nameN = document.getData().get("fname").toString() +
+                                                     document.getData().get("lname");
+                                                    usernameN = document.getData().get("username").toString();
+                                                    emailN = document.getData().get("email").toString();
+                                                    phoneN = document.getData().get("phone").toString();
+                                            }
+                                        });
+                                        cUser = new User(nameN, usernameN, emailN, phoneN);
+
                                         openMainActivity();
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -79,7 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                             });
                 }
             }
-
         });
     }
 

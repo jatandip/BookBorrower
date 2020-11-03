@@ -94,13 +94,10 @@ public class LoginActivity extends AppCompatActivity {
                                                     phoneN = document.getData().get("phone").toString();
                                                     currentUser = new User(nameN, usernameN, emailN, phoneN);
                                             }
-
                                         });
 
                                         //Log.i("testingLog", usernameN);
-
-                                       // currentUser = new User(nameN, usernameN, emailN, phoneN);
-
+                                        // currentUser = new User(nameN, usernameN, emailN, phoneN);
                                         //Log.i("testingLog", currentUser.getEmail().toString());
 
                                         openMainActivity();

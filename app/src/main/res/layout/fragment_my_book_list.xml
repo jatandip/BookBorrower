@@ -8,8 +8,8 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBar"
-        android:layout_width="414dp"
-        android:layout_height="61dp"
+        android:layout_width="415dp"
+        android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
@@ -17,10 +17,10 @@
         android:layout_marginBottom="683dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.023">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -50,20 +50,30 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <ListView
-        android:id="@+id/bookListView"
-        android:layout_width="410dp"
-        android:layout_height="599dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="61dp" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addBtn"
-        android:layout_width="55dp"
-        android:layout_height="52dp"
+        android:layout_width="62dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="340dp"
+        android:layout_marginLeft="340dp"
+        android:layout_marginTop="490dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
-        tools:layout_editor_absoluteX="361dp"
-        tools:layout_editor_absoluteY="607dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/bookListView"
+        android:layout_width="409dp"
+        android:layout_height="569dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="61dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

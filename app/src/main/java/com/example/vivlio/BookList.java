@@ -26,21 +26,6 @@ public class BookList extends ArrayAdapter<Book> {
         this.context = context;
     }
 
-    public ArrayList<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(ArrayList<Book> books) {
-        this.books = books;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
     @NonNull
     @Override
@@ -65,7 +50,9 @@ public class BookList extends ArrayAdapter<Book> {
         title.setText(book.getTitle());
         request.setText(book.getStatus());
 
-        //Log.i("asda", author.getText().toString());
+
+
+        Log.i("asda", author.getText().toString());
 
         //return the view
         return view;

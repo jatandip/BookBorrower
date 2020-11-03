@@ -95,10 +95,13 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                } else {
+                } else if(password.equals(repassword) == false){
                     // If sign in fails, display a message to the user.
                     //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                    Toast.makeText(CreateAccountActivity.this, "Passwords don't match!",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CreateAccountActivity.this, "Something went wrong :/",
                             Toast.LENGTH_SHORT).show();
                 }
             }

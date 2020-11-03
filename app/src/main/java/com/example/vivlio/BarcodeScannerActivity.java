@@ -25,7 +25,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int CAMERA_REQUEST_CODE = 100;
     String barcodeData;
-    Intent returnedData;
+
+    /**
+     * ISBN is returned as an intent. To access the ISBN string
+     * use Intent.getStringExtra("isbn")
+     */
+    Intent returnedData = new Intent();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
                 try {
                     if (ActivityCompat.checkSelfPermission(BarcodeScannerActivity.this,
-                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
 
                         cameraSource.start(surfaceView.getHolder());
                     }
@@ -61,8 +66,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 //                    else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {}
                     else {
                         ActivityCompat.requestPermissions(BarcodeScannerActivity.this,
-                                                    new String[] {Manifest.permission.CAMERA},
-                                                    CAMERA_REQUEST_CODE);
+                                new String[] {Manifest.permission.CAMERA},
+                                CAMERA_REQUEST_CODE);
                     }
                 } catch (IOException e){
                     e.printStackTrace();
@@ -111,5 +116,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         cameraSource.release();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDetectorSources();
     }
 }

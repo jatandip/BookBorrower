@@ -1,5 +1,6 @@
 package com.example.vivlio;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -81,6 +82,7 @@ public class MyBookListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -99,43 +101,31 @@ public class MyBookListFragment extends Fragment {
         tabBar = view.findViewById(R.id.tabBar);
         listofBooks = view.findViewById(R.id.bookListView);
         add = view.findViewById(R.id.addBtn);
-
         taby = view.findViewById(R.id.tabBar);
-        db = FirebaseFirestore.getInstance();
 
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser Firebaseuser = mAuth.getCurrentUser();
-
         final String uid = Firebaseuser.getUid();
-
         collectionReference = db.collection("users" + "/" + uid + "/owned" );
 
         bookDataList = new ArrayList<>();
         bookAdapter = new BookList(getActivity(),bookDataList);
-
         listofBooks.setAdapter(bookAdapter);
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
-
                 bookDataList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     User user = new User("NAME", "test", "EMAIL", "PHONE");
-                    String city = doc.getId();
-                    Log.i("id", String. valueOf(doc.getId()));
-                    Log.i("title", String. valueOf(doc.getData().get("title")));
-
 
                         Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                         bookDataList.add(book);
-                        Log.i("bookTitle", book.getTitle());
-
                 }
                 bookAdapter.notifyDataSetChanged();
-                Log.i("count", String.valueOf(bookAdapter.getCount()));
             }
         });
 
@@ -143,165 +133,109 @@ public class MyBookListFragment extends Fragment {
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.i("asdasd", String.valueOf(tab.getPosition()));
-
 
                 if (tab.getPosition() == 0) {
-                    Log.i("pos", "0");
-
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
-
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 User user = new User("NAME", "test", "EMAIL", "PHONE");
-                                String city = doc.getId();
-                                //Log.i("id", String. valueOf(doc.getId()));
-                                //Log.i("title", String. valueOf(doc.getData().get("title")));
 
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                                     bookDataList.add(book);
-                                    //Log.i("bookTitle", book.getTitle());
-
                             }
                             bookAdapter.notifyDataSetChanged();
-                            //Log.i("count", String.valueOf(bookAdapter.getCount()));
                         }
                     });
                 }
 
                 if (tab.getPosition() == 1) {
-
-                    Log.i("pos", "1");
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
-
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 User user = new User("NAME", "test", "EMAIL", "PHONE");
-                                String city = doc.getId();
-                                //Log.i("id", String. valueOf(doc.getId()));
-                                //Log.i("title", String. valueOf(doc.getData().get("title")));
 
                                 if (doc.getData().get("status").toString().equals("accepted")) {
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                                     bookDataList.add(book);
-                                    Log.i("bookTitle", book.getTitle());
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
-                            Log.i("count", String.valueOf(bookAdapter.getCount()));
                         }
                     });
                 }
 
                 if (tab.getPosition() == 2) {
-                    Log.i("pos", "2");
-
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
-
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 User user = new User("NAME", "test", "EMAIL", "PHONE");
-                                String city = doc.getId();
-                                //Log.i("id", String. valueOf(doc.getId()));
-                                //Log.i("title", String. valueOf(doc.getData().get("title")));
-
                                 if (doc.getData().get("status").toString().equals("available")) {
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                                     bookDataList.add(book);
-                                    //Log.i("bookTitle", book.getTitle());
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
-                            //Log.i("count", String.valueOf(bookAdapter.getCount()));
                         }
                     });
                 }
 
 
                 if (tab.getPosition() == 3) {
-                    Log.i("pos", "3");
-
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
-
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 User user = new User("NAME", "test", "EMAIL", "PHONE");
-                                String city = doc.getId();
-                                //Log.i("id", String. valueOf(doc.getId()));
-                                //Log.i("title", String. valueOf(doc.getData().get("title")));
 
                                 if (doc.getData().get("status").toString().equals("pending")) {
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                                     bookDataList.add(book);
-                                    //Log.i("bookTitle", book.getTitle());
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
-                            //Log.i("count", String.valueOf(bookAdapter.getCount()));
                         }
                     });
                 }
 
                 if (tab.getPosition() == 4) {
-                    Log.i("pos", "4");
-
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
-
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 User user = new User("NAME", "test", "EMAIL", "PHONE");
-                                String city = doc.getId();
-                                //Log.i("id", String. valueOf(doc.getId()));
-                                //Log.i("title", String. valueOf(doc.getData().get("title")));
 
                                 if (doc.getData().get("status").toString().equals("borrowed")) {
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
                                     bookDataList.add(book);
-                                    //Log.i("bookTitle", book.getTitle());
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
-                            //Log.i("count", String.valueOf(bookAdapter.getCount()));
                         }
                     });
                 }
-
             }
-
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-
-
     }
-
 }

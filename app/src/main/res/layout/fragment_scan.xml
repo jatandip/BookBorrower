@@ -62,7 +62,7 @@
             android:layout_marginTop="205dp"
             android:fontFamily="sans-serif-light"
             android:text="BORROWING"
-            android:textColor="#2B2B2B"
+            android:textColor="#2196F3"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

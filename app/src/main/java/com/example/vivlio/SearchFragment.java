@@ -48,6 +48,8 @@ public class SearchFragment extends Fragment {
     private ArrayAdapter<Book> resultAdapter;
     private ArrayList<Book> resultDataList;
     private ListView resultList;
+    private ArrayAdapter<User> userAdapter;
+    private ArrayList<User> userDataList;
     private CollectionReference bookCollection;
     private CollectionReference userCollection;
 
@@ -105,6 +107,9 @@ public class SearchFragment extends Fragment {
         resultDataList = new ArrayList<>();
         resultAdapter = new BookList(getActivity(), resultDataList);
 
+        userDataList = new ArrayList<>();
+        userAdapter = new SearchUserCustomList(getActivity(), userDataList);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -126,6 +131,7 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             resultDataList.clear();
+                            userDataList.clear();
                             resultList.setAdapter(resultAdapter);
                             ArrayList<String> ISBNList =  new ArrayList<>();
                             for(QueryDocumentSnapshot doc: value) {
@@ -154,15 +160,23 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             resultDataList.clear();
-                            ArrayList<String> userList = new ArrayList<>();
+                            userDataList.clear();
+                            resultList.setAdapter(userAdapter);
+                            ArrayList<String> userIDList = new ArrayList<>();
                             for(QueryDocumentSnapshot doc: value) {
                                 String username = doc.getData().get("username").toString();
                                 for(String term : searchTerms) {
                                     if(username.toLowerCase().contains(term.toLowerCase())) {
-                                        break;
+                                        User resultUser;
+                                        resultUser = new User(doc.getData().get("fname").toString() + " " + doc.getData().get("lname").toString(), username, doc.getData().get("username").toString(), doc.getData().get("phone").toString());
+                                        if(userIDList.isEmpty() || !userIDList.contains(doc.getId().toString())) {
+                                            userDataList.add(resultUser);
+                                            userIDList.add(doc.getId().toString());
+                                        }
                                     }
                                 }
                             }
+                            userAdapter.notifyDataSetChanged();
                         }
                     });
                 }

@@ -55,8 +55,8 @@ public class ScanFragment extends Fragment {
     }
 
     public void openLending(){
-        //Intent intent = new Intent(ScanFragment.this.getActivity(), LendingTaskActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(ScanFragment.this.getActivity(),LendTaskActivity.class);
+        startActivity(intent);
     }
 
     public void openBorrowing(){

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -101,6 +102,7 @@ public class MyRequestListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceBundle) {
         ListView listOfRequests = view.findViewById(R.id.request_list_view);
+        TabLayout tabBar = view.findViewById(R.id.tab_bar);
 
         // set up firebase access
         db = FirebaseFirestore.getInstance();
@@ -108,18 +110,19 @@ public class MyRequestListFragment extends Fragment {
         final String uid = mAuth.getCurrentUser().getUid();
         collectionReference = db.collection("users/" + uid + "/requested");
 
+        // set up ListView
         requestDataList = new ArrayList<>();
         requestAdapter = new BookList(getActivity(), requestDataList);
         listOfRequests.setAdapter(requestAdapter);
 
+        // start by showing all (user will start on All tab)
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 requestDataList.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    ArrayList<String> owner = new ArrayList<>();
-                    owner.add(doc.getData().get("owners").toString());
+                    ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
 
                     Book book = new Book(doc.getData().get("title").toString(),
                             doc.getData().get("author").toString(),
@@ -133,6 +136,98 @@ public class MyRequestListFragment extends Fragment {
                 }
                 requestAdapter.notifyDataSetChanged();
             }
+        });
+
+        // filter books by tab
+        tabBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                            requestDataList.clear();
+
+                            for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+                                ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+
+                                Book book = new Book(doc.getData().get("title").toString(),
+                                        doc.getData().get("author").toString(),
+                                        doc.getId(),
+                                        doc.getData().get("status").toString(),
+                                        owner.get(0),
+                                        owner.get(0),
+                                        "link");
+
+                                requestDataList.add(book);
+                            }
+                            requestAdapter.notifyDataSetChanged();
+
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 1) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                            requestDataList.clear();
+
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                if (doc.getData().get("status").toString().equals("accepted")) {
+
+                                    ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+
+                                    Book book = new Book(doc.getData().get("title").toString(),
+                                            doc.getData().get("author").toString(),
+                                            doc.getId(),
+                                            doc.getData().get("status").toString(),
+                                            owner.get(0),
+                                            owner.get(0),
+                                            "link");
+
+                                    requestDataList.add(book);
+                                }
+                            }
+                            requestAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 2) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                            requestDataList.clear();
+
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                if (doc.getData().get("status").toString().equals("borrowed")) {
+
+                                    ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+
+                                    Book book = new Book(doc.getData().get("title").toString(),
+                                            doc.getData().get("author").toString(),
+                                            doc.getId(),
+                                            doc.getData().get("status").toString(),
+                                            owner.get(0),
+                                            uid,
+                                            "link");
+
+                                    requestDataList.add(book);
+                                }
+                            }
+                            requestAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
 

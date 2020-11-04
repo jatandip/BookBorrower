@@ -83,8 +83,8 @@
 
     <TextView
         android:id="@+id/borrowUserNameAccepted"
-        android:layout_width="139dp"
-        android:layout_height="28dp"
+        android:layout_width="138dp"
+        android:layout_height="36dp"
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="329dp"
@@ -95,8 +95,16 @@
         android:id="@+id/mapsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="290dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="321dp"
         android:text="SEE LOCATION"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="290dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,20 +13,20 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/fg1"
-        app:layout_constraintBottom_toBottomOf="@+id/switch1"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/search_switch"
+        app:layout_constraintEnd_toEndOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="@+id/searchTermEditText"
         app:layout_constraintTop_toTopOf="@+id/searchTermEditText" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/search_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="146dp"
         android:layout_marginLeft="146dp"
         android:layout_marginEnd="121dp"
         android:layout_marginRight="121dp"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchTermEditText" />
 
@@ -37,13 +37,13 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Search"
-        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
-        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toBottomOf="@+id/search_button"
+        app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -52,14 +52,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="409dp"
+    <ListView
+        android:id="@+id/result_list_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <TextView
         android:id="@+id/textView"
@@ -67,8 +67,8 @@
         android:layout_height="19dp"
         android:text="Books"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintStart_toEndOf="@+id/switch1"
+        app:layout_constraintBottom_toTopOf="@+id/result_list_view"
+        app:layout_constraintStart_toEndOf="@+id/search_switch"
         app:layout_constraintTop_toBottomOf="@+id/searchTermEditText" />
 
     <TextView
@@ -77,8 +77,8 @@
         android:layout_height="wrap_content"
         android:text="Users"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/switch1"
+        app:layout_constraintBottom_toTopOf="@+id/result_list_view"
+        app:layout_constraintEnd_toStartOf="@+id/search_switch"
         app:layout_constraintTop_toBottomOf="@+id/searchTermEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

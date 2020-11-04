@@ -15,6 +15,7 @@ public class Book implements Serializable {
     private String status;
     private String owner;
     private String currentOwner;
+    private String[] currentOwners;
     private String photoURL;
 
     public Book(String title, String author, String ISBN, String status, String owner, String currentOwner, String photoURL){
@@ -32,6 +33,20 @@ public class Book implements Serializable {
         this.title = title;
         this.author = author;
         this.owner = owner;
+    }
+
+    /**
+     * Constructor for Book in the Search Fragment
+     * @param title title of the book
+     * @param author book's author
+     * @param ISBN book's ISBN
+     * @param currentOwners list of all current owners
+     */
+    public Book(String title, String author, String ISBN, String[] currentOwners) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.currentOwners = currentOwners;
     }
 
     public Book() {}
@@ -146,6 +161,22 @@ public class Book implements Serializable {
      */
     public void setPhotoURL(String photoURL){
         this.photoURL = photoURL;
+    }
+
+    /**
+     * getter for current Owner list
+     * @return currentOwners
+     */
+    public String[] getCurrentOwners() {
+        return currentOwners;
+    }
+
+    /**
+     * setter for Current owners list
+     * @param currentOwners
+     */
+    public void setCurrentOwners(String[] currentOwners) {
+        this.currentOwners = currentOwners;
     }
 
     /**

@@ -106,7 +106,7 @@ public class MyBookListFragment extends Fragment {
         bookAdapter = new BookList(getActivity(),bookDataList);
         listofBooks.setAdapter(bookAdapter);
 
-        /*
+
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -129,10 +129,7 @@ public class MyBookListFragment extends Fragment {
         });
 
 
-
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
@@ -243,7 +240,7 @@ public class MyBookListFragment extends Fragment {
         });
 
 
-         */
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,6 +252,7 @@ public class MyBookListFragment extends Fragment {
 
             }
         });
+
 
         listofBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -283,6 +281,7 @@ public class MyBookListFragment extends Fragment {
 
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -309,17 +308,13 @@ public class MyBookListFragment extends Fragment {
 
 
                 //final CollectionReference collectionReference = db.collection("users/" + "jj1424" + "/owned/" + isbn);
-                HashMap<String, String> info = new HashMap<>();
-                HashMap<String, ArrayList<String>> borrowers = new HashMap<>();
+                HashMap<String, Object> info = new HashMap<>();
                 ArrayList<String> empty = new ArrayList<String>();
 
                 empty.add("");
-                borrowers.put("borrowers", empty);
-
-                HashMap<String,GeoPoint> loc = new HashMap<>();
+                info.put("borrowers", empty);
                 GeoPoint location = new GeoPoint(0,0);
-                loc.put("location" , location);
-
+                info.put("location" , location);
                 info.put("author", author);
                 info.put("title", title);
                 info.put("status", "available");
@@ -341,6 +336,10 @@ public class MyBookListFragment extends Fragment {
                             }
                         });
 
+
+
+
+                /*
                 DocumentReference washingtonRef = db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn);
 
                 washingtonRef
@@ -350,9 +349,11 @@ public class MyBookListFragment extends Fragment {
                         .update("location", location);
 
 
+
+                 */
+
+
             }
         }
     }
-
-
 }

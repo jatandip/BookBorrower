@@ -55,7 +55,7 @@ public class LendTaskActivity extends AppCompatActivity{
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                requestedBy.get(0));
+                                requestedBy.get(0), doc.getId());
                         bookDataList.add(book);
                     }
                 }

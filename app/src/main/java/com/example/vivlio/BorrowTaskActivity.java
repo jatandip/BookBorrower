@@ -2,6 +2,9 @@ package com.example.vivlio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,10 +24,10 @@ import java.util.ArrayList;
 public class BorrowTaskActivity extends AppCompatActivity {
     ArrayAdapter<Book> bookAdapter;
     ArrayList<Book> bookDataList;
+    String selectedISBN;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -34,6 +37,7 @@ public class BorrowTaskActivity extends AppCompatActivity {
         ListView BookListLV;
 
         BookListLV = findViewById(R.id.BORROWT_LVbooks);
+
         bookDataList = new ArrayList<>();
         bookAdapter = new BorrowTaskCustomList(this, bookDataList);
         BookListLV.setAdapter(bookAdapter);
@@ -52,24 +56,34 @@ public class BorrowTaskActivity extends AppCompatActivity {
                 {
                     if (doc.getData().get("status").toString().equals("accepted")) {
                         ArrayList<String> owner = new ArrayList<>();
-                        owner.add(doc.getData().get("owner").toString());
+                        owner.add(doc.getData().get("owners").toString());
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                owner.get(0));
+                                owner.get(0), doc.getId());
+                        Log.e("ISB", doc.getId());
+                        Log.e("title", doc.getData().get("title").toString());
                         bookDataList.add(book);
                     }
                 }
                 bookAdapter.notifyDataSetChanged();
-                openScanner();
             }
         });
 
+        BookListLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedISBN = bookDataList.get(i).getISBN();
+                Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
+                openScanner(selectedISBN);
+
+            }
+        });
     }
 
-    public void openScanner(){
-        //TODO OPEN TO ISBN SCANNER
+    public void openScanner(String isbn){
         //Intent intent = new Intent(BorrowTaskActivity.this, Scanner.class);
+        //intent.putExtra("BORROWER_ISBN", isbn);
         //startActivity(intent);
     }
 }

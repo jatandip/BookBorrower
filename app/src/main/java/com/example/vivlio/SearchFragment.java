@@ -127,18 +127,20 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             resultDataList.clear();
+                            ArrayList<String> ISBNList =  new ArrayList<>();
                             for(QueryDocumentSnapshot doc: value) {
                                 String title = doc.getData().get("title").toString();
                                 String author = doc.getData().get("author").toString();
                                 Log.d("INFO", "Current title and author: " + title + author);
                                 for(String term : searchTerms) {
-                                    if (title.contains(term) || author.contains(term)) {
+                                    if (title.toLowerCase().contains(term.toLowerCase()) || author.toLowerCase().contains(term.toLowerCase())) {
                                         ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
                                         Book resultBook;
                                         resultBook = new Book(title, author, doc.getId().toString(), owners);
                                         Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
-                                        if(!resultDataList.contains(resultBook)) {
+                                        if(ISBNList.isEmpty() || !ISBNList.contains( doc.getId().toString())) {
                                             resultDataList.add(resultBook);
+                                            ISBNList.add(doc.getId().toString());
                                         }
                                     }
                                 }

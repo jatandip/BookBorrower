@@ -38,6 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
@@ -244,7 +245,7 @@ public class MyBookListFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent addBook = new Intent(MyBookListFragment.this.getActivity(), AddBook.class);
-                startActivityForResult(addBook, 7);
+                startActivityForResult(addBook, 0);
 
 
             }
@@ -285,9 +286,12 @@ public class MyBookListFragment extends Fragment {
             if (resultCode == Activity.RESULT_OK) {
                 ArrayList<String> result = data.getStringArrayListExtra("result");
 
-                final String nameN;
-                final String usernameN;
-                final String emailN;
+                String title = result.get(0);
+                String author = result.get(1);
+                String isbn = result.get(2);
+                String currentpath = result.get(3);
+                String path = result.get(4);
+
 
                 Log.i("hello", result.get(0));
 
@@ -297,6 +301,35 @@ public class MyBookListFragment extends Fragment {
 
                 DocumentReference docRef = db.collection("users")
                         .document(Curruser.getUid());
+
+                final CollectionReference collectionReference = db.collection("users");
+                HashMap<String, String> info = new HashMap<>();
+
+                /*
+                collectionReference
+                        .document(Curruser.getUid())
+                        .set(info)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log. d (TAG, "Data has been added successfully!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log. d (TAG, "Data could not be added!" + e.toString());
+                            }
+                        });
+
+
+
+
+
+                 */
+
+
+
 
             }
         }

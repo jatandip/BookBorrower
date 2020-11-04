@@ -62,7 +62,7 @@ public class AddBook extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_book);
         Log.d(TAG, "onCreate started");
         titleEditText = findViewById(R.id.edit_title);
         authorEditText = findViewById(R.id.edit_author);

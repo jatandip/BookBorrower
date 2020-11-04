@@ -33,7 +33,9 @@ public class Book implements Serializable {
         this.author = author;
         this.owner = owner;
     }
-    
+
+    public Book() {}
+
     /**
      * getter for Title
      * @return String

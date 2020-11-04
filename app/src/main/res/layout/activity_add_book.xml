@@ -58,12 +58,11 @@
 
     <ImageView
         android:id="@+id/image_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom= "16dp"
-        android:layout_marginLeft="150dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="190dp"
         android:layout_alignLeft="@id/button_choose_image"
-        android:layout_marginTop="360dp" />
+        android:layout_marginTop="340dp" />
 
     <Button
         android:id="@+id/button_upload"

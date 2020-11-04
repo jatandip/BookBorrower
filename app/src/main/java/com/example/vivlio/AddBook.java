@@ -36,6 +36,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class AddBook extends AppCompatActivity {
@@ -234,15 +235,15 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            book.setAuthor(author);
-            book.setTitle(title);
-            book.setISBN(ISBN);
-            book.setPhotoURL(currentPath);
+            String status = "available";
             Intent intent = new Intent();
-            intent.putExtra("Title", title);
-            intent.putExtra("Author", author);
-            intent.putExtra("ISBN", ISBN);
-            intent.putExtra("photoURL", currentPath);
+            ArrayList<String> newInfo = new ArrayList<>();
+            newInfo.add(title);
+            newInfo.add(author);
+            newInfo.add(ISBN);
+            newInfo.add(currentPath);
+            newInfo.add(status);
+            intent.putStringArrayListExtra("result", newInfo);
             setResult(RESULT_OK, intent);
             finish();
         } else {

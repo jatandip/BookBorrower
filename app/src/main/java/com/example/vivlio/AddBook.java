@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,15 +54,14 @@ public class AddBook extends AppCompatActivity {
     private ImageView bookImageView;
     private String currentPath;
     private Uri uri;
-    private User owner;
-    private User currentOwner;
+    private Book book;
 
     StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate started");
         titleEditText = findViewById(R.id.edit_title);
         authorEditText = findViewById(R.id.edit_author);
@@ -112,6 +112,23 @@ public class AddBook extends AppCompatActivity {
                         Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
                     }
                 });
+
+                Toast.makeText(AddBook.this, "Image Is Uploaded.", Toast.LENGTH_SHORT).show();
+                Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+                if (downloadUri.isSuccessful()){
+                    currentPath = downloadUri.getResult().toString();
+
+
+                    //determine if user requires image to upload, otherwise implement setter outside
+
+
+
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AddBook.this, "Upload Failed.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,6 +142,8 @@ public class AddBook extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        }else{
+            takePicture();
         }
     }
 
@@ -152,7 +171,7 @@ public class AddBook extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
+                        BuildConfig.APPLICATION_ID + ".provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
@@ -206,7 +225,29 @@ public class AddBook extends AppCompatActivity {
     }
 
     public void uploadButtonPressed(){
+        book = new Book();
+        String title, author, ISBN;
 
+        //get current user to assign book
+        title = titleEditText.getText().toString();
+        author = authorEditText.getText().toString();
+        ISBN = ISBNEditText.getText().toString();
+
+        if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
+            book.setAuthor(author);
+            book.setTitle(title);
+            book.setISBN(ISBN);
+            book.setPhotoURL(currentPath);
+            Intent intent = new Intent();
+            intent.putExtra("Title", title);
+            intent.putExtra("Author", author);
+            intent.putExtra("ISBN", ISBN);
+            intent.putExtra("photoURL", currentPath);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

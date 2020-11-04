@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Book implements Serializable {
     private String status;
     private String owner;
     private String currentOwner;
-    private String[] currentOwners;
+    private ArrayList<String> currentOwners;
     private String photoURL;
 
     public Book(String title, String author, String ISBN, String status, String owner, String currentOwner, String photoURL){
@@ -42,7 +43,7 @@ public class Book implements Serializable {
      * @param ISBN book's ISBN
      * @param currentOwners list of all current owners
      */
-    public Book(String title, String author, String ISBN, String[] currentOwners) {
+    public Book(String title, String author, String ISBN, ArrayList<String> currentOwners) {
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -167,7 +168,7 @@ public class Book implements Serializable {
      * getter for current Owner list
      * @return currentOwners
      */
-    public String[] getCurrentOwners() {
+    public ArrayList<String> getCurrentOwners() {
         return currentOwners;
     }
 
@@ -175,7 +176,7 @@ public class Book implements Serializable {
      * setter for Current owners list
      * @param currentOwners
      */
-    public void setCurrentOwners(String[] currentOwners) {
+    public void setCurrentOwners(ArrayList<String> currentOwners) {
         this.currentOwners = currentOwners;
     }
 

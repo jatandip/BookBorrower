@@ -1,5 +1,6 @@
 package com.example.vivlio;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,16 +8,16 @@ import java.util.List;
  * This is the book class; it contains the following information about the book:
  * title, author, ISBN, status, owner (lender), and currentOwner (borrower/lender)
  */
-public class Book {
+public class Book implements Serializable {
     private String title;
     private String author;
     private String ISBN;
     private String status;
-    private User owner;
-    private User currentOwner;
+    private String owner;
+    private String currentOwner;
     private String photoURL;
 
-    public Book(String title, String author, String ISBN, String status, User owner, User currentOwner, String photoURL){
+    public Book(String title, String author, String ISBN, String status, String owner, String currentOwner, String photoURL){
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -26,6 +27,13 @@ public class Book {
         this.photoURL = photoURL;
     }
 
+    //for Borrow Task
+    public Book(String title, String author, String owner){
+        this.title = title;
+        this.author = author;
+        this.owner = owner;
+    }
+    
     /**
      * getter for Title
      * @return String
@@ -94,7 +102,7 @@ public class Book {
      * getter for Owner
      * @return User
      */
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
@@ -102,7 +110,7 @@ public class Book {
      * setter for Owner
      * @param owner
      */
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -110,7 +118,7 @@ public class Book {
      * getter for currentOwner
      * @return User
      */
-    public User getCurrentOwner() {
+    public String getCurrentOwner() {
         return currentOwner;
     }
 
@@ -118,7 +126,7 @@ public class Book {
      * setter for currentOwner
      * @param currentOwner
      */
-    public void setCurrentOwner(User currentOwner) {
+    public void setCurrentOwner(String currentOwner) {
         this.currentOwner = currentOwner;
     }
 

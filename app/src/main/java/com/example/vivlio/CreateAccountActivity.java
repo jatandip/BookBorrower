@@ -17,39 +17,53 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
-    private EditText firstNameET = findViewById(R.id.CREACC_ETfirstName);
-    private EditText lastNameET = findViewById(R.id.CREACC_ETlastName);
-    private EditText usernameET = findViewById(R.id.CREACC_ETusername);
-    private EditText emailET = findViewById(R.id.CREACC_ETemail);
-    private EditText phoneET = findViewById(R.id.CREACC_ETphone);
-    private EditText passwordET = findViewById(R.id.CREACC_ETpassword);
-    private EditText repasswordET = findViewById(R.id.CREACC_ETrepassword);
+    private EditText firstNameET;
+    private EditText lastNameET;
+    private EditText usernameET;
+    private EditText emailET;
+    private EditText phoneET;
+    private EditText passwordET;
+    private EditText repasswordET;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-
         ImageButton createBTN = findViewById(R.id.CREACC_BTNcreate);
+        firstNameET = findViewById(R.id.CREACC_ETfirstName);
+        lastNameET = findViewById(R.id.CREACC_ETlastName);
+        usernameET = findViewById(R.id.CREACC_ETusername);
+        emailET = findViewById(R.id.CREACC_ETemail);
+        phoneET = findViewById(R.id.CREACC_ETphone);
+        passwordET = findViewById(R.id.CREACC_ETpassword);
+        repasswordET = findViewById(R.id.CREACC_ETrepassword);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         createBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO Handle valid parameters
-                String firstName = firstNameET.getText().toString().trim();
-                String lastName = lastNameET.getText().toString().trim();
-                String username = usernameET.getText().toString().trim();
-                String email = emailET.getText().toString().trim();
-                String phone = phoneET.getText().toString().trim();
-                String password = passwordET.getText().toString().trim();
+                final String firstName = firstNameET.getText().toString().trim();
+                final String lastName = lastNameET.getText().toString().trim();
+                final String username = usernameET.getText().toString().trim();
+                final String email = emailET.getText().toString().trim();
+                final String phone = phoneET.getText().toString().trim();
+                final String password = passwordET.getText().toString().trim();
                 String repassword = repasswordET.getText().toString().trim();
-
+                //tester
                 if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(username) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) ||
                         TextUtils.isEmpty(repassword)){
@@ -62,24 +76,41 @@ public class CreateAccountActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    //Log.d(TAG, "createUserWithEmail:success");
-                                    //FirebaseUser user = mAuth.getCurrentUser();
-                                    openMainActivity();
+                                    Log.d("login Success", "signInWithEmail:success");
+                                    Map<String, Object> userInfo = new HashMap<>();
+                                    userInfo.put("email", email);
+                                    userInfo.put("fname", firstName);
+                                    userInfo.put("lname", lastName);
+                                    userInfo.put("phone", phone);
+                                    userInfo.put("username", username);
+                                    db.collection("users")
+                                            .document(mAuth.getCurrentUser().getUid())
+                                            .set(userInfo);
+                                    openLoginActivity();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
                                     Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+                } else if(password.equals(repassword) == false){
+                    // If sign in fails, display a message to the user.
+                    //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                    Toast.makeText(CreateAccountActivity.this, "Passwords don't match!",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CreateAccountActivity.this, "Something went wrong :/",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    private void openMainActivity(){
-        Intent intent = new Intent(this, MainActivity.class);
+
+    private void openLoginActivity(){
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

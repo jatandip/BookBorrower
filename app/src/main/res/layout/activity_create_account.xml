@@ -4,27 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="607dp"
+        android:layout_width="384dp"
+        android:layout_height="557dp"
         android:scaleType="centerCrop"
         android:scaleX="0.90"
         android:scaleY="0.90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.596"
         app:srcCompat="@drawable/creacc_fields" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="122dp"
+        android:layout_width="412dp"
+        android:layout_height="97dp"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,8 +37,8 @@
         android:id="@+id/CREACC_TVtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:layout_marginTop="16dp"
         android:fontFamily="sans-serif-light"
         android:text="Create an account"
@@ -47,7 +47,8 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/CREACC_TVsub"
@@ -65,12 +66,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETfirstName"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="77dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="64dp"
+        android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
-        android:background="@android:color/transparent"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,12 +80,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETlastName"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,12 +94,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETusername"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
         android:layout_marginTop="68dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +108,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETemail"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="18dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,12 +122,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETphone"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="19dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="phone"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,12 +136,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETpassword"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
         android:layout_marginTop="72dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,12 +150,13 @@
 
     <EditText
         android:id="@+id/CREACC_ETrepassword"
-        android:layout_width="294dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="#606060"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,11 +166,11 @@
         android:id="@+id/CREACC_BTNcreate"
         android:layout_width="140dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/login_loginbuttonround"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
+        app:layout_constraintHorizontal_bias="0.974"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -175,7 +183,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/CREACC_BTNcreate"
         app:layout_constraintEnd_toEndOf="@+id/CREACC_BTNcreate"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="@+id/CREACC_BTNcreate"
-        app:layout_constraintTop_toTopOf="@+id/CREACC_BTNcreate" />
+        app:layout_constraintTop_toTopOf="@+id/CREACC_BTNcreate"
+        app:layout_constraintVertical_bias="0.4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

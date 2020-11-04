@@ -1,5 +1,7 @@
 package com.example.vivlio;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,16 +9,17 @@ import java.util.List;
  * This is the book class; it contains the following information about the book:
  * title, author, ISBN, status, owner (lender), and currentOwner (borrower/lender)
  */
-public class Book {
+public class Book implements Serializable {
     private String title;
     private String author;
     private String ISBN;
     private String status;
-    private User owner;
-    private User currentOwner;
+    private String owner;
+    private String currentOwner;
+    private ArrayList<String> currentOwners;
     private String photoURL;
 
-    public Book(String title, String author, String ISBN, String status, User owner, User currentOwner, String photoURL){
+    public Book(String title, String author, String ISBN, String status, String owner, String currentOwner, String photoURL){
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
@@ -25,6 +28,29 @@ public class Book {
         this.currentOwner = currentOwner;
         this.photoURL = photoURL;
     }
+
+    //for Borrow Task
+    public Book(String title, String author, String owner){
+        this.title = title;
+        this.author = author;
+        this.owner = owner;
+    }
+
+    /**
+     * Constructor for Book in the Search Fragment
+     * @param title title of the book
+     * @param author book's author
+     * @param ISBN book's ISBN
+     * @param currentOwners list of all current owners
+     */
+    public Book(String title, String author, String ISBN, ArrayList<String> currentOwners) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.currentOwners = currentOwners;
+    }
+
+    public Book() {}
 
     /**
      * getter for Title
@@ -94,7 +120,7 @@ public class Book {
      * getter for Owner
      * @return User
      */
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
@@ -102,7 +128,7 @@ public class Book {
      * setter for Owner
      * @param owner
      */
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -110,7 +136,7 @@ public class Book {
      * getter for currentOwner
      * @return User
      */
-    public User getCurrentOwner() {
+    public String getCurrentOwner() {
         return currentOwner;
     }
 
@@ -118,7 +144,7 @@ public class Book {
      * setter for currentOwner
      * @param currentOwner
      */
-    public void setCurrentOwner(User currentOwner) {
+    public void setCurrentOwner(String currentOwner) {
         this.currentOwner = currentOwner;
     }
 
@@ -136,6 +162,22 @@ public class Book {
      */
     public void setPhotoURL(String photoURL){
         this.photoURL = photoURL;
+    }
+
+    /**
+     * getter for current Owner list
+     * @return currentOwners
+     */
+    public ArrayList<String> getCurrentOwners() {
+        return currentOwners;
+    }
+
+    /**
+     * setter for Current owners list
+     * @param currentOwners
+     */
+    public void setCurrentOwners(ArrayList<String> currentOwners) {
+        this.currentOwners = currentOwners;
     }
 
     /**

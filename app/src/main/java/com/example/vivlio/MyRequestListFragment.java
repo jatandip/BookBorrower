@@ -29,7 +29,7 @@ import java.util.ArrayList;
 *
 * Should the details be in a fragment?
 *
-* The some of the code for onViewCreated was made looking at MyBookListFragment - thanks William.
+* Some of the code for onViewCreated was made looking at MyBookListFragment.
 *
 *
 *

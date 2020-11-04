@@ -1,9 +1,11 @@
 package com.example.vivlio;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -16,11 +18,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -231,6 +239,17 @@ public class MyBookListFragment extends Fragment {
         });
 
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent addBook = new Intent(MyBookListFragment.this.getActivity(), AddBook.class);
+                startActivityForResult(addBook, 7);
+
+
+            }
+        });
+
         listofBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -253,11 +272,40 @@ public class MyBookListFragment extends Fragment {
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
-
-
-
             }
         });
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                ArrayList<String> result = data.getStringArrayListExtra("result");
+
+                final String nameN;
+                final String usernameN;
+                final String emailN;
+
+                Log.i("hello", result.get(0));
+
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser Curruser = mAuth.getCurrentUser();
+
+                DocumentReference docRef = db.collection("users")
+                        .document(Curruser.getUid());
+
+            }
+        }
+    }
+
+
+
+
+
+
+
 }

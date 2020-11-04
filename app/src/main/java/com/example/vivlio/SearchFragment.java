@@ -133,11 +133,11 @@ public class SearchFragment extends Fragment {
                                 Log.d("INFO", "Current title and author: " + title + author);
                                 for(String term : searchTerms) {
                                     if (title.contains(term) || author.contains(term)) {
-                                        List<String> owners = (List<String>) doc.getData().get("owners");
+                                        ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
                                         Book resultBook;
-                                        for (String owner : owners) {
-                                            resultBook = new Book(title, author, owner);
-                                            Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
+                                        resultBook = new Book(title, author, doc.getId().toString(), owners);
+                                        Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
+                                        if(!resultDataList.contains(resultBook)) {
                                             resultDataList.add(resultBook);
                                         }
                                     }

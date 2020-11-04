@@ -26,7 +26,7 @@ public class Book implements Serializable {
         this.currentOwner = currentOwner;
         this.photoURL = photoURL;
     }
-
+    
     /**
      * getter for Title
      * @return String

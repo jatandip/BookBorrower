@@ -29,6 +29,10 @@ public class mybook_avalible extends AppCompatActivity {
     private TextView isbnView;
     private Button editBtn;
     private Book book;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private Book updatedBook;
+    private Boolean trigger = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,12 @@ public class mybook_avalible extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(mybook_avalible.this, editBook.class);
-                editIntent.putExtra("book", book);
+                if (trigger == false) {
+                    editIntent.putExtra("book", book);
+                }
+                else {
+                    editIntent.putExtra("book", updatedBook);
+                }
                 startActivityForResult(editIntent, 0);
 
             }
@@ -68,19 +77,53 @@ public class mybook_avalible extends AppCompatActivity {
 
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
-
-
-                Book updatedBook  = (Book) data.getSerializableExtra("book");
+                trigger = true;
+                updatedBook  = (Book) data.getSerializableExtra("book");
 
                 titleView.setText(updatedBook.getTitle());
                 authorView.setText(updatedBook.getAuthor());
                 isbnView.setText(updatedBook.getISBN());
 
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
 
+                String uid = Firebaseuser.getUid();
+
+                Log.i("uid", uid);
+                db.collection("users").document(uid + "/owned/" + updatedBook.getISBN())
+                        .update(
+                                "author", updatedBook.getAuthor(),
+                                "title", updatedBook.getTitle()
+                        );
+
+
+                /*
+                db.collection("users").document(uid + "/owned/")
+                        .update(
+                                book.getISBN(), updatedBook.getISBN()
+                        );
+
+                 */
             }
 
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
+            }
+
+
+            if (resultCode == 5) {
+
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
+
+                String uid = Firebaseuser.getUid();
+
+                db.collection("users").document(uid + "/owned/" + book.getISBN())
+                        .delete();
+                finish();
+
             }
         }
     }

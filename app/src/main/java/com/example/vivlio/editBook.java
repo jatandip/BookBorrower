@@ -54,7 +54,7 @@ public class editBook extends AppCompatActivity {
         author.setText(book.getAuthor());
         isbn.setText(book.getISBN());
 
-
+        String UID = book.getCurrentOwner();
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,25 +67,6 @@ public class editBook extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String uid = Firebaseuser.getUid();
-
-                Log.i("uid", uid);
-                db.collection("users").document(uid + "/owned/" + book.getISBN())
-                        .update(
-                                "author", author.getText().toString(),
-                                "title", title.getText().toString()
-                        );
-
-                /*
-                db.collection("users").document(uid + "/owned/")
-                        .update(
-                                "/" + book.getISBN(), isbn.getText().toString()
-                        );
-
-
-                 */
-
                 book.setAuthor(author.getText().toString());
                 book.setISBN(isbn.getText().toString());
                 book.setTitle(title.getText().toString());
@@ -97,6 +78,22 @@ public class editBook extends AppCompatActivity {
 
             }
         });
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendBack = new Intent();
+                sendBack.putExtra("book", "DELETE_BOOK");
+                setResult(5, sendBack);
+                finish();
+
+
+            }
+        });
+
+
+
     }
 
 

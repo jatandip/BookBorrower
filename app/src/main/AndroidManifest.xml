@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".editBook"></activity>
+        <activity android:name=".mybook_accepted"></activity>
+        <activity android:name=".mybook_borrowed" />
+        <activity android:name=".editBook" />
         <activity android:name=".mybook_avalible" />
 
         <meta-data

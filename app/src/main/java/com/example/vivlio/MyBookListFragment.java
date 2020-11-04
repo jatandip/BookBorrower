@@ -242,6 +242,19 @@ public class MyBookListFragment extends Fragment {
                     startActivity(editIntent);
                 }
 
+                if (selected.getStatus().equals("borrowed")) {
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_borrowed.class);
+                    editIntent.putExtra("book", selected);
+                    startActivity(editIntent);
+                }
+
+                if (selected.getStatus().equals("accepted")) {
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_accepted.class);
+                    editIntent.putExtra("book", selected);
+                    startActivity(editIntent);
+                }
+
+
 
             }
         });

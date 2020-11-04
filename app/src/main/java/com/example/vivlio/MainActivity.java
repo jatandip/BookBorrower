@@ -27,9 +27,6 @@ import androidx.navigation.ui.NavigationUI;
 * I had to change the layout to a Frame Layout, the default Constraint Layout had a problem with
 * fragments overlapping with the first fragment in the background when the app launched.
 * Right now there is no fragment opened by default on launch.
-* Also I've left in the default generated UI components of Home, Dashboard, and Notifications. They
-* aren't connected to anything and should be safe to delete, but I've left them in case anyone wants
-* to check out how they were implemented. They use a ViewModel which I don't know anything about.
 *
 * Each fragment should be ready to be replaced by a real working implementation.
 *

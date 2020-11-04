@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,45 +33,27 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyBookListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyBookListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private TabLayout tabBar;
     private ListView listofBooks;
     private FloatingActionButton add;
     private FirebaseFirestore db;
-    ArrayAdapter<Book> bookAdapter;
-    ArrayList<Book> bookDataList;
+    private ArrayAdapter<Book> bookAdapter;
+    private ArrayList<Book> bookDataList;
     private FirebaseAuth mAuth;
     private int position;
     private CollectionReference collectionReference;
     private TabLayout taby;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public MyBookListFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyBookList.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MyBookListFragment newInstance(String param1, String param2) {
         MyBookListFragment fragment = new MyBookListFragment();
         Bundle args = new Bundle();
@@ -92,7 +76,6 @@ public class MyBookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_book_list, container, false);
     }
 
@@ -120,10 +103,15 @@ public class MyBookListFragment extends Fragment {
                 bookDataList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    User user = new User("NAME", "test", "EMAIL", "PHONE");
-
-                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                    if (!borrowers.get(0).equals("")) {
+                        String currentOwner = borrowers.get(0);
+                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                         bookDataList.add(book);
+                    }else {
+                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                        bookDataList.add(book);
+                    }
                 }
                 bookAdapter.notifyDataSetChanged();
             }
@@ -131,9 +119,10 @@ public class MyBookListFragment extends Fragment {
 
 
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 if (tab.getPosition() == 0) {
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -142,10 +131,16 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                User user = new User("NAME", "test", "EMAIL", "PHONE");
 
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.get(0).equals("")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
+                                }else {
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                    bookDataList.add(book);
+                                }
                             }
                             bookAdapter.notifyDataSetChanged();
                         }
@@ -160,12 +155,12 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                User user = new User("NAME", "test", "EMAIL", "PHONE");
 
                                 if (doc.getData().get("status").toString().equals("accepted")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
                                     bookDataList.add(book);
                                 }
+
                             }
                             bookAdapter.notifyDataSetChanged();
                         }
@@ -180,9 +175,8 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                User user = new User("NAME", "test", "EMAIL", "PHONE");
                                 if (doc.getData().get("status").toString().equals("available")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
                                     bookDataList.add(book);
                                 }
                             }
@@ -200,10 +194,8 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                User user = new User("NAME", "test", "EMAIL", "PHONE");
-
                                 if (doc.getData().get("status").toString().equals("pending")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
                                     bookDataList.add(book);
                                 }
                             }
@@ -220,10 +212,10 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                User user = new User("NAME", "test", "EMAIL", "PHONE");
-
-                                if (doc.getData().get("status").toString().equals("borrowed")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), user, user, "link");
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.get(0).equals("")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
                                 }
                             }
@@ -237,5 +229,22 @@ public class MyBookListFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+
+
+        listofBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Book selected = ((Book) listofBooks.getItemAtPosition(i));
+
+                if (selected.getStatus().equals("available")) {
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_avalible.class);
+                    editIntent.putExtra("book", selected);
+                    startActivity(editIntent);
+                }
+
+
+            }
+        });
+
     }
 }

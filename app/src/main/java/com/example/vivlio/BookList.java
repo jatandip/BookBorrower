@@ -50,7 +50,7 @@ public class BookList extends ArrayAdapter<Book> {
         title.setText(book.getTitle());
         request.setText(book.getStatus());
 
-        Log.i("asdasd", book.getCurrentOwner());
+        //Log.i("asdasd", book.getCurrentOwner());
 
 
         //return the view

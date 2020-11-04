@@ -26,6 +26,13 @@ public class Book implements Serializable {
         this.currentOwner = currentOwner;
         this.photoURL = photoURL;
     }
+
+    //for Borrow Task
+    public Book(String title, String author, String owner){
+        this.title = title;
+        this.author = author;
+        this.owner = owner;
+    }
     
     /**
      * getter for Title

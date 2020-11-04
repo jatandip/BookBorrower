@@ -20,19 +20,21 @@ import java.util.ArrayList;
 public class BorrowTaskActivity extends AppCompatActivity {
     ArrayAdapter<Book> bookAdapter;
     ArrayList<Book> bookDataList;
-    ListView BookListLV;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_borrowtask);
+
+        ListView BookListLV;
+
         BookListLV = findViewById(R.id.BORROWT_LVbooks);
         bookDataList = new ArrayList<>();
-        bookAdapter = new BookList(this, bookDataList);
+        bookAdapter = new BorrowTaskCustomList(this, bookDataList);
         BookListLV.setAdapter(bookAdapter);
 
         db = FirebaseFirestore.getInstance();
@@ -47,17 +49,15 @@ public class BorrowTaskActivity extends AppCompatActivity {
                 bookDataList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    /*
-                    Book book = new Book(doc.getData().get("title").toString(),
-                            doc.getData().get("author").toString(),
-                            doc.getId(),
-                            doc.getData().get("status").toString(),
-                            user,
-                            user,
-                            "link");
-                    bookDataList.add(book);
+                    if (doc.getData().get("status").toString().equals("accepted")) {
+                        ArrayList<String> owner = new ArrayList<>();
+                        owner.add(doc.getData().get("owner").toString());
 
-                     */
+                        Book book = new Book(doc.getData().get("title").toString(),
+                                doc.getData().get("author").toString(),
+                                owner.get(0));
+                        bookDataList.add(book);
+                    }
                 }
                 bookAdapter.notifyDataSetChanged();
             }

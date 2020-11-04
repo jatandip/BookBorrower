@@ -9,12 +9,22 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class BorrowTaskCustomList extends ArrayAdapter<Book>{
     public ArrayList<Book> books;
     public Context context;
-
+    private FirebaseFirestore db;
+    public String ownerName;
 
     public BorrowTaskCustomList(Context context, ArrayList<Book> books) {
         super(context, 0, books);
@@ -31,15 +41,41 @@ public class BorrowTaskCustomList extends ArrayAdapter<Book>{
             view = LayoutInflater.from(context).inflate(R.layout.borrowtask_list, parent, false);
         }
 
-        Book book = books.get(position);
+        db = FirebaseFirestore.getInstance();
+        final Book book = books.get(position);
 
-        TextView titleTV = view.findViewById(R.id.BTL_TVtitle);
-        TextView authorTV = view.findViewById(R.id.BTL_TVauthor);
-        TextView ownerTV = view.findViewById(R.id.BTL_TVowner);
 
-        titleTV.setText(book.getAuthor());
-        authorTV.setText(book.getTitle());
-        ownerTV.setText(book.getStatus());
+        DocumentReference docRef = db.collection("users")
+                .document(book.getOwner().substring(1, book.getOwner().length()-1));
+        final View finalView = view;
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                ownerName = document.getData().get("fname").toString() + " " +
+                        document.getData().get("lname");
+                Log.e("socument", document.getData().get("fname").toString());
+
+                TextView titleTV = finalView.findViewById(R.id.BTL_TVtitle);
+                TextView authorTV = finalView.findViewById(R.id.BTL_TVauthor);
+                TextView ownerTV = finalView.findViewById(R.id.BTL_TVowner);
+
+                String ownerText = "Owner: " + ownerName;
+
+                Log.e("TITLE", book.getTitle());
+                Log.e("Auth", book.getAuthor());
+                Log.e("owner", ownerText);
+
+                titleTV.setText(book.getTitle());
+                authorTV.setText(book.getAuthor());
+                ownerTV.setText(ownerText);
+            }
+
+
+
+        });
+
+
 
         //return the view
         return view;

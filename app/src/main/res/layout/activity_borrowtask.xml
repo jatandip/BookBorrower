@@ -10,7 +10,8 @@
         android:id="@+id/BORROWT_LVbooks"
         android:layout_width="match_parent"
         android:layout_height="633dp"
-        android:background="#FFFFFF"
+        android:background="#C8C8C8"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

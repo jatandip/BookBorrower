@@ -104,7 +104,6 @@ public class SearchFragment extends Fragment {
 
         resultDataList = new ArrayList<>();
         resultAdapter = new BookList(getActivity(), resultDataList);
-        resultList.setAdapter(resultAdapter);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -127,6 +126,7 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             resultDataList.clear();
+                            resultList.setAdapter(resultAdapter);
                             ArrayList<String> ISBNList =  new ArrayList<>();
                             for(QueryDocumentSnapshot doc: value) {
                                 String title = doc.getData().get("title").toString();
@@ -146,6 +146,23 @@ public class SearchFragment extends Fragment {
                                 }
                             }
                             resultAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+                else {
+                    userCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            resultDataList.clear();
+                            ArrayList<String> userList = new ArrayList<>();
+                            for(QueryDocumentSnapshot doc: value) {
+                                String username = doc.getData().get("username").toString();
+                                for(String term : searchTerms) {
+                                    if(username.toLowerCase().contains(term.toLowerCase())) {
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     });
                 }

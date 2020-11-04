@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,9 @@ public class MyRequestListFragment extends Fragment {
 
     private ArrayList<Book> requestDataList;
     private BookList requestAdapter;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private CollectionReference collectionReference;
 
 
     public MyRequestListFragment() {
@@ -99,11 +103,10 @@ public class MyRequestListFragment extends Fragment {
         ListView listOfRequests = view.findViewById(R.id.request_list_view);
 
         // set up firebase access
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        final String uid = firebaseUser.getUid();
-        CollectionReference collectionReference = db.collection("users/" + uid + "/requested");
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        final String uid = mAuth.getCurrentUser().getUid();
+        collectionReference = db.collection("users/" + uid + "/requested");
 
         requestDataList = new ArrayList<>();
         requestAdapter = new BookList(getActivity(), requestDataList);
@@ -115,8 +118,16 @@ public class MyRequestListFragment extends Fragment {
                 requestDataList.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(),
-                            doc.getData().get("status").toString(), doc.getData().get("owners").toString(), doc.getData().get("owners").toString(), "link");
+                    ArrayList<String> owner = new ArrayList<>();
+                    owner.add(doc.getData().get("owners").toString());
+
+                    Book book = new Book(doc.getData().get("title").toString(),
+                            doc.getData().get("author").toString(),
+                            doc.getId(),
+                            doc.getData().get("status").toString(),
+                            owner.get(0),
+                            owner.get(0),
+                            "link");
 
                     requestDataList.add(book);
                 }

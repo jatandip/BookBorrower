@@ -32,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -105,6 +106,7 @@ public class MyBookListFragment extends Fragment {
         bookAdapter = new BookList(getActivity(),bookDataList);
         listofBooks.setAdapter(bookAdapter);
 
+        /*
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -125,6 +127,7 @@ public class MyBookListFragment extends Fragment {
                 bookAdapter.notifyDataSetChanged();
             }
         });
+
 
 
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -240,6 +243,8 @@ public class MyBookListFragment extends Fragment {
         });
 
 
+         */
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,7 +295,7 @@ public class MyBookListFragment extends Fragment {
                 String author = result.get(1);
                 String isbn = result.get(2);
                 String currentpath = result.get(3);
-                String path = result.get(4);
+                String status = result.get(4);
 
 
                 Log.i("hello", result.get(0));
@@ -302,43 +307,52 @@ public class MyBookListFragment extends Fragment {
                 DocumentReference docRef = db.collection("users")
                         .document(Curruser.getUid());
 
-                final CollectionReference collectionReference = db.collection("users");
-                HashMap<String, String> info = new HashMap<>();
 
-                /*
-                collectionReference
-                        .document(Curruser.getUid())
+                //final CollectionReference collectionReference = db.collection("users/" + "jj1424" + "/owned/" + isbn);
+                HashMap<String, String> info = new HashMap<>();
+                HashMap<String, ArrayList<String>> borrowers = new HashMap<>();
+                ArrayList<String> empty = new ArrayList<String>();
+
+                empty.add("");
+                borrowers.put("borrowers", empty);
+
+                HashMap<String,GeoPoint> loc = new HashMap<>();
+                GeoPoint location = new GeoPoint(0,0);
+                loc.put("location" , location);
+
+                info.put("author", author);
+                info.put("title", title);
+                info.put("status", "available");
+                info.put("path", currentpath);
+
+
+                db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn)
                         .set(info)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log. d (TAG, "Data has been added successfully!");
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log. d (TAG, "Data could not be added!" + e.toString());
+                                Log.w(TAG, "Error writing document", e);
                             }
                         });
 
+                DocumentReference washingtonRef = db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn);
 
+                washingtonRef
+                        .update("borrowers", empty);
 
-
-
-                 */
-
-
+                washingtonRef
+                        .update("location", location);
 
 
             }
         }
     }
-
-
-
-
-
 
 
 }

@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, String> oldBookData;
     private HashMap<String, String> oldRequestData;
 
-    //private boolean requestedNotification;
-    //private boolean acceptedNotification;
-
     private BadgeDrawable requestsNotificationBadge;
     private BadgeDrawable booksNotificationBadge;
 
@@ -84,17 +81,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        // initialize notifications to false
-        //requestedNotification = false;
-        //acceptedNotification = false;
-
         // initialize badges
         requestsNotificationBadge = navView.getOrCreateBadge(R.id.navigation_my_request_list);
         booksNotificationBadge = navView.getOrCreateBadge(R.id.navigation_my_book_list);
 
         requestsNotificationBadge.setVisible(false);
         booksNotificationBadge.setVisible(false);
-
 
         // bottom navigation bar listener
         // replaces fragment in nav_host_fragment with the fragment corresponding to the option pressed

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,8 +90,12 @@ public class LendTaskActivity extends AppCompatActivity{
             String result = data.getStringExtra("isbn");
             Log.e("scanned isbn in task", result);
             if(selectedISBN.equals(result)){
-
-                //TODO check if other mans has same scan
+                //Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
+                //intent.putExtra("LENDER", result);
+                //startActivity(intent);
+            }else {
+                Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }

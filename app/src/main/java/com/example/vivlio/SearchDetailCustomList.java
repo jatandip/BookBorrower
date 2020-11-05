@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This models the list of books in the Search Details page
+ */
 public class SearchDetailCustomList extends ArrayAdapter<User> {
     public ArrayList<User> users;
     public Context context;

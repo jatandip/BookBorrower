@@ -1,14 +1,20 @@
 package com.example.vivlio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class mybook_accepted extends AppCompatActivity {
@@ -23,6 +29,12 @@ public class mybook_accepted extends AppCompatActivity {
     private Boolean trigger = false;
     private TextView Name;
     private TextView username;
+    public FirebaseUser user;
+    public static User currentUser;
+    private String nameN;
+    private String usernameN;
+
+
 
 
     @Override
@@ -44,12 +56,29 @@ public class mybook_accepted extends AppCompatActivity {
         Name = findViewById(R.id.borrowNameAccepted);
         username = findViewById(R.id.borrowUserNameAccepted);
 
-
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
 
-        String uid = Firebaseuser.getUid();
+        String curr = book.getCurrentOwner();
+
+
+        DocumentReference docRef = db.collection("users")
+                .document(curr);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+
+                nameN = document.getData().get("fname").toString() + " " +
+                        document.getData().get("lname");
+                usernameN = document.getData().get("username").toString();
+                Name.setText(nameN);
+                username.setText(usernameN);
+            }
+        });
+
+
+
     }
 
 

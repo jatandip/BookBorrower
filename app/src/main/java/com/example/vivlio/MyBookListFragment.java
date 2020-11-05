@@ -165,8 +165,10 @@ public class MyBookListFragment extends Fragment {
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
 
-                                if (doc.getData().get("status").toString().equals("accepted")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.get(0).equals("") && doc.getData().get("status").toString().equals("accepted")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
                                 }
 
@@ -222,7 +224,7 @@ public class MyBookListFragment extends Fragment {
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("")) {
+                                if (!borrowers.get(0).equals("") && doc.getData().get("status").toString().equals("borrowed")) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
@@ -309,6 +311,11 @@ public class MyBookListFragment extends Fragment {
 
                 //final CollectionReference collectionReference = db.collection("users/" + "jj1424" + "/owned/" + isbn);
                 HashMap<String, Object> info = new HashMap<>();
+
+                HashMap<String, Object> BookCollectionInfo = new HashMap<>();
+
+
+
                 ArrayList<String> empty = new ArrayList<String>();
 
                 empty.add("");
@@ -320,6 +327,12 @@ public class MyBookListFragment extends Fragment {
                 info.put("status", "available");
                 info.put("path", currentpath);
 
+                ArrayList<String> Owner = new ArrayList<String>();
+                Owner.add(Curruser.getUid());
+
+                BookCollectionInfo.put("title", title);
+                BookCollectionInfo.put("author", author);
+                BookCollectionInfo.put("owners", Owner);
 
                 db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn)
                         .set(info)
@@ -337,6 +350,21 @@ public class MyBookListFragment extends Fragment {
                         });
 
 
+
+                db.collection("books").document(isbn)
+                        .set(BookCollectionInfo)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
 
 
                 /*

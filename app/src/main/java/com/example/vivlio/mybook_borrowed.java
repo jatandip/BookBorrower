@@ -42,7 +42,7 @@ public class mybook_borrowed extends AppCompatActivity {
         titleView = findViewById(R.id.titleViewBorrowed);
         authorView = findViewById(R.id.authorViewBorrowed);
         isbnView = findViewById(R.id.isbnViewBorrowed);
-        editBtn = findViewById(R.id.editBtnBorrowed);
+        //editBtn = findViewById(R.id.editBtnBorrowed);
 
         titleView.setText(book.getTitle());
         authorView.setText(book.getAuthor());

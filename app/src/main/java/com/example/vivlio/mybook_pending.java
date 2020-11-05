@@ -38,8 +38,8 @@ public class mybook_pending extends AppCompatActivity {
     private ListView listofBooks;
     private FloatingActionButton add;
     private FirebaseFirestore db;
-    private ArrayAdapter<User> bookAdapter;
-    private ArrayList<User> bookDataList;
+    public static ArrayAdapter<User> bookAdapter;
+    public static ArrayList<User> bookDataList;
     private FirebaseAuth mAuth;
     private int position;
     private CollectionReference collectionReference;

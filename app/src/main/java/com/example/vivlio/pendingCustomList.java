@@ -79,20 +79,67 @@ public class pendingCustomList extends ArrayAdapter<User> {
 
                 db.collection("users").document(uid + "/owned/" + user.getIsbn())
                         .update(
-                                "borrowers", updated
+                                "borrowers", updated,
+                                "status", "accepted"
                         );
 
+                Log.i("owner", uid);
+                Log.i("borrower", user.getBorrower());
 
+
+                Log.i("tag","users/" + user.getBorrower() + "/requested/" + user.getIsbn());
                 db.collection("users").document(user.getBorrower() + "/requested/" + user.getIsbn())
                         .update("status", "accepted");
 
+
+                mybook_pending.bookDataList.clear();
+                mybook_pending.bookDataList.add(user);
+                mybook_pending.bookAdapter.notifyDataSetChanged();
             }
         });
 
 
+        /*
+        decline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
 
+                DocumentReference docRef = db.collection("users")
+                        .document(uid + "/owned/" + user.getIsbn());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot document = task.getResult();
+                        ArrayList<String> borrowers = (ArrayList<String>) document.getData().get("borrowers");
 
+                        borrowers.remove(user.getBorrower());
+                        Log.i("borrowers", String.valueOf(borrowers));
+
+
+                        db.collection("users").document(uid + "/owned/" + user.getIsbn())
+                                .update(
+                                        "borrowers", borrowers,
+                                        "status", document.getData().get("status").toString()
+                                );
+
+
+                        db.collection("users").document(user.getBorrower() + "/requested/" + user.getIsbn())
+                                .delete();
+
+
+                        mybook_pending.bookDataList.clear();
+                        mybook_pending.bookDataList.add(user);
+                        mybook_pending.bookAdapter.notifyDataSetChanged();
+
+
+                    }
+
+                });
+            }
+        });
+
+         */
 
 
         TextView author = view.findViewById(R.id.pendingNameView);

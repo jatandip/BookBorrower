@@ -83,7 +83,7 @@ public class mybook_pending extends AppCompatActivity {
 
 
                 for (final String borrower : borrowers) {
-                    DocumentReference docRef = db.collection("users")
+                    DocumentReference docRef = db.collection("users/")
                             .document(borrower);
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override

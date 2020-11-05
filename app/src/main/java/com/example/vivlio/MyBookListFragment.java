@@ -115,7 +115,7 @@ public class MyBookListFragment extends Fragment {
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                    if (!borrowers.get(0).equals("")) {
+                    if (!borrowers.isEmpty()) {
                         String currentOwner = borrowers.get(0);
                         Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                         bookDataList.add(book);
@@ -142,7 +142,7 @@ public class MyBookListFragment extends Fragment {
                             {
 
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("")) {
+                                if (!borrowers.isEmpty()) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
@@ -166,7 +166,7 @@ public class MyBookListFragment extends Fragment {
                             {
 
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("") && doc.getData().get("status").toString().equals("accepted")) {
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
@@ -224,7 +224,7 @@ public class MyBookListFragment extends Fragment {
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("") && doc.getData().get("status").toString().equals("borrowed")) {
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);

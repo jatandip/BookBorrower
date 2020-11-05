@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fg1">
+
+    <ProgressBar
+        android:id="@+id/SUCEX_PBloading"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SUCEX_TVsuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exchange Successful!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#F1F1F1"
+        app:layout_constraintBottom_toTopOf="@+id/SUCEX_PBloading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SUCEX_TVstaysafe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stay 6ft apart!"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/SUCEX_TVsuccess"
+        app:layout_constraintStart_toStartOf="@+id/SUCEX_TVsuccess"
+        app:layout_constraintTop_toBottomOf="@+id/SUCEX_TVsuccess" />
+
+    <ImageButton
+        android:id="@+id/SUCEX_IBhome"
+        android:layout_width="145dp"
+        android:layout_height="45dp"
+        android:background="@drawable/login_loginbuttonround"
+        android:text="HOME"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SUCEX_PBloading"
+        app:layout_constraintVertical_bias="0.66" />
+
+    <TextView
+        android:id="@+id/SUCEX_TVhome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOME"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/SUCEX_IBhome"
+        app:layout_constraintEnd_toEndOf="@+id/SUCEX_IBhome"
+        app:layout_constraintStart_toStartOf="@+id/SUCEX_IBhome"
+        app:layout_constraintTop_toTopOf="@+id/SUCEX_IBhome" />
+</androidx.constraintlayout.widget.ConstraintLayout>

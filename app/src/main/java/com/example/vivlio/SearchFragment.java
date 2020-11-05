@@ -104,6 +104,11 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+    /**
+     * Runs once the view has been created and populates the page with necessary components. Allows the user to click search and query the database for a book or user with the specified keyword(s).
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -214,6 +219,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        // On click listener for the books search result sos that the user can then request the book
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

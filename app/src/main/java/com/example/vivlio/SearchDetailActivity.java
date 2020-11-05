@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * This is the activity is used to display the details for a searched book, as well as all the owners who have the book available to request.
+ */
 public class SearchDetailActivity extends AppCompatActivity {
     private TextView titleEditText;
     private TextView authorEditText;
@@ -67,7 +70,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         userCollection = db.collection("users/");
 
-
+        // This finds all the owers of the book with status pending or available and then checks if the book has been requested previously and displays the appropriate status.
         for(final String owner : searchDetailBook.getCurrentOwners()) {
             Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
             CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
@@ -116,6 +119,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                     });
         }
 
+        // This functions checks if the user clicks on a requestable book and requests it from the owner
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {

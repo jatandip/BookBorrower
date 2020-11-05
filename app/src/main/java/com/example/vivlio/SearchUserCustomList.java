@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This model provides the format of the list of results when searching.
+ */
 public class SearchUserCustomList extends ArrayAdapter<User> {
 
     public ArrayList<User> users;

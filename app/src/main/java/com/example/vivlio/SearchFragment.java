@@ -15,15 +15,21 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +58,7 @@ public class SearchFragment extends Fragment {
     private ArrayList<User> userDataList;
     private CollectionReference bookCollection;
     private CollectionReference userCollection;
+    private Boolean available = false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -113,7 +120,7 @@ public class SearchFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         bookCollection = db.collection("books/");
         userCollection = db.collection("users/");
@@ -133,25 +140,47 @@ public class SearchFragment extends Fragment {
                             resultDataList.clear();
                             userDataList.clear();
                             resultList.setAdapter(resultAdapter);
-                            ArrayList<String> ISBNList =  new ArrayList<>();
-                            for(QueryDocumentSnapshot doc: value) {
-                                String title = doc.getData().get("title").toString();
-                                String author = doc.getData().get("author").toString();
+                            final ArrayList<String> ISBNList =  new ArrayList<>();
+                            for(final QueryDocumentSnapshot doc: value) {
+                                final String title = doc.getData().get("title").toString();
+                                final String author = doc.getData().get("author").toString();
                                 Log.d("INFO", "Current title and author: " + title + author);
                                 for(String term : searchTerms) {
                                     if (title.toLowerCase().contains(term.toLowerCase()) || author.toLowerCase().contains(term.toLowerCase())) {
-                                        ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
-                                        Book resultBook;
-                                        resultBook = new Book(title, author, doc.getId().toString(), owners);
-                                        Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
-                                        if(ISBNList.isEmpty() || !ISBNList.contains( doc.getId().toString())) {
-                                            resultDataList.add(resultBook);
-                                            ISBNList.add(doc.getId().toString());
+                                        final ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
+
+                                        for(String owner : owners) {
+
+                                            Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
+                                            CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
+                                            Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
+                                            ownedCollection.document(doc.getId().toString()).get()
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
+                                                                    available = true;
+                                                                    Book resultBook;
+                                                                    resultBook = new Book(title, author, doc.getId().toString(), owners);
+                                                                    Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
+                                                                    if ((ISBNList.isEmpty() || !ISBNList.contains(doc.getId().toString())) && available) {
+                                                                        resultDataList.add(resultBook);
+                                                                        ISBNList.add(doc.getId().toString());
+                                                                        available = false;
+                                                                    }
+                                                                    Log.e("TASK RESULT", document.get("status").toString() + available.toString());
+                                                                    resultAdapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    });
                                         }
                                     }
                                 }
                             }
-                            resultAdapter.notifyDataSetChanged();
                         }
                     });
                 }

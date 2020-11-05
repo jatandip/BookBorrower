@@ -29,11 +29,12 @@ public class Book implements Serializable {
         this.photoURL = photoURL;
     }
 
-    //for Borrow Task
-    public Book(String title, String author, String owner){
+    //for Borrow/Lend Task
+    public Book(String title, String author, String owner, String ISBN){
         this.title = title;
         this.author = author;
         this.owner = owner;
+        this.ISBN = ISBN;
     }
 
     /**

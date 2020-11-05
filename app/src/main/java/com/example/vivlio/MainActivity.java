@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private HashMap<String, String> oldBookData;
     private HashMap<String, String> oldRequestData;
 
-    //private boolean requestedNotification;
-    //private boolean acceptedNotification;
-
     private BadgeDrawable requestsNotificationBadge;
     private BadgeDrawable booksNotificationBadge;
 
@@ -83,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
-        // initialize notifications to false
-        //requestedNotification = false;
-        //acceptedNotification = false;
 
         // initialize badges
         requestsNotificationBadge = navView.getOrCreateBadge(R.id.navigation_my_request_list);
@@ -182,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // handling case 2:
         requestedCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -218,13 +210,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // set badges
-
-
-
-
     }
-
-
 }

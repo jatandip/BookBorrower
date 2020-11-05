@@ -9,13 +9,13 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="129dp"
-        android:layout_height="37dp"
+        android:layout_height="0dp"
         android:layout_marginStart="37dp"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="44dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginBottom="7dp"
         android:text="Edit Book!"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,59 +25,66 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginBottom="26dp"
         android:text="Remember to save!"
+        app:layout_constraintBottom_toTopOf="@+id/textView17"
         app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/titleBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginBottom="20dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <EditText
         android:id="@+id/authorBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginBottom="23dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/titleBox"
-        app:layout_constraintTop_toBottomOf="@+id/titleBox" />
+        app:layout_constraintBottom_toTopOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <EditText
         android:id="@+id/isbnBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="152dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/authorBox"
-        app:layout_constraintTop_toBottomOf="@+id/authorBox" />
+        app:layout_constraintBottom_toTopOf="@+id/deleteBtn"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="12dp"
         android:text="DELETE"
         app:layout_constraintBottom_toTopOf="@+id/cancelBtn"
-        app:layout_constraintStart_toStartOf="@+id/cancelBtn" />
+        app:layout_constraintStart_toStartOf="@+id/cancelBtn"
+        app:layout_constraintTop_toBottomOf="@+id/isbnBox" />
 
     <Button
         android:id="@+id/cancelBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="47dp"
         android:layout_marginLeft="47dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="114dp"
+        android:layout_marginRight="114dp"
+        android:layout_marginBottom="27dp"
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteBtn" />
 
     <Button
         android:id="@+id/saveBtn"
@@ -85,8 +92,39 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="73dp"
         android:layout_marginRight="73dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="30dp"
         android:text="SAVE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancelBtn" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ISBN"
+        app:layout_constraintBottom_toTopOf="@+id/isbnBox"
+        app:layout_constraintStart_toStartOf="@+id/authorBox"
+        app:layout_constraintTop_toBottomOf="@+id/authorBox" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author"
+        app:layout_constraintBottom_toTopOf="@+id/authorBox"
+        app:layout_constraintStart_toStartOf="@+id/titleBox"
+        app:layout_constraintTop_toBottomOf="@+id/titleBox" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginBottom="1dp"
+        android:text="Title"
+        app:layout_constraintBottom_toTopOf="@+id/titleBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

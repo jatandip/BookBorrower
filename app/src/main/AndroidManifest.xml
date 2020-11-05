@@ -39,6 +39,7 @@
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".CreateAccountActivity" />
         <activity android:name=".BorrowTaskActivity"/>
+        <activity android:name=".SuccessExchangeActivity"/>
         <activity android:name=".BarcodeScannerActivity" />
         <activity android:name=".LendTaskActivity" />
         <activity android:name=".mybook_pending" />

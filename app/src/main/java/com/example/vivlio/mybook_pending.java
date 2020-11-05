@@ -4,11 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,7 +59,6 @@ public class mybook_pending extends AppCompatActivity {
         setContentView(R.layout.activity_mybook_pending);
 
 
-
         listofBooks = findViewById(R.id.pendingList);
         bookDataList = new ArrayList<>();
         bookAdapter = new pendingCustomList(mybook_pending.this, bookDataList);
@@ -77,7 +82,7 @@ public class mybook_pending extends AppCompatActivity {
                 //Log.i("borrowers", String.valueOf(borrowers));
 
 
-                for (String borrower : borrowers) {
+                for (final String borrower : borrowers) {
                     DocumentReference docRef = db.collection("users")
                             .document(borrower);
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -90,32 +95,20 @@ public class mybook_pending extends AppCompatActivity {
                             usernameN = document.getData().get("username").toString();
                             emailN = document.getData().get("email").toString();
                             phonenumber = document.getData().get("phone").toString();
-                            User add = new User(nameN, usernameN, emailN, phonenumber);
+                            User add = new User(nameN, usernameN, emailN, phonenumber, book.getISBN(), borrower);
                             Log.i("name", document.getData().get("fname").toString() + " " +
                                     document.getData().get("lname"));
 
                             bookDataList.add(add);
-                            Log.i("size", String.valueOf(bookDataList.size()));
                             bookAdapter.notifyDataSetChanged();
-
-
 
 
                         }
                     });
-
-                    //Log.i("size", String.valueOf(bookDataList.size()));
-                    //Log.i("size", String.valueOf(bookDataList.size()));
-                    //bookAdapter.notifyDataSetChanged();
                 }
-
             }
         });
-
-
-
-
-
     }
+
 
 }

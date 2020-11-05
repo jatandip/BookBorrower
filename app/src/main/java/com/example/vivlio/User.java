@@ -7,12 +7,40 @@ public class User implements Serializable {
     private String username;
     private String email;
     private String phonenumber;
+    private String isbn;
+    private String borrower;
 
     public User(String name, String username, String email, String phonenumber) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.phonenumber = phonenumber;
+    }
+
+    public User(String name, String username, String email, String phonenumber, String isbn, String borrower) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phonenumber = phonenumber;
+        this.isbn = isbn;
+        this.borrower = borrower;
+    }
+
+
+    public String getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getName() {

@@ -8,11 +8,12 @@
 
     <ListView
         android:id="@+id/pendingList"
-        android:layout_width="409dp"
-        android:layout_height="373dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="285dp"
+        android:layout_width="399dp"
+        android:layout_height="367dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="288dp"
+        android:clickable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

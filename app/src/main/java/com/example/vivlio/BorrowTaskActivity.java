@@ -33,7 +33,7 @@ public class BorrowTaskActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrowtask);
-
+        
         ListView BookListLV;
 
         BookListLV = findViewById(R.id.BORROWT_LVbooks);
@@ -74,7 +74,7 @@ public class BorrowTaskActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedISBN = bookDataList.get(i).getISBN();
                 Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
-                openScanner();
+                //openScanner();
 
             }
         });

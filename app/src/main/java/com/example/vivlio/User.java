@@ -9,6 +9,8 @@ public class User implements Serializable {
     private String phonenumber;
     private String isbn;
     private String borrower;
+    private String ownedBookStatus;
+    private String uid;
 
     public User(String name, String username, String email, String phonenumber) {
         this.name = name;
@@ -24,6 +26,13 @@ public class User implements Serializable {
         this.phonenumber = phonenumber;
         this.isbn = isbn;
         this.borrower = borrower;
+    }
+
+    public User(String uid, String name, String username, String ownedBookStatus, String extra) {
+        this.uid = uid;
+        this.name = name;
+        this.username = username;
+        this.ownedBookStatus = ownedBookStatus;
     }
 
 
@@ -75,4 +84,19 @@ public class User implements Serializable {
         this.phonenumber = phonenumber;
     }
 
+    public String getOwnedBookStatus() {
+        return ownedBookStatus;
+    }
+
+    public void setOwnedBookStatus(String ownedBookStatus) {
+        this.ownedBookStatus = ownedBookStatus;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

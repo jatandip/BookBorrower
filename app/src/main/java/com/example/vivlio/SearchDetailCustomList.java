@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,11 @@ public class SearchDetailCustomList extends ArrayAdapter<User> {
         User user = users.get(position);
 
         TextView username = view.findViewById(R.id.search_detail_username);
-        TextView status = view.findViewById(R.id.maker_View);
+        TextView status = view.findViewById(R.id.search_detail_status);
 
         username.setText(user.getUsername());
-        status.setText(user.getName());
+        status.setText(user.getOwnedBookStatus());
+        Log.e("CUSTOM_LIST_USERNAME", user.getUsername());
 
         return view;
     }

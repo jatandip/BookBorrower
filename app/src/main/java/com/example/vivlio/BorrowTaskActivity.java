@@ -37,7 +37,6 @@ public class BorrowTaskActivity extends AppCompatActivity {
         ListView BookListLV;
 
         BookListLV = findViewById(R.id.BORROWT_LVbooks);
-
         bookDataList = new ArrayList<>();
         bookAdapter = new BorrowTaskCustomList(this, bookDataList);
         BookListLV.setAdapter(bookAdapter);
@@ -61,8 +60,8 @@ public class BorrowTaskActivity extends AppCompatActivity {
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
                                 owner.get(0), doc.getId());
-                        Log.e("ISB", doc.getId());
-                        Log.e("title", doc.getData().get("title").toString());
+                        //Log.e("ISB", doc.getId());
+                        //Log.e("title", doc.getData().get("title").toString());
                         bookDataList.add(book);
                     }
                 }

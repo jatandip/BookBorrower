@@ -29,6 +29,7 @@ import java.util.HashMap;
 public class SearchDetailActivity extends AppCompatActivity {
     private TextView titleEditText;
     private TextView authorEditText;
+    private TextView isbnEditText;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference userCollection;
@@ -46,6 +47,7 @@ public class SearchDetailActivity extends AppCompatActivity {
         titleEditText = findViewById(R.id.search_detail_title);
         authorEditText = findViewById(R.id.search_detail_author);
         resultList = findViewById(R.id.searchOwnersList);
+        isbnEditText = findViewById(R.id.search_detail_isbn);
 
         ownerDataList = new ArrayList<>();
         ownerAdapter = new SearchDetailCustomList(this, ownerDataList);
@@ -56,6 +58,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         titleEditText.setText(searchDetailBook.getTitle());
         authorEditText.setText(searchDetailBook.getAuthor());
+        isbnEditText.setText(searchDetailBook.getISBN());
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -140,49 +143,52 @@ public class SearchDetailActivity extends AppCompatActivity {
                 final CollectionReference requestedCollection = db.collection("users/" + mAuth.getUid() + "/requested/");
                 final CollectionReference ownerCollection = db.collection("users/" + chosenOne.getUid() + "/owned/");
 
-                requestedCollection.document(searchDetailBook.getISBN()).get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                DocumentSnapshot doc = task.getResult();
-                                if(!doc.exists()) {
+                Log.e("CHOSEN ONE STATUS", chosenOne.getOwnedBookStatus());
+                if(chosenOne.getOwnedBookStatus().equals("available")) {
+                    requestedCollection.document(searchDetailBook.getISBN()).get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    DocumentSnapshot doc = task.getResult();
+                                    if (!doc.exists()) {
 
-                                    HashMap<String, Object> newRequestedBook = new HashMap<>();
-                                    newRequestedBook.put("title", searchDetailBook.getTitle());
-                                    newRequestedBook.put("author", searchDetailBook.getAuthor());
-                                    newRequestedBook.put("status", "pending");
-                                    GeoPoint location = new GeoPoint(0,0);
-                                    newRequestedBook.put("location", location);
-                                    newRequestedBook.put("path", "link");
-                                    newRequestedBook.put("owners", new ArrayList<String>());
-                                    requestedCollection.document(searchDetailBook.getISBN()).set(newRequestedBook);
+                                        HashMap<String, Object> newRequestedBook = new HashMap<>();
+                                        newRequestedBook.put("title", searchDetailBook.getTitle());
+                                        newRequestedBook.put("author", searchDetailBook.getAuthor());
+                                        newRequestedBook.put("status", "pending");
+                                        GeoPoint location = new GeoPoint(0, 0);
+                                        newRequestedBook.put("location", location);
+                                        newRequestedBook.put("path", "link");
+                                        newRequestedBook.put("owners", new ArrayList<String>());
+                                        requestedCollection.document(searchDetailBook.getISBN()).set(newRequestedBook);
+                                    }
+                                    requestedCollection.document(searchDetailBook.getISBN()).get()
+                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    DocumentSnapshot addOwnerDoc = task.getResult();
+                                                    ArrayList<String> requestOwners = new ArrayList<>();
+                                                    requestOwners = (ArrayList<String>) addOwnerDoc.get("owners");
+                                                    requestOwners.add(chosenOne.getUid());
+                                                    requestedCollection.document(searchDetailBook.getISBN()).update("owners", requestOwners);
+                                                    ownerCollection.document(searchDetailBook.getISBN()).get()
+                                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                    DocumentSnapshot addBorrowerdoc = task.getResult();
+                                                                    ArrayList<String> requestBorrowers = (ArrayList<String>) addBorrowerdoc.get("borrowers");
+                                                                    requestBorrowers.add(mAuth.getUid());
+                                                                    ownerCollection.document(searchDetailBook.getISBN()).update("borrowers", requestBorrowers);
+                                                                }
+                                                            });
+                                                }
+                                            });
+
                                 }
-                                requestedCollection.document(searchDetailBook.getISBN()).get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                DocumentSnapshot addOwnerDoc = task.getResult();
-                                                ArrayList<String> requestOwners = new ArrayList<>();
-                                                requestOwners = (ArrayList<String>) addOwnerDoc.get("owners");
-                                                requestOwners.add(chosenOne.getUid());
-                                                requestedCollection.document(searchDetailBook.getISBN()).update("owners", requestOwners);
-                                                ownerCollection.document(searchDetailBook.getISBN()).get()
-                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                DocumentSnapshot addBorrowerdoc = task.getResult();
-                                                                ArrayList<String> requestBorrowers = (ArrayList<String>) addBorrowerdoc.get("borrowers");
-                                                                requestBorrowers.add(mAuth.getUid());
-                                                                ownerCollection.document(searchDetailBook.getISBN()).update("borrowers", requestBorrowers);
-                                                            }
-                                                        });
-                                            }
-                                        });
-
-                            }
-                        });
-                chosenOne.setOwnedBookStatus("pending");
-                ownerDataList.set(i, chosenOne);
+                            });
+                    chosenOne.setOwnedBookStatus("pending");
+                    ownerDataList.set(i, chosenOne);
+                }
                 ownerAdapter.notifyDataSetChanged();
             }
         });

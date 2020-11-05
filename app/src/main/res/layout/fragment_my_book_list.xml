@@ -9,7 +9,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBar"
         marginTop="?android:attr/actionBarSize"
-        android:layout_width="415dp"
+        android:layout_width="408dp"
         android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
@@ -53,11 +53,11 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addBtn"
-        android:layout_width="62dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="340dp"
-        android:layout_marginLeft="340dp"
-        android:layout_marginTop="490dp"
+        android:layout_width="60dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="350dp"
+        android:layout_marginLeft="530dp"
+        android:layout_marginTop="530dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintStart_toStartOf="parent"

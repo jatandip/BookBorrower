@@ -278,6 +278,15 @@ public class MyBookListFragment extends Fragment {
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
+
+                if (selected.getStatus().equals("pending")) {
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_pending.class);
+                    editIntent.putExtra("book", selected);
+                    startActivity(editIntent);
+                }
+
+
+
             }
         });
 
@@ -365,21 +374,6 @@ public class MyBookListFragment extends Fragment {
                                 Log.w(TAG, "Error writing document", e);
                             }
                         });
-
-
-                /*
-                DocumentReference washingtonRef = db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn);
-
-                washingtonRef
-                        .update("borrowers", empty);
-
-                washingtonRef
-                        .update("location", location);
-
-
-
-                 */
-
 
             }
         }

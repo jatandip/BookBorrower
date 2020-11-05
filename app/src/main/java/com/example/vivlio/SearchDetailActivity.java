@@ -67,12 +67,10 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         userCollection = db.collection("users/");
 
-        Log.e("YOYO", searchDetailBook.getCurrentOwners().get(0));
 
         for(final String owner : searchDetailBook.getCurrentOwners()) {
             Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
             CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
-            Log.e("TASK COLLECTION", ownedCollection.getPath() + searchDetailBook.getISBN());
             ownedCollection.document(searchDetailBook.getISBN()).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -80,19 +78,14 @@ public class SearchDetailActivity extends AppCompatActivity {
                             final DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
-                                    Log.e("TASK RESULT", document.get("status").toString() + available.toString());
-                                    Log.e("OWNER", owner);
                                     userCollection.document(owner).get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                     final DocumentSnapshot goodUser = task.getResult();
                                                     if(goodUser.exists()) {
-                                                        Log.e("GOOD USER", goodUser.getData().get("lname").toString() + document.getData().get("status").toString());
                                                         //ownerDataList.add(new User(goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), document.getData().get("status").toString()));
-                                                        Log.e("SIZE", String.valueOf(ownerDataList.size()));
                                                         CollectionReference requester = db.collection("users/" + mAuth.getUid() + "/requested");
-                                                        Log.e("PATH", searchDetailBook.getISBN());
                                                         requester.document(searchDetailBook.getISBN()).get()
                                                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                     @Override
@@ -102,16 +95,13 @@ public class SearchDetailActivity extends AppCompatActivity {
                                                                             ArrayList<String> checkUser = (ArrayList<String>) requestedSnapshot.get("owners");
                                                                             if (checkUser.contains(goodUser.getId())) {
                                                                                 ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "pending", ""));
-                                                                                Log.e("AVAILABLE_USER", goodUser.getData().get("lname").toString());
                                                                             }
                                                                             else {
                                                                                 ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "available", ""));
-                                                                                Log.e("REQUESTED_USER", goodUser.getData().get("lname").toString());
                                                                             }
                                                                         }
                                                                         else {
                                                                             ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "available", ""));
-                                                                            Log.e("REQUESTED_USER", goodUser.getData().get("lname").toString());
                                                                         }
                                                                         ownerAdapter.notifyDataSetChanged();
                                                                     }
@@ -143,7 +133,6 @@ public class SearchDetailActivity extends AppCompatActivity {
                 final CollectionReference requestedCollection = db.collection("users/" + mAuth.getUid() + "/requested/");
                 final CollectionReference ownerCollection = db.collection("users/" + chosenOne.getUid() + "/owned/");
 
-                Log.e("CHOSEN ONE STATUS", chosenOne.getOwnedBookStatus());
                 if(chosenOne.getOwnedBookStatus().equals("available")) {
                     requestedCollection.document(searchDetailBook.getISBN()).get()
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -171,6 +160,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                                                     requestOwners = (ArrayList<String>) addOwnerDoc.get("owners");
                                                     requestOwners.add(chosenOne.getUid());
                                                     requestedCollection.document(searchDetailBook.getISBN()).update("owners", requestOwners);
+                                                    ownerCollection.document(searchDetailBook.getISBN()).update("status", "pending");
                                                     ownerCollection.document(searchDetailBook.getISBN()).get()
                                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                                 @Override

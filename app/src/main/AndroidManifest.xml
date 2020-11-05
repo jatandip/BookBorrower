@@ -17,8 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".mybook_accepted"></activity>
-        <activity android:name=".AddBook"></activity>
+        <activity android:name=".mybook_pending"></activity>
+        <activity android:name=".mybook_accepted" />
+        <activity android:name=".AddBook" />
         <activity android:name=".mybook_borrowed" />
         <activity android:name=".editBook" />
         <activity android:name=".mybook_avalible" />
@@ -30,6 +31,7 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,9 +40,10 @@
             android:label="@string/app_name" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".CreateAccountActivity" />
-        <activity android:name=".BorrowTaskActivity"/>
+        <activity android:name=".BorrowTaskActivity" />
         <activity android:name=".BarcodeScannerActivity" />
         <activity android:name=".LendTaskActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

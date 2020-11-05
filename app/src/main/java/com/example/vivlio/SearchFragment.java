@@ -218,8 +218,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchFragment.this.getActivity(), SearchDetailActivity.class);
-                intent.putExtra("selected book", (Book) adapterView.getItemAtPosition(i));
-                startActivity(intent);
+                if(searchSwitch.isChecked()) {
+                    intent.putExtra("selected book", (Book) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
+                }
             }
         });
 

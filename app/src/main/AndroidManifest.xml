@@ -42,6 +42,8 @@
         <activity android:name=".BarcodeScannerActivity" />
         <activity android:name=".LendTaskActivity" />
         <activity android:name=".mybook_pending" />
+        <activity android:name=".SearchDetailActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

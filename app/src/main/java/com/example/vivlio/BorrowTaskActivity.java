@@ -74,15 +74,27 @@ public class BorrowTaskActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedISBN = bookDataList.get(i).getISBN();
                 Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
-                openScanner(selectedISBN);
+                openScanner();
 
             }
         });
     }
 
-    public void openScanner(String isbn){
-        //Intent intent = new Intent(BorrowTaskActivity.this, Scanner.class);
-        //intent.putExtra("BORROWER_ISBN", isbn);
-        //startActivity(intent);
+    public void openScanner(){
+        Intent intent = new Intent(BorrowTaskActivity.this, BarcodeScannerActivity.class);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            String result = data.getStringExtra("isbn");
+            Log.e("scanned isbn in task", result);
+            if(selectedISBN.equals(result)){
+
+                //TODO check if other mans has same scan
+            }
+        }
     }
 }

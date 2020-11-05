@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".mybook_accepted"></activity>
         <activity android:name=".AddBook"></activity>
         <activity android:name=".mybook_borrowed" />

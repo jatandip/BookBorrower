@@ -1,5 +1,6 @@
 package com.example.vivlio;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -216,7 +217,9 @@ public class SearchFragment extends Fragment {
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Intent intent = new Intent(SearchFragment.this.getActivity(), SearchDetailActivity.class);
+                intent.putExtra("selected book", (Book) adapterView.getItemAtPosition(i));
+                startActivity(intent);
             }
         });
 

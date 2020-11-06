@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,31 +44,36 @@ public class RequestCustomList extends ArrayAdapter {
         //if the view is null create and new view and inflate it
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.content_request_list, parent, false);
-
         }
 
-        Book book = books.get(position);
+        final Book book = books.get(position);
+        final View finalView = view;
 
         // turn owner code into the username to display
+        // update all the TextViews
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.document("users/" + book.getOwner());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                userName = task.getResult().get("username").toString();
+                userName = task.getResult().getData().get("username").toString();
+                // Log.d("username", userName);
+
+                TextView title = finalView.findViewById(R.id.tv_title);
+                TextView author = finalView.findViewById(R.id.tv_author);
+                TextView owner = finalView.findViewById(R.id.tv_owner);
+                TextView status = finalView.findViewById(R.id.tv_status);
+
+                title.setText(book.getTitle());
+                author.setText(book.getAuthor());
+                owner.setText(userName);
+                status.setText(book.getStatus());
             }
         });
 
 
-        TextView title = view.findViewById(R.id.tv_title);
-        TextView author = view.findViewById(R.id.tv_author);
-        TextView owner = view.findViewById(R.id.tv_owner);
-        TextView status = view.findViewById(R.id.tv_status);
 
-        title.setText(book.getTitle());
-        author.setText(book.getAuthor());
-        owner.setText(userName);
-        status.setText(book.getStatus());
+
 
         //return the view
         return view;

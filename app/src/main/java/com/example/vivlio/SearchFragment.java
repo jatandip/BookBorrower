@@ -157,7 +157,6 @@ public class SearchFragment extends Fragment {
                                         final ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
 
                                         for(String owner : owners) {
-
                                             Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
                                             CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
                                             Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());

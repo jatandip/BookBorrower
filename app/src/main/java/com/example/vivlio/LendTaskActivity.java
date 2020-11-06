@@ -29,6 +29,7 @@ public class LendTaskActivity extends AppCompatActivity{
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
+    String otherUID;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -71,6 +72,7 @@ public class LendTaskActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedISBN = bookDataList.get(i).getISBN();
+                otherUID = bookDataList.get(i).getOwner();
                 Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
                 openScanner();
 
@@ -90,9 +92,10 @@ public class LendTaskActivity extends AppCompatActivity{
             String result = data.getStringExtra("isbn");
             Log.e("scanned isbn in task", result);
             if(selectedISBN.equals(result)){
-                //Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
-                //intent.putExtra("LENDER", result);
-                //startActivity(intent);
+                Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
+                intent.putExtra("LENDER", result);
+                intent.putExtra("OTHER_UID", otherUID);
+                startActivity(intent);
             }else {
                 Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
                         Toast.LENGTH_SHORT).show();

@@ -14,6 +14,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+/**
+ * Activity that allows user to edit a book they own and is available
+ * Activity will load and display the books description and user can edit the description to what they want
+ * User can then save the information if they decided that they want the changes to the description they made
+ * User can also delete the book if they want to
+ */
+
+
+
+
 public class editBook extends AppCompatActivity {
 
     private EditText title;
@@ -27,6 +38,12 @@ public class editBook extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
 
+    /**General OnCreate method, loads the books information into the activity
+     * Gets the information of the book using the book that was passed in using Intent
+     * Allows the user to cancel or save the edit they made to book description
+     * Allows user to also delete the book if they want to.
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

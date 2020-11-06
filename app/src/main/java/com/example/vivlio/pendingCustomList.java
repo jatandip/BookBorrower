@@ -23,6 +23,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * CustomList for displaying all the the people who want to borrow the users books
+ * Displays the name and the username of the potential borrower
+ * User can accept their request and the database will change the status
+ * Of the book to pending
+ * The rest of the users who wanted to borrow the users will no longer be able too and
+ * Get cleared from the customList
+ */
+
+
+
 public class pendingCustomList extends ArrayAdapter<User> {
 
     public ArrayList<User> users;
@@ -39,6 +50,16 @@ public class pendingCustomList extends ArrayAdapter<User> {
     }
 
 
+    /**
+     * General getView method that sets up and displays the name and username
+     * Also sets up the accept button so that when the user clicks on accept
+     * The firebase will update with the new information and the customlist will
+     * get cleared
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

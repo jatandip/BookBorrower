@@ -33,6 +33,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * Activity that handles pending books that the user owns.
+ * Gets and shows the information of the book
+ * Loads and shows the people who want to borrow your book
+ */
+
+
 public class mybook_pending extends AppCompatActivity {
 
     private ListView listofBooks;
@@ -53,6 +60,14 @@ public class mybook_pending extends AppCompatActivity {
     private String emailN;
 
 
+    /**
+     * General OnCreate Method
+     * Handles getting and showing the book information
+     * Handles getting all the people who want to borrow the book
+     * Handles adding all the people who want to borrow the book to the custom list
+     * So the activity can display the people who want to borrow the book
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

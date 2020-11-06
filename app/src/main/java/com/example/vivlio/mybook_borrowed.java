@@ -16,6 +16,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**Activity that handles a book the current user owns that is borrowed
+ *Gets the information of the book from the Intent and loads the information in
+ *Creates a instance of firebase firestore and auth to load the information of
+ *The user that is currently borrowing the book
+ */
+
 public class mybook_borrowed extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
@@ -31,6 +37,13 @@ public class mybook_borrowed extends AppCompatActivity {
     private String nameN;
     private String usernameN;
 
+
+    /**
+     * General OnCreate method. Loads the information of the user and the user who is borrowing the book
+     * Gets the information using firebase and Intent.
+     * It then displays the information.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

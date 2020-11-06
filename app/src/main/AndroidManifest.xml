@@ -18,11 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".mybook_accepted"></activity>
+        <activity android:name=".Mybook_Accepted"></activity>
         <activity android:name=".AddBook"></activity>
-        <activity android:name=".mybook_borrowed" />
-        <activity android:name=".editBook" />
-        <activity android:name=".mybook_avalible" />
+        <activity android:name=".Mybook_Borrowed" />
+        <activity android:name=".EditBook" />
+        <activity android:name=".Mybook_Avalible" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -43,7 +43,7 @@
         <activity android:name=".SuccessExchangeActivity"/>
         <activity android:name=".BarcodeScannerActivity" />
         <activity android:name=".LendTaskActivity" />
-        <activity android:name=".mybook_pending" />
+        <activity android:name=".Mybook_Pending" />
         <activity android:name=".SearchDetailActivity"
             android:parentActivityName=".MainActivity"/>
 

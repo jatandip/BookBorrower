@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 
 
-public class mybook_accepted extends AppCompatActivity {
+public class Mybook_Accepted extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
     private TextView isbnView;

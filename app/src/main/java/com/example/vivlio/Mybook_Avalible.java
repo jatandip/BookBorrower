@@ -1,6 +1,5 @@
 package com.example.vivlio;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,16 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -31,7 +23,7 @@ import static android.content.ContentValues.TAG;
  * it deletes the book from the database
  */
 
-public class mybook_avalible extends AppCompatActivity {
+public class Mybook_Avalible extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
     private TextView isbnView;
@@ -70,7 +62,7 @@ public class mybook_avalible extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent editIntent = new Intent(mybook_avalible.this, editBook.class);
+                Intent editIntent = new Intent(Mybook_Avalible.this, EditBook.class);
                 if (trigger == false) {
                     editIntent.putExtra("book", book);
                 }

@@ -12,12 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
@@ -34,7 +30,7 @@ import java.util.ArrayList;
 
 
 
-public class pendingCustomList extends ArrayAdapter<User> {
+public class PendingCustomList extends ArrayAdapter<User> {
 
     public ArrayList<User> users;
     public Context context;
@@ -43,7 +39,7 @@ public class pendingCustomList extends ArrayAdapter<User> {
     public FirebaseUser firebaseUser;
 
 
-    public pendingCustomList( Context context, ArrayList<User> users) {
+    public PendingCustomList(Context context, ArrayList<User> users) {
         super(context,0,users);
         this.users = users;
         this.context = context;
@@ -113,9 +109,9 @@ public class pendingCustomList extends ArrayAdapter<User> {
                         .update("status", "accepted");
 
 
-                mybook_pending.bookDataList.clear();
-                mybook_pending.bookDataList.add(user);
-                mybook_pending.bookAdapter.notifyDataSetChanged();
+                Mybook_Pending.bookDataList.clear();
+                Mybook_Pending.bookDataList.add(user);
+                Mybook_Pending.bookAdapter.notifyDataSetChanged();
             }
         });
 

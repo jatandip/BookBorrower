@@ -25,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 
-public class editBook extends AppCompatActivity {
+public class EditBook extends AppCompatActivity {
 
     private EditText title;
     private EditText author;

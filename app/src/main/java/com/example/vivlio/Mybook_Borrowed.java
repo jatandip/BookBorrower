@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  *The user that is currently borrowing the book
  */
 
-public class mybook_borrowed extends AppCompatActivity {
+public class Mybook_Borrowed extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
     private TextView isbnView;

@@ -10,6 +10,16 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+
+
+/**
+ * Activity that allows user to edit their profile information
+ * Activity will load and display the the users information and user can edit their description if they want to
+ * User can then save the information using the save button
+ * User can also cancel the changes made to their profile information using the cancel button
+ */
+
+
 public class EditProfileActivity extends AppCompatActivity {
 
     EditText emailEdit;
@@ -19,6 +29,13 @@ public class EditProfileActivity extends AppCompatActivity {
     String newEmail;
     String newPhone;
 
+
+    /**
+     * General OnCreate method.
+     * Method loads the profile information of the user and displays it.
+     * If user decides to save the changes, method gets the updated fields and sends the information back using the Intent.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

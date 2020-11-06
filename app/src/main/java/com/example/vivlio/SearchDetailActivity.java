@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -143,18 +144,18 @@ public class SearchDetailActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     DocumentSnapshot doc = task.getResult();
-                                    if (!doc.exists()) {
 
-                                        HashMap<String, Object> newRequestedBook = new HashMap<>();
-                                        newRequestedBook.put("title", searchDetailBook.getTitle());
-                                        newRequestedBook.put("author", searchDetailBook.getAuthor());
-                                        newRequestedBook.put("status", "pending");
-                                        GeoPoint location = new GeoPoint(0, 0);
-                                        newRequestedBook.put("location", location);
-                                        newRequestedBook.put("path", "link");
-                                        newRequestedBook.put("owners", new ArrayList<String>());
-                                        requestedCollection.document(searchDetailBook.getISBN()).set(newRequestedBook);
-                                    }
+                                    HashMap<String, Object> newRequestedBook = new HashMap<>();
+                                    newRequestedBook.put("title", searchDetailBook.getTitle());
+                                    newRequestedBook.put("author", searchDetailBook.getAuthor());
+                                    newRequestedBook.put("status", "pending");
+                                    GeoPoint location = new GeoPoint(0, 0);
+                                    newRequestedBook.put("location", location);
+                                    newRequestedBook.put("path", "link");
+                                    newRequestedBook.put("owners", new ArrayList<String>());
+
+                                    requestedCollection.document(searchDetailBook.getISBN()).set(newRequestedBook);
+
                                     requestedCollection.document(searchDetailBook.getISBN()).get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override

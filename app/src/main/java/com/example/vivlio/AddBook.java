@@ -10,6 +10,7 @@ import android.net.Uri;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.BuildConfig;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -118,12 +119,7 @@ public class AddBook extends AppCompatActivity {
                 Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
                 if (downloadUri.isSuccessful()){
                     currentPath = downloadUri.getResult().toString();
-
-
                     //determine if user requires image to upload, otherwise implement setter outside
-
-
-
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

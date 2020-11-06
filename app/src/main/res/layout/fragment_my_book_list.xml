@@ -9,7 +9,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBar"
         marginTop="?android:attr/actionBarSize"
-        android:layout_width="415dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
@@ -51,30 +51,28 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBtn"
-        android:layout_width="62dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="340dp"
-        android:layout_marginLeft="340dp"
-        android:layout_marginTop="490dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/bookListView"
-        android:layout_width="409dp"
-        android:layout_height="569dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="61dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabBar"
         app:layout_constraintVertical_bias="0.0">
 
     </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBtn"
+        android:layout_width="60dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

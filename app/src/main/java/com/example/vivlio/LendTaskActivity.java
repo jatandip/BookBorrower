@@ -2,8 +2,12 @@ package com.example.vivlio;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +25,11 @@ import java.util.ArrayList;
 public class LendTaskActivity extends AppCompatActivity{
     ArrayAdapter<Book> bookAdapter;
     ArrayList<Book> bookDataList;
+    String selectedISBN;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
+    String otherUID;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -51,24 +57,49 @@ public class LendTaskActivity extends AppCompatActivity{
                 {
                     if (doc.getData().get("status").toString().equals("accepted")) {
                         ArrayList<String> requestedBy = new ArrayList<>();
-                        requestedBy.add(doc.getData().get("requested by").toString());
+                        requestedBy.add(doc.getData().get("borrowers").toString());
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                requestedBy.get(0));
+                                requestedBy.get(0), doc.getId().replace("-",""));
                         bookDataList.add(book);
                     }
                 }
                 bookAdapter.notifyDataSetChanged();
-                openScanner();
             }
         });
+        BookListLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedISBN = bookDataList.get(i).getISBN();
+                otherUID = bookDataList.get(i).getOwner();
+                Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
+                openScanner();
 
+            }
+        });
     }
 
     public void openScanner(){
-        //TODO OPEN TO ISBN SCANNER
-        //Intent intent = new Intent(BorrowTaskActivity.this, Scanner.class);
-        //startActivity(intent);
+        Intent intent = new Intent(LendTaskActivity.this, BarcodeScannerActivity.class);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            String result = data.getStringExtra("isbn");
+            Log.e("scanned isbn in task", result);
+            if(selectedISBN.equals(result)){
+                Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
+                intent.putExtra("LENDER", result);
+                intent.putExtra("OTHER_UID", otherUID);
+                startActivity(intent);
+            }else {
+                Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

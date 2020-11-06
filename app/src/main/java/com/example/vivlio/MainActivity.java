@@ -1,17 +1,32 @@
 package com.example.vivlio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.xml.parsers.DocumentBuilder;
 
 //Hello kishan testing //
 
@@ -27,9 +42,6 @@ import androidx.navigation.ui.NavigationUI;
 * I had to change the layout to a Frame Layout, the default Constraint Layout had a problem with
 * fragments overlapping with the first fragment in the background when the app launched.
 * Right now there is no fragment opened by default on launch.
-* Also I've left in the default generated UI components of Home, Dashboard, and Notifications. They
-* aren't connected to anything and should be safe to delete, but I've left them in case anyone wants
-* to check out how they were implemented. They use a ViewModel which I don't know anything about.
 *
 * Each fragment should be ready to be replaced by a real working implementation.
 *
@@ -42,6 +54,17 @@ import androidx.navigation.ui.NavigationUI;
 * */
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private CollectionReference requestedCollectionReference;
+    private CollectionReference ownedCollectionReference;
+
+    private HashMap<String, String> oldBookData;
+    private HashMap<String, String> oldRequestData;
+
+    private BadgeDrawable requestsNotificationBadge;
+    private BadgeDrawable booksNotificationBadge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +81,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        // initialize badges
+        requestsNotificationBadge = navView.getOrCreateBadge(R.id.navigation_my_request_list);
+        booksNotificationBadge = navView.getOrCreateBadge(R.id.navigation_my_book_list);
+
+        requestsNotificationBadge.setVisible(false);
+        booksNotificationBadge.setVisible(false);
+
 
         // bottom navigation bar listener
         // replaces fragment in nav_host_fragment with the fragment corresponding to the option pressed
@@ -68,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_my_request_list:
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new MyRequestListFragment()).commit();
+                        requestsNotificationBadge.setVisible(false);
                         return true;
                     case R.id.navigation_search:
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new SearchFragment()).commit();
@@ -77,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.navigation_my_book_list:
                         manager.beginTransaction().replace(R.id.nav_host_fragment, new MyBookListFragment()).commit();
+                        booksNotificationBadge.setVisible(false);
                         return true;
                     case R.id.navigation_profile:
 
@@ -91,7 +123,92 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        // handle notifications
+        // notification should show in two cases:
+        // 1 when one of the users owned books changes its status from "available" to "pending"
+        // 2 when one of the users requested books changes its status from "pending" to "accepted"
+
+        // set up firebase access
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        final String uid = mAuth.getCurrentUser().getUid();
+        requestedCollectionReference = db.collection("users/" + uid + "/requested");
+        ownedCollectionReference = db.collection("users/" + uid + "/owned");
+
+        oldBookData = new HashMap<>();
+        oldRequestData = new HashMap<>();
+
+        // handling case 1:
+        ownedCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                {
+                    /*
+                    try {
+                        Log.d("old book data", oldBookData.get(doc.getId()));
+                    } catch (Exception e) {
+                        Log.d("old book data", "fail");
+                    }
+                    try {
+                        Log.d("current book data", doc.getData().get("status").toString());
+                    } catch (Exception e) {
+                        Log.d("current book data", "fail");
+                    }
+                    */
+
+                    // see if book is in hashmap
+                    try {
+                        if (oldBookData.get(doc.getId()).equals("available") && doc.getData().get("status").toString().equals("pending")) {
+                            Log.d("nice", "nice");
+                            booksNotificationBadge.setVisible(true);
+                        }
+                    } catch (Exception e) {
+                        Log.d("Hashmap Error", "oldBookData probably doesn't have anything in it");
+                    }
+
+                    // update hashmap
+                    oldBookData.put(doc.getId(), doc.getData().get("status").toString());
+                }
+            }
+        });
+
+        // handling case 2:
+        requestedCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                {
+                    /*
+                    try {
+                        Log.d("old request data", oldRequestData.get(doc.getId()));
+                    } catch (Exception e) {
+                        Log.d("old request data", "fail");
+                    }
+
+                    try {
+                        Log.d("current request data", doc.getData().get("status").toString());
+                    } catch (Exception e) {
+                        Log.d("current request data", "fail");
+                    }
+                    */
+
+                    // see if book is in hashmap
+                    try {
+                        if (oldRequestData.get(doc.getId()).equals("pending") && doc.getData().get("status").toString().equals("accepted")) {
+                            Log.d("nice", "nice");
+                            requestsNotificationBadge.setVisible(true);
+                        }
+                    } catch (Exception e) {
+                        Log.d("Hashmap Error", "oldRequestData probably doesn't have anything in it");
+                    }
+
+                    // update hashmap
+                    oldRequestData.put(doc.getId(), doc.getData().get("status").toString());
+                }
+            }
+        });
     }
-
-
 }

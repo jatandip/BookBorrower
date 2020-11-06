@@ -1,9 +1,11 @@
 package com.example.vivlio;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -16,20 +18,28 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
 
@@ -96,6 +106,7 @@ public class MyBookListFragment extends Fragment {
         bookAdapter = new BookList(getActivity(),bookDataList);
         listofBooks.setAdapter(bookAdapter);
 
+
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -104,7 +115,7 @@ public class MyBookListFragment extends Fragment {
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                    if (!borrowers.get(0).equals("")) {
+                    if (!borrowers.isEmpty()) {
                         String currentOwner = borrowers.get(0);
                         Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                         bookDataList.add(book);
@@ -119,8 +130,6 @@ public class MyBookListFragment extends Fragment {
 
 
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
@@ -133,7 +142,7 @@ public class MyBookListFragment extends Fragment {
                             {
 
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("")) {
+                                if (!borrowers.isEmpty()) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
@@ -156,8 +165,10 @@ public class MyBookListFragment extends Fragment {
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
 
-                                if (doc.getData().get("status").toString().equals("accepted")) {
-                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
                                 }
 
@@ -213,7 +224,7 @@ public class MyBookListFragment extends Fragment {
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.get(0).equals("")) {
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
                                     String currentOwner = borrowers.get(0);
                                     Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
                                     bookDataList.add(book);
@@ -228,6 +239,20 @@ public class MyBookListFragment extends Fragment {
             public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+
+
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent addBook = new Intent(MyBookListFragment.this.getActivity(), AddBook.class);
+                startActivityForResult(addBook, 0);
+
+
+            }
         });
 
 
@@ -254,10 +279,103 @@ public class MyBookListFragment extends Fragment {
                     startActivity(editIntent);
                 }
 
+                if (selected.getStatus().equals("pending")) {
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_pending.class);
+                    editIntent.putExtra("book", selected);
+                    startActivity(editIntent);
+                }
+
 
 
             }
         });
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                ArrayList<String> result = data.getStringArrayListExtra("result");
+
+                String title = result.get(0);
+                String author = result.get(1);
+                String isbn = result.get(2);
+                String currentpath = result.get(3);
+                String status = result.get(4);
+
+
+                Log.i("hello", result.get(0));
+
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser Curruser = mAuth.getCurrentUser();
+
+                DocumentReference docRef = db.collection("users")
+                        .document(Curruser.getUid());
+
+
+                //final CollectionReference collectionReference = db.collection("users/" + "jj1424" + "/owned/" + isbn);
+                HashMap<String, Object> info = new HashMap<>();
+
+                HashMap<String, Object> BookCollectionInfo = new HashMap<>();
+
+
+
+                ArrayList<String> empty = new ArrayList<String>();
+
+                //empty.add("");
+                info.put("borrowers", empty);
+                GeoPoint location = new GeoPoint(0,0);
+                info.put("location" , location);
+                info.put("author", author);
+                info.put("title", title);
+                info.put("status", "available");
+                info.put("path", currentpath);
+
+                ArrayList<String> Owner = new ArrayList<String>();
+                Owner.add(Curruser.getUid());
+
+                BookCollectionInfo.put("title", title);
+                BookCollectionInfo.put("author", author);
+                BookCollectionInfo.put("owners", Owner);
+
+                db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn)
+                        .set(info)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+
+
+
+                db.collection("books").document(isbn)
+                        .set(BookCollectionInfo)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.vivlio;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,20 +11,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,8 +56,11 @@ public class SearchFragment extends Fragment {
     private ArrayAdapter<Book> resultAdapter;
     private ArrayList<Book> resultDataList;
     private ListView resultList;
+    private ArrayAdapter<User> userAdapter;
+    private ArrayList<User> userDataList;
     private CollectionReference bookCollection;
     private CollectionReference userCollection;
+    private Boolean available = false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -93,6 +104,11 @@ public class SearchFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+    /**
+     * Runs once the view has been created and populates the page with necessary components. Allows the user to click search and query the database for a book or user with the specified keyword(s).
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -104,12 +120,14 @@ public class SearchFragment extends Fragment {
 
         resultDataList = new ArrayList<>();
         resultAdapter = new BookList(getActivity(), resultDataList);
-        resultList.setAdapter(resultAdapter);
+
+        userDataList = new ArrayList<>();
+        userAdapter = new SearchUserCustomList(getActivity(), userDataList);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = mAuth.getCurrentUser();
+        final FirebaseUser user = mAuth.getCurrentUser();
 
         bookCollection = db.collection("books/");
         userCollection = db.collection("users/");
@@ -119,7 +137,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 boolean switchState = searchSwitch.isChecked(); //Checked = books, unchecked = users
-                final String[] searchTerms = searchEditText.getText().toString().split(" ");
+                final String[] searchTerms = searchEditText.getText().toString().split("\\s+");
                 Log.d("SEARCHING", "Initiated Search with Term: " + searchTerms[0]);
 
                 if(switchState) {
@@ -127,25 +145,88 @@ public class SearchFragment extends Fragment {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             resultDataList.clear();
-                            for(QueryDocumentSnapshot doc: value) {
-                                String title = doc.getData().get("title").toString();
-                                String author = doc.getData().get("author").toString();
-                                Log.d("INFO", "Current title and author: " + title + author);
+                            userDataList.clear();
+                            resultList.setAdapter(resultAdapter);
+                            final ArrayList<String> ISBNList =  new ArrayList<>();
+                            for(final QueryDocumentSnapshot doc: value) {
+                                final String title = doc.getData().get("title").toString();
+                                final String author = doc.getData().get("author").toString();
+                                final ArrayList<String> bookCollectionOwners = (ArrayList<String>) doc.getData().get("owners");
+                                Log.d("INFO", "Current title and author: " + title + author + " " + !bookCollectionOwners.contains(mAuth.getUid()));
                                 for(String term : searchTerms) {
-                                    if (title.contains(term) || author.contains(term)) {
-                                        List<String> owners = (List<String>) doc.getData().get("owners");
-                                        Book resultBook;
-                                        for (String owner : owners) {
-                                            resultBook = new Book(title, author, owner);
-                                            Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
-                                            resultDataList.add(resultBook);
+                                    if ((title.toLowerCase().contains(term.toLowerCase()) || author.toLowerCase().contains(term.toLowerCase()))) { //&& (!bookCollectionOwners.contains(mAuth.getUid()))) {
+                                        final ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
+
+                                        for(String owner : owners) {
+                                            Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
+                                            CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
+                                            Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
+                                            ownedCollection.document(doc.getId().toString()).get()
+                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
+                                                                    available = true;
+                                                                    Book resultBook;
+                                                                    resultBook = new Book(title, author, doc.getId().toString(), owners);
+                                                                    Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
+                                                                    if ((ISBNList.isEmpty() || !ISBNList.contains(doc.getId().toString())) && available) {
+                                                                        resultDataList.add(resultBook);
+                                                                        ISBNList.add(doc.getId().toString());
+                                                                        available = false;
+                                                                    }
+                                                                    Log.e("TASK RESULT", document.get("status").toString() + available.toString());
+                                                                    resultAdapter.notifyDataSetChanged();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    });
                                         }
                                     }
                                 }
                             }
-                            resultAdapter.notifyDataSetChanged();
                         }
                     });
+                }
+                else {
+                    userCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            resultDataList.clear();
+                            userDataList.clear();
+                            resultList.setAdapter(userAdapter);
+                            ArrayList<String> userIDList = new ArrayList<>();
+                            for(QueryDocumentSnapshot doc: value) {
+                                String username = doc.getData().get("username").toString();
+                                for(String term : searchTerms) {
+                                    if(username.toLowerCase().contains(term.toLowerCase())) {
+                                        User resultUser;
+                                        resultUser = new User(doc.getData().get("fname").toString() + " " + doc.getData().get("lname").toString(), username, doc.getData().get("username").toString(), doc.getData().get("phone").toString());
+                                        if(userIDList.isEmpty() || !userIDList.contains(doc.getId().toString())) {
+                                            userDataList.add(resultUser);
+                                            userIDList.add(doc.getId().toString());
+                                        }
+                                    }
+                                }
+                            }
+                            userAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+
+        // On click listener for the books search result sos that the user can then request the book
+        resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(SearchFragment.this.getActivity(), SearchDetailActivity.class);
+                if(searchSwitch.isChecked()) {
+                    intent.putExtra("selected book", (Book) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
                 }
             }
         });

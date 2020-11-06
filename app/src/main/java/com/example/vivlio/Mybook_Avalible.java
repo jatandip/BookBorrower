@@ -1,6 +1,5 @@
 package com.example.vivlio;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,18 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
+/**
+ * Activity that handles available books that the user owns.
+ * Loads the books information and allows the user to edit the information of the book.
+ * If user edits the book the activity loads the new information in, also if user deletes the book then
+ * it deletes the book from the database
+ */
 
-public class mybook_avalible extends AppCompatActivity {
+public class Mybook_Avalible extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
     private TextView isbnView;
@@ -34,6 +34,13 @@ public class mybook_avalible extends AppCompatActivity {
     private Book updatedBook;
     private Boolean trigger = false;
 
+
+    /**
+     * General OnCreate method that loads the books information and sets the information to be displayed
+     * editBtn on click listener will lead to a new activity that allows the user to edit the books information. It
+     * will also return the updated information if their was a change
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +62,7 @@ public class mybook_avalible extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent editIntent = new Intent(mybook_avalible.this, editBook.class);
+                Intent editIntent = new Intent(Mybook_Avalible.this, EditBook.class);
                 if (trigger == false) {
                     editIntent.putExtra("book", book);
                 }
@@ -69,6 +76,19 @@ public class mybook_avalible extends AppCompatActivity {
 
     }
 
+
+    /**
+     * OnActivityResult method that handles the information the editBook book returns
+     * If the requestCode is 0 and is equal to Activity.RESULT_OK then it means
+     * The books information was updated. So then we update the books information
+     * In the database. If the resultCode is equal to Activity.RESULT_CANCELED then
+     * no changes were made so we do nothing. If the resultCode is equal to 5, then
+     * the user decided that they wanted to delete the book, so we delete the book
+     * from the database
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

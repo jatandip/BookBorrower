@@ -37,6 +37,17 @@ public class LoginActivity extends AppCompatActivity {
     public static User currentUser;
     private FirebaseFirestore db;
 
+    /**
+     * onCreate handles the authentication of the user. It will take the user's email and password
+     * that is inputted and call Firebase Authentication to verify the credentials. if one or both
+     * of the fields are empty it will create a warning prompting the user to fill in the details.
+     *
+     * Once the authentication is successful, we create a new "currentUser" of type User using the
+     * details of the current user which can be called from other classes.
+     *
+     * If the user taps on "new to Vivlio?" text they will be taken to the Create Account activity.
+     * @param savedInstances
+     */
     @Override
     protected void onCreate(Bundle savedInstances) {
         super.onCreate(savedInstances);
@@ -112,17 +123,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void loginUser(){
-        //TODO authenticate user
-        //TODO set currentUser
 
-    }
-
+    /**
+     * Called after "new to Vivlio?" text is tapped on to open Create Account Activity
+     */
     private void openCreateAccount(){
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Called after authentication is successful to open the main page
+     */
     private void openMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

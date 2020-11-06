@@ -14,6 +14,12 @@ import androidx.annotation.Nullable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+
+/**
+ * This is a custom list to store the books for MyBookListFragment
+ * This customList will set the view. Sets the author, title, and the status of the book to be displayed
+ * In the end will return a view
+ */
 public class BookList extends ArrayAdapter<Book> {
 
     public ArrayList<Book> books;
@@ -27,6 +33,15 @@ public class BookList extends ArrayAdapter<Book> {
     }
 
 
+
+    /**
+     * General onCreate method, this queries the database to find the owners of the book and displays whether or not the book has already been requested.
+     * Allows the user to request available books.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

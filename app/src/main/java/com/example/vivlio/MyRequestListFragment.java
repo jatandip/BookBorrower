@@ -24,25 +24,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-/*
-* Fragment that displays a list of the User's requested books. Selecting a book launches into an
-* activity that displays the details of the request.
-*
-* Should the details be in a fragment?
-*
-* Some of the code for onViewCreated was made looking at MyBookListFragment.
-*
-*
-*
-* */
-
-
-
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyRequestListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+ * MyRequestListFragment.java
+ *
+ * Fragment that displays a list of the User's requested books. The tab at the top can filter by
+ * based on the status. User can see All, Requests with status Available, and Requests with status
+ * Borrowed.
+ *
+ * */
+
 public class MyRequestListFragment extends Fragment {
 
     private ArrayList<Book> requestDataList;
@@ -62,7 +52,6 @@ public class MyRequestListFragment extends Fragment {
      *
      * @return A new instance of fragment MyRequestList.
      */
-    // TODO: Rename and change types and number of parameters
     public static MyRequestListFragment newInstance() {
         MyRequestListFragment fragment = new MyRequestListFragment();
         Bundle args = new Bundle();
@@ -70,6 +59,11 @@ public class MyRequestListFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Boilerplate onCreate method
+     * Would set parameters but there are none to set.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +72,31 @@ public class MyRequestListFragment extends Fragment {
         }
     }
 
+    /**
+     * Boilerplate onCreateView method
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return created View
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_request_list, container, false);
     }
 
+
+    /**
+     * Handles the task of the MyRequestList.
+     * Displays the list of the user's Requested books.
+     * Tab at the top can filter by based on the status. User can see All, Requests with status
+     * Available, and Requests with status Borrowed.
+     *
+     * The content in the list contains the book title, author, owner, and status.
+     *
+     * @param view
+     * @param savedInstanceBundle
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceBundle) {
         ListView listOfRequests = view.findViewById(R.id.request_list_view);
@@ -141,6 +154,10 @@ public class MyRequestListFragment extends Fragment {
                             {
                                 ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
 
+                                if(owner.isEmpty()) {
+                                    owner.add(mAuth.getCurrentUser().getUid());
+                                }
+
                                 Book book = new Book(doc.getData().get("title").toString(),
                                         doc.getData().get("author").toString(),
                                         doc.getId(),
@@ -168,6 +185,10 @@ public class MyRequestListFragment extends Fragment {
 
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
 
+                                    if(owner.isEmpty()) {
+                                        owner.add(mAuth.getCurrentUser().getUid());
+                                    }
+
                                     Book book = new Book(doc.getData().get("title").toString(),
                                             doc.getData().get("author").toString(),
                                             doc.getId(),
@@ -194,6 +215,10 @@ public class MyRequestListFragment extends Fragment {
                                 if (doc.getData().get("status").toString().equals("borrowed")) {
 
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+
+                                    if(owner.isEmpty()) {
+                                        owner.add(mAuth.getCurrentUser().getUid());
+                                    }
 
                                     Book book = new Book(doc.getData().get("title").toString(),
                                             doc.getData().get("author").toString(),

@@ -1,5 +1,8 @@
 package com.example.vivlio;
 import android.app.Activity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -7,6 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -21,7 +28,8 @@ import static junit.framework.TestCase.assertTrue;
 
 
 /**
- * Test class for the Search Fragment
+ * Test class for the MyBookList fragment and switching between the different book status
+ * Tests adding book aswell
  */
 @RunWith(AndroidJUnit4.class)
 public class MyBookListTesting {
@@ -29,8 +37,8 @@ public class MyBookListTesting {
     private Solo solo;
 
     @Rule
-    public ActivityTestRule<MainActivity> rule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<LoginActivity> rule =
+            new ActivityTestRule<>(LoginActivity.class, true, true);
 
     @Before
     public void SetUp() throws Exception {
@@ -46,39 +54,46 @@ public class MyBookListTesting {
         Activity activity = rule.getActivity();
     }
 
-    
+
+    /**
+     * Logs into the user using the provided username and password
+     * Tests to make sure it is in the correct activity
+     * Clicks on the MyBookList fragment
+     * Adds the information for a new book and clicks confirm to add the book
+     * Clicks on the different tabs to make sure the navigation between tabs works
+     */
     @Test
     public void checkShow() {
-        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
+
+        solo.clickOnImageButton(0);
+
+        solo.assertCurrentActivity("Login failed", MainActivity.class);
+
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
-        //assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.addBtn));
-        solo.assertCurrentActivity("<Error Message>", AddBook.class);
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
+        FloatingActionButton add = (FloatingActionButton)solo.getView(R.id.addBtn);
+        solo.clickOnView(add);
 
+        solo.enterText((EditText) solo.getView(R.id.edit_author), "testingAuthor");
+        solo.enterText((EditText) solo.getView(R.id.edit_title), "testingTitle");
+        solo.enterText((EditText) solo.getView(R.id.edit_isbn), "testingIsbn");
 
+        Button confirm = (Button) solo.getView(R.id.button_upload);
+        solo.clickOnView(confirm);
 
-
-
-
-
-        /*
-        assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("test", 1, 2000));
-        solo.clickOnView(solo.getView(R.id.search_switch));
-        solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "g");
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Game",1,2000));
-         */
-
-
-
-
-
-
+        solo.clickOnText("Accepted");
+        solo.clickOnText("Available");
+        solo.clickOnText("Pending");
+        solo.clickOnText("Borrowed");
+        solo.clickOnText("All");
 
     }
 

@@ -29,6 +29,16 @@ public class SuccessExchangeActivity extends AppCompatActivity {
     private CollectionReference collectionReference;
     private FirebaseAuth mAuth;
 
+    /**
+     * Gets the ISBN that the user scanned as well as the UID of the user that the exchange is being
+     * done with. checks the database to see if the scanned isbns match. if they do, the exchange
+     * is successful and the appropriate message is displayed, along iwth a button to take the user
+     * to the home page. The status of the books in the database will also be updated from
+     * "accepted" to "borrowed"
+     * If the scanned ISBNs do not match, the appropriate message is displayed, along iwth a button
+     * to take the user to the home page.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +140,9 @@ public class SuccessExchangeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * called after the user taps on the home button to take the user to the main page.
+     */
     public void openHome(){
         Intent intent = new Intent(SuccessExchangeActivity.this, MainActivity.class);
         startActivity(intent);

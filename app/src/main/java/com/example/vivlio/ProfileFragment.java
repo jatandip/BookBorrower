@@ -30,9 +30,11 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A Fragment for the profile
+ * Gets the users profile information and displays it
+ * If the user decides they want to edit their profile information
+ * Leads to the EditProfile Activity
+ * If the user changes their information we change the information in the firebase database
  */
 public class ProfileFragment extends Fragment {
 
@@ -70,6 +72,10 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * General OnCreate method
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +86,13 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Handles the result of the EditProfile activity
+     * If changes need to be made it will do so in the firestore
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,7 +158,13 @@ public class ProfileFragment extends Fragment {
     }//
 
 
-
+    /**
+     * Inflates the view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -154,6 +173,13 @@ public class ProfileFragment extends Fragment {
     }
 
 
+    /**
+     * Gets and loads the profile information
+     * Handles the edit button click and passing in the profile information to
+     * EditProfile, starts the EditProfile activity
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
                     nameTextView = view.findViewById(R.id.nameView);

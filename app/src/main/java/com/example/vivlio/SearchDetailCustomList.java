@@ -14,7 +14,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
- * This models the list of books in the Search Details page
+ * This class is used to model the indices in the list of owners of a book.
+ * The custom list also displays the status of the book, denoting if the user can request the book or not.
  */
 public class SearchDetailCustomList extends ArrayAdapter<User> {
     public ArrayList<User> users;
@@ -26,6 +27,14 @@ public class SearchDetailCustomList extends ArrayAdapter<User> {
         this.context = context;
     }
 
+    /**
+     * Called to get the view for one item in the list.
+     * This method populates the text fields and returns the resulting view
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return The view with relevant information
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

@@ -23,35 +23,33 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.xml.parsers.DocumentBuilder;
 
-//Hello kishan testing //
-
-
-/*
-* Main hub of activity
-*
-* Holds the bottom navigation bar.
-* Selecting an item on the navigation bar replaces the current fragment in nav_host_fragment with the
-* fragment corresponding the item pressed.
-*
-* A few things to note:
-* I had to change the layout to a Frame Layout, the default Constraint Layout had a problem with
-* fragments overlapping with the first fragment in the background when the app launched.
-* Right now there is no fragment opened by default on launch.
-*
-* Each fragment should be ready to be replaced by a real working implementation.
-*
-* I also haven't looked at Login, that should probably be called right at the top, I'll
-* have to double check.
-*
-* Also right now the nav_host_fragment has a hardcoded margin of 58dp, ideally it should automatically
-* sit on top of the nav bar, I'm trying to find a way to do that.
-*
-* */
+/**
+ * MainActivity
+ *
+ * Main hub of activity. Holds the bottom navigation bar. Selecting an item on the navigation bar
+ * replaces the current fragment in nav_host_fragment with the fragment corresponding the item
+ * pressed.
+ *
+ * Notifications are handled in this activity. On each Firebase Snapshot, it checks a dictionary
+ * with the old values of a book's ISBN and status and sees if the current database has any changes
+ * that should trigger a notification. Then it updates the dictionary with the current values. If a
+ * notification is triggered a batch appears on the relevant menu item in the navigation bar.
+ *
+ * The two conditions for notifications are:
+ * Case 1: a book in a user's "owned" collection has a change in status from "available" to "pending"
+ * Case 2: a book in a user's "requested" collection has a change in status from "pending" to "accepted"
+ *
+ * Issues:
+ * There is no fragment opened by default on launch, this may be something to change in the future.
+ * The nav_host_fragment has a hardcoded margin of 58dp, that should maybe automatically sit on top
+ * of the nav bar.
+ * Notifications are just a small badge on the relevant menu item in the navigation bar, they
+ * could maybe be more prominent like next to the changed item in the list as well.
+ *
+ * */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
     private BadgeDrawable requestsNotificationBadge;
     private BadgeDrawable booksNotificationBadge;
 
+    /**
+     * Handles the task of the MainActivity.
+     * The navigation bar has a listener to launch the corresponding fragment when an item is
+     * pressed.
+     * The notifications are handled by checking changes the the database.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // handle notifications
         // notification should show in two cases:
         // 1 when one of the users owned books changes its status from "available" to "pending"
@@ -162,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     // see if book is in hashmap
                     try {
                         if (oldBookData.get(doc.getId()).equals("available") && doc.getData().get("status").toString().equals("pending")) {
-                            Log.d("nice", "nice");
                             booksNotificationBadge.setVisible(true);
                         }
                     } catch (Exception e) {
@@ -198,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
                     // see if book is in hashmap
                     try {
                         if (oldRequestData.get(doc.getId()).equals("pending") && doc.getData().get("status").toString().equals("accepted")) {
-                            Log.d("nice", "nice");
                             requestsNotificationBadge.setVisible(true);
                         }
                     } catch (Exception e) {

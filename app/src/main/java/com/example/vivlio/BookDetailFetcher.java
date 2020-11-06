@@ -73,15 +73,18 @@ public class BookDetailFetcher {
         List<String> parsedDataArray = new ArrayList<String>();
 
         reader.beginObject();
-        while (reader.hasNext() && parsedDataArray == null) {
+        while (reader.hasNext() && parsedDataArray.isEmpty()) {
             String name = reader.nextName();
             if (name.equals("items")) {
+                reader.beginArray();
                 parsedDataArray = readItemsArray(reader);
+                reader.endArray();
             } else {
                 reader.skipValue();
             }
         }
         reader.endObject();
+        reader.close();
 
         title = parsedDataArray.get(0);
         authors = parsedDataArray.get(1);
@@ -99,20 +102,20 @@ public class BookDetailFetcher {
     private List<String> readItemsArray(JsonReader reader) throws IOException {
         List<String> infoArray = new ArrayList<>();
 
-        reader.beginArray();
-        while (reader.hasNext() && infoArray == null) {
-            reader.beginObject();
-            while (reader.hasNext() && infoArray == null) {
-                String name = reader.nextName();
-                if (name.equals("volumeInfo")) {
-                    infoArray = readVolumeInfo(reader);
-                } else {
-                    reader.skipValue();
-                }
+//        reader.beginArray();
+//        while (reader.hasNext() && infoArray == null) {
+        reader.beginObject();
+        while (reader.hasNext() && infoArray.isEmpty()) {
+            String name = reader.nextName();
+            if (name.equals("volumeInfo")) {
+                infoArray = readVolumeInfo(reader);
+            } else {
+                reader.skipValue();
             }
-            reader.endObject();
         }
-        reader.endArray();
+        reader.endObject();
+
+//        reader.endArray();
 
         return infoArray;
     }
@@ -138,6 +141,7 @@ public class BookDetailFetcher {
                 reader.beginArray();
 //                while (reader.hasNext()) {
                 while (reader.hasNext() && authors == null) {
+
                     authors = reader.nextString();
 //                    String author = reader.nextString();
 //                    authors.add(author);

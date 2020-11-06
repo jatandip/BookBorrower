@@ -81,7 +81,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                                        int height) {}
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                cameraSource.stop();
+                cameraSource.release();
             }
         });
 

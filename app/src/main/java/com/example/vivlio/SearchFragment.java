@@ -151,9 +151,10 @@ public class SearchFragment extends Fragment {
                             for(final QueryDocumentSnapshot doc: value) {
                                 final String title = doc.getData().get("title").toString();
                                 final String author = doc.getData().get("author").toString();
-                                Log.d("INFO", "Current title and author: " + title + author);
+                                final ArrayList<String> bookCollectionOwners = (ArrayList<String>) doc.getData().get("owners");
+                                Log.d("INFO", "Current title and author: " + title + author + " " + !bookCollectionOwners.contains(mAuth.getUid()));
                                 for(String term : searchTerms) {
-                                    if (title.toLowerCase().contains(term.toLowerCase()) || author.toLowerCase().contains(term.toLowerCase())) {
+                                    if ((title.toLowerCase().contains(term.toLowerCase()) || author.toLowerCase().contains(term.toLowerCase()))) { //&& (!bookCollectionOwners.contains(mAuth.getUid()))) {
                                         final ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
 
                                         for(String owner : owners) {

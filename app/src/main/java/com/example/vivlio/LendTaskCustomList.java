@@ -30,6 +30,13 @@ public class LendTaskCustomList extends ArrayAdapter<Book>{
         this.context = context;
     }
 
+    /**
+     * Sets up custom list for lenderTask with the book's title, author and requester.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

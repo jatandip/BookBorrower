@@ -19,24 +19,26 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 public class BarcodeScannerActivity extends AppCompatActivity {
-
+    private BookDetailFetcher detailFetcher;
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int CAMERA_REQUEST_CODE = 100;
-    String barcodeData;
+    private String barcodeData;
 
     /**
      * ISBN is returned as an intent. To access the ISBN string
      * use Intent.getStringExtra("isbn")
      */
-    Intent returnedData = new Intent();
+    Intent returnedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_scanner);
         surfaceView = findViewById(R.id.surface_view);
+        returnedData = new Intent();
+        detailFetcher = new BookDetailFetcher();
         initDetectorSources();
     }
 
@@ -99,7 +101,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
+                    detailFetcher.request(barcodeData);
+
                     returnedData.putExtra("isbn", barcodeData);
+                    returnedData.putExtra("title", detailFetcher.getTitle());
+                    returnedData.putExtra("author", detailFetcher.getAuthor());
                     setResult(RESULT_OK, returnedData);
                     finish();
                 }

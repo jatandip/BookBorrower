@@ -327,7 +327,7 @@ public class MyBookListFragment extends Fragment {
 
                 ArrayList<String> empty = new ArrayList<String>();
 
-                empty.add("");
+                //empty.add("");
                 info.put("borrowers", empty);
                 GeoPoint location = new GeoPoint(0,0);
                 info.put("location" , location);

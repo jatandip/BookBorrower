@@ -20,7 +20,7 @@ import static org.junit.Assert.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 /**
- * Test class for the Search Detail Fragment
+ * Test class for the Search Detail Activity
  */
 @RunWith(AndroidJUnit4.class)
 public class SearchDetailTest {
@@ -31,6 +31,10 @@ public class SearchDetailTest {
     public ActivityTestRule<MainActivity> rule =
             new ActivityTestRule<>(MainActivity.class, true, true);
 
+    /**
+     * Sets up the Robotium object with the appropriate activity information.
+     * @throws Exception
+     */
     @Before
     public void SetUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());

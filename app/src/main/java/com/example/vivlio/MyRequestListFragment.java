@@ -46,7 +46,7 @@ import java.util.ArrayList;
 public class MyRequestListFragment extends Fragment {
 
     private ArrayList<Book> requestDataList;
-    private BookList requestAdapter;
+    private RequestCustomList requestAdapter;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
@@ -97,7 +97,7 @@ public class MyRequestListFragment extends Fragment {
 
         // set up ListView
         requestDataList = new ArrayList<>();
-        requestAdapter = new BookList(getActivity(), requestDataList);
+        requestAdapter = new RequestCustomList(getActivity(), requestDataList);
         listOfRequests.setAdapter(requestAdapter);
 
         // start by showing all (user will start on All tab)

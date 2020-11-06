@@ -31,6 +31,12 @@ public class BorrowTaskActivity extends AppCompatActivity {
     private CollectionReference collectionReference;
     String otherUID;
 
+    /**
+     * Gets list of books that the current user has requested that have been accepted. Displays that
+     * list of book with their title, author and owner. Once the user selects a book, the scanner will
+     * open for them to scan the ISBN.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -84,11 +90,22 @@ public class BorrowTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * call this method after user taps on a book to open scanner to scan ISBN of book
+     */
     public void openScanner(){
         Intent intent = new Intent(BorrowTaskActivity.this, BarcodeScannerActivity.class);
         startActivityForResult(intent, 0);
     }
 
+    /**
+     * once the user scans the ISBN, this method will check if it matches the ISBN of the book they
+     * had selected. if it does, it will call the Success Exchange activity. otherwise the user will
+     * be notified that their isbn does not match and they can select a book again.
+     * @param requestCode default
+     * @param resultCode default
+     * @param data scanned isbn
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

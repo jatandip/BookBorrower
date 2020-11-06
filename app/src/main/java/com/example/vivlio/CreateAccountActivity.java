@@ -35,6 +35,13 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    /**
+     * Handles creation of a new account. ocne all the fields have been properly filled, will call
+     * Firebase Auth to create an account. if successful, will create a new user document in
+     * FireStore with the appropriate details. Opens Login activity again from where the user can
+     * log in with their new account.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +115,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * called to open login activity after successful account creation
+     */
     private void openLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

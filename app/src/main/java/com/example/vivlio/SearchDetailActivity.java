@@ -28,7 +28,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * This is the activity is used to display the details for a searched book, as well as all the owners who have the book available to request.
+ * This is the activity is used to display the details for a searched book.
+ * As well as all the owners who have the book available to request.
+ * Lastly, this class supports allowing the user to click on a book marked "available" and request the book from the owner.
  */
 public class SearchDetailActivity extends AppCompatActivity {
     private TextView titleEditText;
@@ -43,6 +45,11 @@ public class SearchDetailActivity extends AppCompatActivity {
     private Boolean available = false;
 
 
+    /**
+     * General onCreate method, this queries the database to find the owners of the book and displays whether or not the book has already been requested.
+     * Allows the user to request available books.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

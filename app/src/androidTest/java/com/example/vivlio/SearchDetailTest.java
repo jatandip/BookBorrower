@@ -60,7 +60,10 @@ public class SearchDetailTest {
         solo.clickOnText("Witch");
         solo.assertCurrentActivity("Wrong Activity", SearchDetailActivity.class);
         assertTrue(solo.waitForText("test",1,2000));
-        assertTrue(solo.waitForText("available",1, 2000) || solo.waitForText("pending",1,200));
+        if(solo.waitForText("available", 1, 2000)) {
+            solo.clickOnText("available");
+            assertTrue((solo.waitForText("pending",1,2000)));
+        }
 
     }
 

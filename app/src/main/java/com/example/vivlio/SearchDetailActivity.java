@@ -73,7 +73,7 @@ public class SearchDetailActivity extends AppCompatActivity {
         // This finds all the owers of the book with status pending or available and then checks if the book has been requested previously and displays the appropriate status.
         for(final String owner : searchDetailBook.getCurrentOwners()) {
             Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
-            CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
+            final CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
             ownedCollection.document(searchDetailBook.getISBN()).get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
@@ -81,6 +81,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                             final DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
+                                    ownedCollection.document(searchDetailBook.getISBN()).update("status", "pending");
                                     userCollection.document(owner).get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override

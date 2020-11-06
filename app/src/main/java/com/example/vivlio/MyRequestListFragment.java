@@ -109,6 +109,10 @@ public class MyRequestListFragment extends Fragment {
                 {
                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
 
+                    if(owner.isEmpty()) {
+                        owner.add(mAuth.getCurrentUser().getUid());
+                    }
+
                     Book book = new Book(doc.getData().get("title").toString(),
                             doc.getData().get("author").toString(),
                             doc.getId(),

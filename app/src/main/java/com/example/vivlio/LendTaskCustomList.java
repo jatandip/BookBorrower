@@ -42,7 +42,9 @@ public class LendTaskCustomList extends ArrayAdapter<Book>{
         db = FirebaseFirestore.getInstance();
         final Book book = books.get(position);
 
+        Log.e("lender name", book.getOwner());
 
+//978014384948
         DocumentReference docRef = db.collection("users")
                 .document(book.getOwner().substring(1, book.getOwner().length()-1));
         final View finalView = view;

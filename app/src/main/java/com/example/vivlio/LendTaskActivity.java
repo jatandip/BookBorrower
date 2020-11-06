@@ -57,11 +57,11 @@ public class LendTaskActivity extends AppCompatActivity{
                 {
                     if (doc.getData().get("status").toString().equals("accepted")) {
                         ArrayList<String> requestedBy = new ArrayList<>();
-                        requestedBy.add(doc.getData().get("requested by").toString());
+                        requestedBy.add(doc.getData().get("borrowers").toString());
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                requestedBy.get(0), doc.getId());
+                                requestedBy.get(0), doc.getId().replace("-",""));
                         bookDataList.add(book);
                     }
                 }

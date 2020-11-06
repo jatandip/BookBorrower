@@ -40,7 +40,7 @@ public class SuccessExchangeActivity extends AppCompatActivity {
         final TextView staySafeTV = findViewById(R.id.SUCEX_TVstaysafe);
         final TextView homeTV = findViewById(R.id.SUCEX_TVhome);
 
-        Boolean isBorrower;
+        final Boolean isBorrower;
         final String myISBN;
         final String otherUID;
 
@@ -56,7 +56,6 @@ public class SuccessExchangeActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        //collectionReference = db.collection("users" + "/" + otherUID);
 
         DocumentReference updateUser = db.collection("users")
                 .document(mAuth.getCurrentUser().getUid());
@@ -84,13 +83,28 @@ public class SuccessExchangeActivity extends AppCompatActivity {
                                 .document(mAuth.getCurrentUser().getUid());
                         updateUser.update("scanned isbn", "");
 
+                        //TODO CHANGE FOR BORROWER "accepted" > "borrowed"
+                        if(isBorrower){
+                            db.collection("users")
+                                    .document(mAuth.getCurrentUser().getUid() +
+                                    "/requested/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                            .update("status","borrowed");
+
+                        } else {
+                            //TODO CHANGE FOR OWNER "accepted" > "borrowed"
+                            db.collection("users")
+                                    .document(mAuth.getCurrentUser().getUid() +
+                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                    .update("status","borrowed");
+                        }
+
                     } else if (otherISBN == ""){
                         Log.e("empty", "empty");
                         Log.e("otherisbn2 ",otherISBN);
 
                     } else if (myISBN.equals(otherISBN) == false){
                         Log.e("diff", "diff");
-                        Log.e("otherisbn3 ",otherISBN.toString());
+                        Log.e("otherisbn3 ",otherISBN);
 
                         successTV.setText("Exchange failed!");
                         staySafeTV.setText("Please try again!");

@@ -1,38 +1,27 @@
 package com.example.vivlio;
+
 import android.app.Activity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-
 
 /**
- * Test class for the MyBookList fragment and switching between the different book status
- * Tests adding book aswell
+ * Testing to see if the user can navigate to the profile fragment and
+ * click on edit profile button, Checks if user can save his changes to his profile
  */
-@RunWith(AndroidJUnit4.class)
-public class MyBookListTesting {
+
+
+public class ProfileTesting {
 
     private Solo solo;
 
@@ -56,11 +45,9 @@ public class MyBookListTesting {
 
 
     /**
-     * Logs into the user using the provided username and password
-     * Tests to make sure it is in the correct activity
-     * Clicks on the MyBookList fragment
-     * Adds the information for a new book and clicks confirm to add the book
-     * Clicks on the different tabs to make sure the navigation between tabs works
+     * Logs in as a user, navigates to the profile fragment,
+     * clicks the edit button to see if the user can edit the profile information
+     * then saves the changes made
      */
     @Test
     public void checkShow() {
@@ -76,24 +63,17 @@ public class MyBookListTesting {
 
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
-        solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        FloatingActionButton add = (FloatingActionButton)solo.getView(R.id.addBtn);
-        solo.clickOnView(add);
+        solo.sleep(5000);
+        solo.clickOnView(solo.getView(R.id.navigation_profile));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        solo.enterText((EditText) solo.getView(R.id.edit_author), "testingAuthor");
-        solo.enterText((EditText) solo.getView(R.id.edit_title), "testingTitle");
-        solo.enterText((EditText) solo.getView(R.id.edit_isbn), "testingIsbn");
+        FloatingActionButton edit = (FloatingActionButton)solo.getView(R.id.editButton);
+        solo.clickOnView(edit);
 
-        Button confirm = (Button) solo.getView(R.id.button_upload);
+        Button confirm = (Button) solo.getView(R.id.saveButton);
         solo.clickOnView(confirm);
-
-        solo.clickOnText("Accepted");
-        solo.clickOnText("Available");
-        solo.clickOnText("Pending");
-        solo.clickOnText("Borrowed");
-        solo.clickOnText("All");
 
     }
 
@@ -105,17 +85,5 @@ public class MyBookListTesting {
     public void tearDown() throws Exception{
         solo.finishOpenedActivities();
     }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

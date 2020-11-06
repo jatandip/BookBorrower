@@ -101,11 +101,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
-                    detailFetcher.request(barcodeData);
+                    //detailFetcher.request(barcodeData);
 
                     returnedData.putExtra("isbn", barcodeData);
-                    returnedData.putExtra("title", detailFetcher.getTitle());
-                    returnedData.putExtra("author", detailFetcher.getAuthor());
+                    //returnedData.putExtra("title", detailFetcher.getTitle());
+                    //returnedData.putExtra("author", detailFetcher.getAuthor());
                     setResult(RESULT_OK, returnedData);
                     finish();
                 }

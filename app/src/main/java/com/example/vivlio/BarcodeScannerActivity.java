@@ -18,6 +18,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+/**
+ * This activity class requests the phone's camera and
+ * creates a preview screen for the camera. It detects
+ * for any barcode from the camera and upon first detection
+ * the data is saved in the intent and the activity is terminated.
+ */
 public class BarcodeScannerActivity extends AppCompatActivity {
     private BookDetailFetcher detailFetcher;
     private SurfaceView surfaceView;
@@ -32,16 +38,30 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      */
     Intent returnedData;
 
+    /**
+     * Initialize all resources and attributes upon the activity's creation
+     * @param savedInstanceState Saved state of the app
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_scanner);
+
+        /**
+         * SurfaceView is used because it can create a drawing surface
+         * on a separate thread. A camera preview screen requires the screen
+         * to be updated constantly, which would bottleneck the main thread.
+         */
         surfaceView = findViewById(R.id.surface_view);
+
         returnedData = new Intent();
         detailFetcher = new BookDetailFetcher();
         initDetectorSources();
     }
 
+    /**
+     * Initializes the BarcodeDetector, CameraSource, SurfaceHolder.Callback objects
+     */
     private void initDetectorSources() {
         // initialize and build detector, enable all barcode formats
         barcodeDetector = new BarcodeDetector.Builder(this)
@@ -56,6 +76,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         // implement a SurfaceHolder.Callback for surfaceView
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            /**
+             * Checks for camera permission when the surface is first created,
+             * request permission from user otherwise.
+             * @param surfaceHolder Interface that allows for manipulation of Surface
+             */
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
                 try {
@@ -79,15 +104,21 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width,
                                        int height) {}
+
+            // release camera resources when surface is destroyed
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                cameraSource.stop();
+                cameraSource.release(); // undecided between this and .stop()
             }
         });
 
         initDetectorProcessor(barcodeDetector);
     }
 
+    /**
+     * Initializes Detector.Processor objects for BarcodeDetector objects
+     * @param detector BarcodeDetector object that has already been instantiated
+     */
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -95,9 +126,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 // TODO: display small popup to inform user the scanner has been stopped
             }
 
-            // implement detector behaviour when a barcode is scanned
+            /**
+             * Sets the processor behaviour when a detection is received
+             * @param detections detected codes from the detector
+             */
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
+                // All detected barcodes are saved in a SparseArray
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
@@ -113,17 +148,28 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks if the scanned in barcode is an ISBN code
+     * @param code ISBN code
+     * @return return true if the barcode is an ISBN code, false otherwise
+     */
     private boolean isISBN(String code) {
         // TODO: parse barcode data into int and check if it is an ISBN
         return true;
     }
 
+    /**
+     * Release camera resources when the activity is paused
+     */
     @Override
     protected void onPause() {
         super.onPause();
         cameraSource.release();
     }
 
+    /**
+     * Reinitialize camera resources when activity is resumed
+     */
     @Override
     protected void onResume() {
         super.onResume();

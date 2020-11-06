@@ -29,6 +29,7 @@ public class BorrowTaskActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
+    String otherUID;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -60,7 +61,7 @@ public class BorrowTaskActivity extends AppCompatActivity {
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                owner.get(0), doc.getId());
+                                owner.get(0), doc.getId().replace("-",""));
                         //Log.e("ISB", doc.getId());
                         //Log.e("title", doc.getData().get("title").toString());
                         bookDataList.add(book);
@@ -74,7 +75,9 @@ public class BorrowTaskActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedISBN = bookDataList.get(i).getISBN();
+                otherUID = bookDataList.get(i).getOwner();
                 Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
+                Log.e("SELECTED BOOK ISBN", bookDataList.get(i).getISBN());
                 openScanner();
 
             }
@@ -93,9 +96,10 @@ public class BorrowTaskActivity extends AppCompatActivity {
             String result = data.getStringExtra("isbn");
             Log.e("scanned isbn in task", result);
             if(selectedISBN.equals(result)){
-                //Intent intent = new Intent(BorrowTaskActivity.this, SuccessExchangeActivity.class);
-                //intent.putExtra("BORROWER", result);
-                //startActivity(intent);
+                Intent intent = new Intent(BorrowTaskActivity.this, SuccessExchangeActivity.class);
+                intent.putExtra("BORROWER", result);
+                intent.putExtra("OTHER_UID", otherUID);
+                startActivity(intent);
             } else {
                 Toast.makeText(BorrowTaskActivity.this, "ISBN did not match selected book!",
                         Toast.LENGTH_SHORT).show();

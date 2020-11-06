@@ -11,11 +11,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.BuildConfig;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,7 +23,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +37,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * This is the AddBook class; it allows user to enter book description, take a picture, open
+ * their gallery to select a picture, and upload when all required fields (title, author,
+ * ISBN) are filled out
+ */
 public class AddBook extends AppCompatActivity {
     private static final String TAG = "AddBook";
     private static final int CAMERA_REQUEST_CODE = 1;
@@ -60,6 +62,11 @@ public class AddBook extends AppCompatActivity {
 
     StorageReference storageReference;
 
+    /**
+     * Handles the task of AddBook, sets onclicklisteners for the following buttons:
+     * galleryPictureButton, cameraPictureButton, and uploadButton
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +103,12 @@ public class AddBook extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Creates new intent and sets type to image/*, which allows for image/jpg, image/png
+     * and image/gif receivers before starting the activity which will send the request
+     * to open up the gallery
+     */
     private void fileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -103,6 +116,15 @@ public class AddBook extends AppCompatActivity {
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * After getting current picture, whether it be from a camera picture or from the gallery
+     * and upload it to the Firebase storage. If successful, will return a message stating that
+     * the image is uploaded, otherwise will display a message saying the upload has failed.
+     * If the upload is successful, the currentPath (which is the link to get the picture) will be
+     * updated with the result of the downloadUri
+     * @param name
+     * @param uri
+     */
     private void uploadFile(String name, Uri uri){
         final StorageReference image = storageReference.child("pictures/" + name);
         image.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -129,12 +151,22 @@ public class AddBook extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * returns file extension type
+     * @param uri
+     * @return
+     */
     private String getFileExt(Uri uri) {
         ContentResolver c = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(c.getType(uri));
     }
 
+    /**
+     * If camera permission has been allowed, then take a picture by calling the function
+     * takePicture, otherwise ask for permission to take picture
+     */
     private void getCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
@@ -144,6 +176,14 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
+    /**
+     * after getting/rejecting permission from getcamerapermission, checks if permission has been
+     * granted. This will either open up the camera app by calling the function takePicture, or will
+     * display a message telling the user that they must allow camera usage to use the function
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == CAMERA_PERM_CODE){
@@ -155,6 +195,11 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
+    /**
+     * function for taking a picture, creates a file, and sets a uri where the output will be
+     * stored in the uri. The camera function is then called, and when returned, the uri should
+     * contain the correct information
+     */
     private void takePicture(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null){
@@ -176,6 +221,12 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
+    /**
+     * creates an image file with a timestamp, making the file a jpeg. When a picture is captured,
+     * it will be put into the picture directory, and a temp file will be created and returned
+     * @return
+     * @throws IOException
+     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -192,7 +243,14 @@ public class AddBook extends AppCompatActivity {
         return image;
     }
 
-
+    /**
+     * handles the result after a picture has been selected from either a camera taken picture, or
+     * from the gallery. It then creates an intent to scan the file, before sending all relevant
+     * information to the function uploadFile to upload
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,6 +279,13 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
+    /**
+     * handles when the upload button is pressed. This checks if the required fields are filled out
+     * (title, author, ISBN), but a picture is not required to proceed. If the fields are completed,
+     * a book class is created, added in, and sent back with an intent containing all the
+     * information. If the fields are not completed, the user will receive a message stating that
+     * there are missing fields required, and will not proceed until they are filled out
+     */
     public void uploadButtonPressed(){
         book = new Book();
         String title, author, ISBN;

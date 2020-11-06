@@ -19,6 +19,16 @@ public class Book implements Serializable {
     private ArrayList<String> currentOwners;
     private String photoURL;
 
+    /**
+     * A constructor for the entire Book
+     * @param title
+     * @param author
+     * @param ISBN
+     * @param status
+     * @param owner
+     * @param currentOwner
+     * @param photoURL
+     */
     public Book(String title, String author, String ISBN, String status, String owner, String currentOwner, String photoURL){
         this.title = title;
         this.author = author;
@@ -29,7 +39,13 @@ public class Book implements Serializable {
         this.photoURL = photoURL;
     }
 
-    //for Borrow/Lend Task
+    /**
+     * A constructor for only Book description
+     * @param title
+     * @param author
+     * @param owner
+     * @param ISBN
+     */
     public Book(String title, String author, String owner, String ISBN){
         this.title = title;
         this.author = author;
@@ -51,6 +67,9 @@ public class Book implements Serializable {
         this.currentOwners = currentOwners;
     }
 
+    /**
+     * empty constructor for book
+     */
     public Book() {}
 
     /**

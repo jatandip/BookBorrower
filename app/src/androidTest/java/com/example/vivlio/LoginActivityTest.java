@@ -1,6 +1,5 @@
 package com.example.vivlio;
 
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -22,6 +21,8 @@ public class LoginActivityTest {
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(),rule.getActivity());
+        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
+
     }
 
     @After
@@ -31,11 +32,8 @@ public class LoginActivityTest {
 
     @Test
     public void testSuccessfulLogin(){
-        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
-
 
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
@@ -47,8 +45,6 @@ public class LoginActivityTest {
 
     @Test
     public void testFailedLogin(){
-        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
@@ -62,7 +58,6 @@ public class LoginActivityTest {
 
     @Test
     public void testEmptyFields(){
-        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
 
         //Empty fields
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
@@ -89,8 +84,6 @@ public class LoginActivityTest {
 
     @Test
     public void openCreateAccount(){
-        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
         solo.clickOnText("new to Vivlio?");
 
         solo.assertCurrentActivity("Didnt open to Create account", CreateAccountActivity.class);

@@ -1,5 +1,7 @@
 package com.example.vivlio;
 import android.app.Activity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -7,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -52,8 +57,9 @@ public class MyBookListTesting {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
         //assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.addBtn));
-        solo.assertCurrentActivity("<Error Message>", AddBook.class);
+        Activity current = solo.getCurrentActivity();
+        TabItem tabs = (TabItem) solo.getView(R.id.tab_all);
+        //solo. clickOnView(solo.getView(tabs.getChildAt(0)));
 
 
 
@@ -62,24 +68,7 @@ public class MyBookListTesting {
 
 
 
-        /*
-        assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("test", 1, 2000));
-        solo.clickOnView(solo.getView(R.id.search_switch));
-        solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "g");
-        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Game",1,2000));
-         */
-
-
-
-
-
-
-
+        //solo.assertCurrentActivity("<Error Message>", AddBook.class);
     }
 
     /**

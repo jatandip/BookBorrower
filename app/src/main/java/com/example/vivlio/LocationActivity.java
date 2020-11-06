@@ -20,6 +20,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the location activity. It handles two current cases, one where a user is setting
+ * the location of where they want a borrower to pick up the book, and one where a borrower is
+ * trying to view the location of where the book pickup location is. If the call is from the lender,
+ * this function will return an intent containing the longitute and latitude of the selected
+ * location when a confirm button is pressed, and if the call is from the borrower, both cancel and
+ * confirm buttons will finish the activity
+ */
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private double longitude;
@@ -29,12 +37,21 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private Button confirmButton;
     private Boolean changed;
 
+    /**
+     * LocationActivity constructor for the borrower
+     * @param longitude
+     * @param latitude
+     */
     public LocationActivity(double longitude, double latitude){
         this.longitude = longitude;
         this.latitude = latitude;
         looker = true;
     }
 
+    /**
+     * LocationActivity constructor for the lender with a preset location shown to be
+     * West Edmonton Mall
+     */
     public LocationActivity(){
         longitude = -113.6242;
         latitude = 53.5225;
@@ -42,6 +59,11 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         changed = false;
     }
 
+    /**
+     * Handles the creation of LocationActivity, creates a supportmapgragment, and syncs.
+     * This also sets the onclicklisteners for the cancel and confirm buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +90,11 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         });
     }
 
+    /**
+     *this function is called for lenders who want to set their location. Each time the user clicks
+     * on the map, the screen will zoom in on the selected area and place a marker down, keeping
+     * track of where the marker is
+     */
     public void getLocation(){
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -84,6 +111,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         });
     }
 
+    /**
+     *this function checks for 3 cases, if the user is a lender who has not selected a spot on the
+     * map (case 2), if the user is a lender who has selected a spot on the map (case 1), and if
+     * the user is a borrower, before returning/displaying the respective results, including
+     * returning an intent with the latitude and longitude if the user is a lender who has selected
+     * a spot on the map
+     */
     public void checkTask(){
         if (changed == true){
             Intent intent = new Intent();
@@ -100,6 +134,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         }
     }
 
+    /**
+     *this function is called when the map is ready to be used, and will determine whether the user
+     * is a borrower (where a set location will be displayed), or a lender (where getLOcation will
+     * be called to allow the user to select a location)
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

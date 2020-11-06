@@ -51,7 +51,12 @@ public class MyBookListTesting {
     public void checkShow() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
-        assertTrue(solo.waitForText("Users", 1, 2000));
+        //assertTrue(solo.waitForText("Users", 1, 2000));
+        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.addBtn));
+        solo.assertCurrentActivity("<Error Message>", AddBook.class);
+
+
+
 
 
 

@@ -19,11 +19,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
+
 /**
- * Test class for the Search Detail Fragment
+ * Test class for the Search Fragment
  */
 @RunWith(AndroidJUnit4.class)
-public class SearchDetailTest {
+public class MyBookListTesting {
 
     private Solo solo;
 
@@ -45,25 +46,39 @@ public class SearchDetailTest {
         Activity activity = rule.getActivity();
     }
 
-    /**
-     * Searches for c which should return the Lion, The With and the Wardrobe by C.S. Lewis. Clicking on the book should open SearchDetailActivity which should have the owner test2
-     * with status pending or available.
-     */
+    
     @Test
-    public void checkSearchDetail() {
+    public void checkShow() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        solo.clickOnView(solo.getView(R.id.navigation_search));
-        solo.clickOnView(solo.getView(R.id.search_switch));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "w");
+        solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
+        //assertTrue(solo.waitForText("Users", 1, 2000));
+        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.addBtn));
+        solo.assertCurrentActivity("<Error Message>", AddBook.class);
+
+
+
+
+
+
+
+
+        /*
+        assertTrue(solo.waitForText("Users", 1, 2000));
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Lion",1,2000));
-        solo.clickOnText("Witch");
-        solo.assertCurrentActivity("Wrong Activity", SearchDetailActivity.class);
-        assertTrue(solo.waitForText("test",1,2000));
-        if(solo.waitForText("available", 1, 2000)) {
-            solo.clickOnText("available");
-            assertTrue((solo.waitForText("pending",1,2000)));
-        }
+        assertTrue(solo.waitForText("test", 1, 2000));
+        solo.clickOnView(solo.getView(R.id.search_switch));
+        solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "g");
+        solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
+        assertTrue(solo.waitForText("Game",1,2000));
+         */
+
+
+
+
+
+
 
     }
 
@@ -76,3 +91,16 @@ public class SearchDetailTest {
         solo.finishOpenedActivities();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

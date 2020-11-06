@@ -81,7 +81,6 @@ public class SearchDetailActivity extends AppCompatActivity {
                             final DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
                                 if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
-                                    ownedCollection.document(searchDetailBook.getISBN()).update("status", "pending");
                                     userCollection.document(owner).get()
                                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                 @Override

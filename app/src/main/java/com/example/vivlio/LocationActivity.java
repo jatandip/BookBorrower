@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -105,10 +104,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (looker == false){
-            Log.d("LocationActivity", ">>>>>>>>CHECKPOINT");
             getLocation();
         }else{
-            Log.d("LocationActivity", ">>>>>>>>CHECKPOINT2");
             Geocoder geocoder = new Geocoder(getApplicationContext());
             try {
                 List<Address> addresses =

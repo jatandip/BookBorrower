@@ -1,6 +1,5 @@
 package com.example.vivlio;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,19 +15,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -36,12 +31,21 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.content.ContentValues.TAG;
+
+/**
+ * Activity that handles the Fragment that handles the users book list
+ * Sets up the view using the onCreateView method
+ * After the view is created handles loading the books into the customList
+ * Depending on the tab that the user selects the activity will display a different set of books
+ * If the user selects a book the activity will start a different activity that corresponds to the status of the book
+ * The created activity may or may not return new information that we will update the customList with
+ * User can also click on the add button to add a book from this fragment
+ */
+
 
 public class MyBookListFragment extends Fragment {
 
@@ -73,6 +77,11 @@ public class MyBookListFragment extends Fragment {
         return fragment;
     }
 
+
+    /**
+     * General OnCreate method that gets the arguments
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +92,28 @@ public class MyBookListFragment extends Fragment {
         }
     }
 
+    /**
+     * Inflates the View
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_my_book_list, container, false);
     }
 
+
+    /**
+     * After the view is created load the elements of the uml
+     * Create and set the adapter and load the books into the adapter
+     * Depending on the tab the user is in the adapter will store different set of books
+     * Add button opens AddBook activity to allow the user to add a book
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         tabBar = view.findViewById(R.id.tabBar);
@@ -262,25 +287,25 @@ public class MyBookListFragment extends Fragment {
                 Book selected = ((Book) listofBooks.getItemAtPosition(i));
 
                 if (selected.getStatus().equals("available")) {
-                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_avalible.class);
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), Mybook_Avalible.class);
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
 
                 if (selected.getStatus().equals("borrowed")) {
-                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_borrowed.class);
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), Mybook_Borrowed.class);
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
 
                 if (selected.getStatus().equals("accepted")) {
-                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_accepted.class);
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), Mybook_Accepted.class);
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
 
                 if (selected.getStatus().equals("pending")) {
-                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), mybook_pending.class);
+                    Intent editIntent = new Intent(MyBookListFragment.this.getActivity(), Mybook_Pending.class);
                     editIntent.putExtra("book", selected);
                     startActivity(editIntent);
                 }
@@ -292,6 +317,14 @@ public class MyBookListFragment extends Fragment {
 
     }
 
+    /**
+     * If the user adds a book, the AddBook activity will
+     * Return info using an intent, this method gets the information
+     * From the intent, and creates a new book, and adds it to the firestore
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

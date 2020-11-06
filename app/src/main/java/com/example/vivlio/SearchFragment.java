@@ -88,6 +88,10 @@ public class SearchFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * General onCreate method to display the fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +101,13 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    /**
+     * Runs once the view has been created and inflates the view into the fragment space provided in the center of the screen.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 /**
  * This model provides the format of the list of results when searching.
+ * The class can create views with the username and name of the users who match the search terms provided.
+ * These views are used to populate the ListView of search results.
  */
 public class SearchUserCustomList extends ArrayAdapter<User> {
 
@@ -26,6 +28,13 @@ public class SearchUserCustomList extends ArrayAdapter<User> {
         this.context = context;
     }
 
+    /**
+     * This method returns the view for a single user in the custom list.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return The view populated with information
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

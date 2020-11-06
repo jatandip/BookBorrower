@@ -112,11 +112,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    public void loginUser(){
-        //TODO authenticate user
-        //TODO set currentUser
-
-    }
 
     private void openCreateAccount(){
         Intent intent = new Intent(this, CreateAccountActivity.class);

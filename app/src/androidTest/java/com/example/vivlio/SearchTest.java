@@ -30,6 +30,10 @@ public class SearchTest {
     public ActivityTestRule<MainActivity> rule =
             new ActivityTestRule<>(MainActivity.class, true, true);
 
+    /**
+     * Sets up the Robotium object wit the appropriate activity information
+     * @throws Exception
+     */
     @Before
     public void SetUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());

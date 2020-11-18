@@ -43,7 +43,7 @@ public class LendTaskCustomList extends ArrayAdapter<Book>{
         View view = convertView;
         //if the view is null create and new view and inflate it
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.borrowtask_list, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.lendtask_list, parent, false);
         }
 
         db = FirebaseFirestore.getInstance();

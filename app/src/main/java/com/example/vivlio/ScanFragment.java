@@ -52,6 +52,8 @@ public class ScanFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         FloatingActionButton borrowFAB = view.findViewById(R.id.EXCHANGE_FABborrow);
         FloatingActionButton lendFAB = view.findViewById(R.id.EXCHANGE_FABlend);
+        FloatingActionButton returnFAB = view.findViewById(R.id.EXCHANGE_FABreturning);
+        FloatingActionButton recieveFAB = view.findViewById(R.id.EXCHANGE_FABrecieving);
 
         borrowFAB.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -67,6 +69,19 @@ public class ScanFragment extends Fragment {
             }
         });
 
+        returnFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openReturn();
+            }
+        });
+
+        recieveFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                openRecieve();
+            }
+        });
     }
 
     /**
@@ -84,4 +99,21 @@ public class ScanFragment extends Fragment {
         Intent intent = new Intent(ScanFragment.this.getActivity(), BorrowTaskActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * opens a list of books that the user has borrowed
+     */
+    public void openReturn(){
+        Intent intent = new Intent(ScanFragment.this.getActivity(), ReturningTaskActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * opens a list of books that the user has lent
+     */
+    public void openRecieve(){
+        Intent intent = new Intent(ScanFragment.this.getActivity(), RecievingTaskActivity.class);
+        startActivity(intent);
+    }
+
 }

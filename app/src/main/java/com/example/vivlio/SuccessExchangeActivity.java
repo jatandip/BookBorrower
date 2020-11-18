@@ -51,16 +51,37 @@ public class SuccessExchangeActivity extends AppCompatActivity {
         final TextView homeTV = findViewById(R.id.SUCEX_TVhome);
 
         final Boolean isBorrower;
+        final Boolean isReturner;
+        final Boolean isReturn;
+        final Boolean isExchange;
         final String myISBN;
         final String otherUID;
 
         final Bundle extras = getIntent().getExtras();
-        if(extras.get("BORROWER") == null){
-            isBorrower = false;
-            myISBN = extras.getString("LENDER");
-        } else {
+        if(extras.get("BORROWER") != null){
             isBorrower = true;
+            isReturner = false;
+            isReturn = false;
+            isExchange = true;
             myISBN = extras.getString("BORROWER");
+        } else if(extras.get("LENDER") != null) {
+            isExchange = true;
+            isReturn = false;
+            isBorrower = false;
+            isReturner = false;
+            myISBN = extras.getString("LENDER");
+        } else if(extras.get("RETURNER") != null) {
+            isReturn = true;
+            isBorrower = false;
+            isExchange = false;
+            isReturner = true;
+            myISBN = extras.getString("RETURNER");
+        } else {
+            isBorrower = false;
+            isReturner = false;
+            isExchange = false;
+            isReturn = true;
+            myISBN = extras.getString("RECIEVER");
         }
         otherUID = extras.getString("OTHER_UID").substring(1, extras.getString("OTHER_UID").length()-1);
 
@@ -83,8 +104,12 @@ public class SuccessExchangeActivity extends AppCompatActivity {
                         Log.e("otherisbn1 ",otherISBN);
                         Log.e("equals", "equals");
 
+                        if(isReturn) {
+                            successTV.setText("Return Successful!");
+                        }
                         successTV.setVisibility(View.VISIBLE);
                         staySafeTV.setVisibility(View.VISIBLE);
+
                         homeIB.setVisibility(View.VISIBLE);
                         homeTV.setVisibility(View.VISIBLE);
                         progressBarPB.setVisibility(View.INVISIBLE);
@@ -100,12 +125,28 @@ public class SuccessExchangeActivity extends AppCompatActivity {
                                     "/requested/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
                             .update("status","borrowed");
 
-                        } else {
+                        } else if (isExchange) {
                             //TODO CHANGE FOR OWNER "accepted" > "borrowed"
                             db.collection("users")
                                     .document(mAuth.getCurrentUser().getUid() +
                                             "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
                                     .update("status","borrowed");
+                        } else if (isReturner) {
+                            //TODO for returner delete from requested
+                            db.collection("users")
+                                    .document(mAuth.getCurrentUser().getUid() +
+                                            "/requested/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                    .delete();
+                        } else {
+                            //TODO for owner remove borrower and change status borrowed > available
+                            db.collection("users")
+                                    .document(mAuth.getCurrentUser().getUid() +
+                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                    .update("status","available");
+                            db.collection("users")
+                                    .document(mAuth.getCurrentUser().getUid() +
+                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                    .update("borrowers","");
                         }
 
                     } else if (otherISBN == ""){
@@ -116,7 +157,11 @@ public class SuccessExchangeActivity extends AppCompatActivity {
                         Log.e("diff", "diff");
                         Log.e("otherisbn3 ",otherISBN);
 
-                        successTV.setText("Exchange failed!");
+                        if(isExchange) {
+                            successTV.setText("Exchange failed!");
+                        } else {
+                            successTV.setText("Return failed!");
+                        }
                         staySafeTV.setText("Please try again!");
 
                         successTV.setVisibility(View.VISIBLE);

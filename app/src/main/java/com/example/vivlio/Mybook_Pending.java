@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +49,7 @@ public class Mybook_Pending extends AppCompatActivity {
     private String usernameN;
     private String phonenumber;
     private String emailN;
+    private Button backButton;
 
 
     /**
@@ -61,6 +64,9 @@ public class Mybook_Pending extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mybook_pending);
+
+        backButton = findViewById(R.id.backButtonPending);
+
 
 
         listofBooks = findViewById(R.id.pendingList);
@@ -110,6 +116,14 @@ public class Mybook_Pending extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+
             }
         });
     }

@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
@@ -191,17 +192,25 @@ public class ProfileFragment extends Fragment {
                     Intent intent = getActivity().getIntent();
                     user = (User) intent.getSerializableExtra("User");
 
+                    db = FirebaseFirestore.getInstance();
                     mAuth = FirebaseAuth.getInstance();
-                    FirebaseUser currUser = mAuth.getCurrentUser();
 
-                    //LoginActivity.currentUser.getName();
+                    DocumentReference docRef = db.collection("users")
+                            .document(mAuth.getCurrentUser().getUid());
 
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot document = task.getResult();
 
-                    Log.i("is empty? ", LoginActivity.currentUser.getName().toString());
-                    nameTextView.setText( LoginActivity.currentUser.getName());
-                    usernameTextView.setText( LoginActivity.currentUser.getUsername());
-                    phoneNumTextView.setText(LoginActivity.currentUser.getPhonenumber());
-                    emailTextView.setText(LoginActivity.currentUser.getEmail());
+                            String name = document.getData().get("fname").toString() + " " +
+                                    document.getData().get("lname");
+                            nameTextView.setText(name);
+                            usernameTextView.setText(document.getData().get("username").toString());
+                            phoneNumTextView.setText(document.getData().get("phone").toString());
+                            emailTextView.setText((document.getData().get("email").toString()));
+                        }
+                    });
 
                     editProfile.setOnClickListener(new View.OnClickListener() {
                         @Override

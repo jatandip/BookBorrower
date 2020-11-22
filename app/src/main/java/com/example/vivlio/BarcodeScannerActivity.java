@@ -36,7 +36,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * ISBN is returned as an intent. To access the ISBN string
      * use Intent.getStringExtra("isbn")
      */
-    Intent returnedData;
+    private Intent returnedData;
 
     /**
      * Initialize all resources and attributes upon the activity's creation
@@ -108,7 +108,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             // release camera resources when surface is destroyed
             @Override
             public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                cameraSource.release(); // undecided between this and .stop()
+                cameraSource.stop();
             }
         });
 
@@ -136,11 +136,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
-                    //detailFetcher.request(barcodeData);
-
+                    detailFetcher.request(barcodeData);
+                    System.out.println(detailFetcher.getTitle());
+                    System.out.println(detailFetcher.getAuthor());
                     returnedData.putExtra("isbn", barcodeData);
-                    //returnedData.putExtra("title", detailFetcher.getTitle());
-                    //returnedData.putExtra("author", detailFetcher.getAuthor());
+                    returnedData.putExtra("title", detailFetcher.getTitle());
+                    returnedData.putExtra("author", detailFetcher.getAuthor());
                     setResult(RESULT_OK, returnedData);
                     finish();
                 }

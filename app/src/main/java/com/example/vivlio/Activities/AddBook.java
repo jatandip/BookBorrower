@@ -57,6 +57,7 @@ public class AddBook extends AppCompatActivity {
     private Button galleryPictureButton;
     private Button cameraPictureButton;
     private Button uploadButton;
+    private Button scanButton;
     private ImageView bookImageView;
     private String currentPath;
     private Uri uri;
@@ -81,6 +82,7 @@ public class AddBook extends AppCompatActivity {
         cameraPictureButton = findViewById(R.id.button_camera_image);
         uploadButton = findViewById(R.id.button_upload);
         bookImageView = findViewById(R.id.image_view);
+        scanButton = findViewById(R.id.button_scan);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -102,6 +104,14 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadButtonPressed();
+            }
+        });
+
+        scanButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                scanButtonPressed();
             }
         });
     }
@@ -279,6 +289,17 @@ public class AddBook extends AppCompatActivity {
                 uploadFile(imageFileName, contentUri);
             }
         }
+        if (requestCode == 0){
+            if (resultCode == Activity.RESULT_OK){
+                String isbn = data.getStringExtra("isbn");
+                String title = data.getStringExtra("title");
+                String author = data.getStringExtra("author");
+                ISBNEditText.setText(isbn);
+                titleEditText.setText(title);
+                authorEditText.setText(author);
+
+            }
+        }
     }
 
     /**
@@ -312,6 +333,12 @@ public class AddBook extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void scanButtonPressed(){
+        Intent scanBook = new Intent(this, BarcodeScannerActivity.class);
+        startActivityForResult(scanBook, 0);
+
     }
 
 }

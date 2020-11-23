@@ -10,15 +10,23 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.vivlio.Book;
 import com.example.vivlio.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +40,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText repasswordET;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private CollectionReference collectionReference;
+    private boolean uniqueUsername = true;
 
     /**
      * Handles creation of a new account. ocne all the fields have been properly filled, will call
@@ -71,54 +81,71 @@ public class CreateAccountActivity extends AppCompatActivity {
                 //tester
                 if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(username) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) ||
-                        TextUtils.isEmpty(repassword)){
+                        TextUtils.isEmpty(repassword)) {
                     Toast.makeText(CreateAccountActivity.this, "Please fill in all fields",
                             Toast.LENGTH_SHORT).show();
-                } else if(password.equals(repassword)){
-                    mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("login Success", "signInWithEmail:success");
-                                    Map<String, Object> userInfo = new HashMap<>();
-                                    userInfo.put("email", email);
-                                    userInfo.put("fname", firstName);
-                                    userInfo.put("lname", lastName);
-                                    userInfo.put("phone", phone);
-                                    userInfo.put("scanned isbn","");
-                                    userInfo.put("username", username);
-                                    db.collection("users")
-                                            .document(mAuth.getCurrentUser().getUid())
-                                            .set(userInfo);
-                                    HashMap<String, Object> info = new HashMap<>();
-                                    info.put("blank", "BLANK");
-                                    db.collection("users").document(
-                                            mAuth.getCurrentUser().getUid() +
-                                                    "/requested" + "/BLANK_BOOK").set(info);
-                                    db.collection("users").document(
-                                            mAuth.getCurrentUser().getUid() +
-                                                    "/owned" + "/BLANK_BOOK").set(info);
-                                    //collectionReference = db.collection("users" + "/" + currentUID + "/requested");
-
-                                    openLoginActivity();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                } else if(password.equals(repassword) == false){
-                    // If sign in fails, display a message to the user.
-                    //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(CreateAccountActivity.this, "Passwords don't match!",
+                }else if(password.equals(repassword) == false){
+                    Toast.makeText(CreateAccountActivity.this, "Passwords do not match!",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(CreateAccountActivity.this, "Something went wrong :/",
-                            Toast.LENGTH_SHORT).show();
+                    uniqueUsername = true;
+                    collectionReference = db.collection("users");
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+                                Log.e("peek username", doc.getData().get("username").toString());
+                                if (doc.getData().get("username").toString().equals(username)) {
+                                    Log.e("unique","in");
+                                    uniqueUsername = false;
+                                }
+                            }
+                            if (uniqueUsername) {
+                                mAuth.createUserWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(CreateAccountActivity.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // Sign in success, update UI with the signed-in user's information
+                                                    Log.d("login Success", "signInWithEmail:success");
+                                                    Map<String, Object> userInfo = new HashMap<>();
+                                                    userInfo.put("email", email);
+                                                    userInfo.put("fname", firstName);
+                                                    userInfo.put("lname", lastName);
+                                                    userInfo.put("phone", phone);
+                                                    userInfo.put("scanned isbn", "");
+                                                    userInfo.put("username", username);
+                                                    db.collection("users")
+                                                            .document(mAuth.getCurrentUser().getUid())
+                                                            .set(userInfo);
+                                                    HashMap<String, Object> info = new HashMap<>();
+                                                    info.put("blank", "BLANK");
+                                                    db.collection("users").document(
+                                                            mAuth.getCurrentUser().getUid() +
+                                                                    "/requested" + "/BLANK_BOOK").set(info);
+                                                    db.collection("users").document(
+                                                            mAuth.getCurrentUser().getUid() +
+                                                                    "/owned" + "/BLANK_BOOK").set(info);
+                                                    //collectionReference = db.collection("users" + "/" + currentUID + "/requested");
+
+                                                    openLoginActivity();
+                                                } else {
+                                                    // If sign in fails, display a message to the user.
+                                                    Log.w("Login Failed", "signInWithEmail:failure", task.getException());
+                                                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            } else {
+                                Toast.makeText(CreateAccountActivity.this, "Username already in use!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }});
+
+
                 }
             }
         });

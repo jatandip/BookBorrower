@@ -1,13 +1,12 @@
 package com.example.vivlio;
 
 import android.app.Activity;
-import android.app.Instrumentation;
-import android.view.Surface;
 import android.view.SurfaceView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.BarcodeScannerActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;

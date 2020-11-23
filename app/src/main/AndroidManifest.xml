@@ -18,34 +18,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".Mybook_Accepted"></activity>
-        <activity android:name=".AddBook"></activity>
-        <activity android:name=".Mybook_Borrowed" />
-        <activity android:name=".EditBook" />
-        <activity android:name=".Mybook_Avalible" />
+        <activity android:name=".Activities.Mybook_Accepted"></activity>
+        <activity android:name=".Activities.AddBook"></activity>
+        <activity android:name=".Activities.Mybook_Borrowed" />
+        <activity android:name=".Activities.EditBook" />
+        <activity android:name=".Activities.Mybook_Avalible" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".EditProfileActivity" />
-        <activity android:name=".CreateAccountActivity" />
-        <activity android:name=".BorrowTaskActivity"/>
-        <activity android:name=".SuccessExchangeActivity"/>
-        <activity android:name=".BarcodeScannerActivity" />
-        <activity android:name=".LendTaskActivity" />
-        <activity android:name=".Mybook_Pending" />
-        <activity android:name=".SearchDetailActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".Activities.EditProfileActivity" />
+        <activity android:name=".Activities.CreateAccountActivity" />
+        <activity android:name=".Activities.BorrowTaskActivity"/>
+        <activity android:name=".Activities.SuccessExchangeActivity"/>
+        <activity android:name=".Activities.BarcodeScannerActivity" />
+        <activity android:name=".Activities.LendTaskActivity" />
+        <activity android:name=".Activities.Mybook_Pending" />
+        <activity android:name=".Activities.SearchDetailActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -58,7 +58,7 @@
         </provider>
         <activity
             android:exported="true"
-            android:name=".LocationActivity"
+            android:name=".Activities.LocationActivity"
             ></activity>
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <meta-data

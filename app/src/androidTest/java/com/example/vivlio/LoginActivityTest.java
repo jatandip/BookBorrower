@@ -5,6 +5,9 @@ import android.widget.EditText;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.CreateAccountActivity;
+import com.example.vivlio.Activities.LoginActivity;
+import com.example.vivlio.Activities.MainActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;

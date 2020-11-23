@@ -137,6 +137,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
                     detailFetcher.request(barcodeData);
+                    System.out.println(barcodes.size());
                     System.out.println(detailFetcher.getTitle());
                     System.out.println(detailFetcher.getAuthor());
                     returnedData.putExtra("isbn", barcodeData);
@@ -155,7 +156,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * @return return true if the barcode is an ISBN code, false otherwise
      */
     private boolean isISBN(String code) {
-        // TODO: parse barcode data into int and check if it is an ISBN
+        if (code.length() == 13) {
+
+        } else if (code.length() == 10) {
+
+        } else {
+            return false;
+        }
         return true;
     }
 

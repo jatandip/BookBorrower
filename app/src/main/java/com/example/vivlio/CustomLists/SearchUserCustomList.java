@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.vivlio.R;
+import com.example.vivlio.User;
 
 import java.util.ArrayList;
 

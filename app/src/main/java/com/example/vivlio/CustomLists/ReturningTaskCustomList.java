@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.vivlio.Book;
+import com.example.vivlio.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -19,13 +21,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class RecievingTaskCustomList extends ArrayAdapter<Book> {
+public class ReturningTaskCustomList extends ArrayAdapter<Book> {
     public ArrayList<Book> books;
     public Context context;
     private FirebaseFirestore db;
     public String ownerName;
 
-    public RecievingTaskCustomList(Context context, ArrayList<Book> books) {
+    public ReturningTaskCustomList(Context context, ArrayList<Book> books) {
         super(context, 0, books);
         this.books = books;
         this.context = context;
@@ -36,7 +38,7 @@ public class RecievingTaskCustomList extends ArrayAdapter<Book> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.recievetask_list, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.returntask_list, parent, false);
         }
 
         db = FirebaseFirestore.getInstance();
@@ -53,15 +55,15 @@ public class RecievingTaskCustomList extends ArrayAdapter<Book> {
                         document.getData().get("lname");
                 Log.e("socument", document.getData().get("fname").toString());
 
-                TextView titleTV = finalView.findViewById(R.id.RCTL_TVtitle);
-                TextView authorTV = finalView.findViewById(R.id.RCTL_TVauthor);
-                TextView ownerTV = finalView.findViewById(R.id.RCTL_TVowner);
+                TextView titleTV = finalView.findViewById(R.id.RTL_TVtitle);
+                TextView authorTV = finalView.findViewById(R.id.RTL_TVauthor);
+                TextView ownerTV = finalView.findViewById(R.id.RTL_TVowner);
 
-                String ownerText = "Borrowed by: " + ownerName;
+                String ownerText = "Owner: " + ownerName;
 
                 Log.e("TITLE", book.getTitle());
                 Log.e("Auth", book.getAuthor());
-                Log.e("borrower", ownerText);
+                Log.e("owner", ownerText);
 
                 titleTV.setText(book.getTitle());
                 authorTV.setText(book.getAuthor());
@@ -73,6 +75,5 @@ public class RecievingTaskCustomList extends ArrayAdapter<Book> {
         });
 
         return view;
-
     }
 }

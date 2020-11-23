@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.vivlio.LocationActivity;
+import com.example.vivlio.Mybook_Pending;
+import com.example.vivlio.R;
+import com.example.vivlio.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

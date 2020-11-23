@@ -84,8 +84,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                         TextUtils.isEmpty(repassword)) {
                     Toast.makeText(CreateAccountActivity.this, "Please fill in all fields",
                             Toast.LENGTH_SHORT).show();
-                }else if(password.equals(repassword) == false){
+                }else if(password.equals(repassword) == false) {
                     Toast.makeText(CreateAccountActivity.this, "Passwords do not match!",
+                            Toast.LENGTH_SHORT).show();
+                }else if (email.contains("@") == false || email.contains(".") == false){
+                    Toast.makeText(CreateAccountActivity.this, "Invalid email!",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     uniqueUsername = true;
@@ -134,7 +137,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w("Login Failed", "signInWithEmail:failure", task.getException());
-                                                    Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                                    Toast.makeText(CreateAccountActivity.this, "Weak password!",
                                                             Toast.LENGTH_SHORT).show();
                                                 }
                                             }

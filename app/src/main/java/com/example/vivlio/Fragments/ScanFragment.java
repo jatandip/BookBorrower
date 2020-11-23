@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.vivlio.Activities.BorrowTaskActivity;
+import com.example.vivlio.Activities.LendTaskActivity;
+import com.example.vivlio.R;
+import com.example.vivlio.Activities.RecievingTaskActivity;
+import com.example.vivlio.Activities.ReturningTaskActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 
 public class ScanFragment extends Fragment {
@@ -88,7 +91,7 @@ public class ScanFragment extends Fragment {
      * opens List of books that the current user has accepted the requests of
      */
     public void openLending(){
-        Intent intent = new Intent(ScanFragment.this.getActivity(),LendTaskActivity.class);
+        Intent intent = new Intent(ScanFragment.this.getActivity(), LendTaskActivity.class);
         startActivity(intent);
     }
 

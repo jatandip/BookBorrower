@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.SurfaceView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.vivlio.BookDetailFetcher;
+import com.example.vivlio.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

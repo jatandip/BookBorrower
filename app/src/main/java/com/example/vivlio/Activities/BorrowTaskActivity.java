@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.vivlio.CustomLists.LendTaskCustomList;
+import com.example.vivlio.Book;
+import com.example.vivlio.CustomLists.BorrowTaskCustomList;
+import com.example.vivlio.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -23,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class LendTaskActivity extends AppCompatActivity{
+public class BorrowTaskActivity extends AppCompatActivity {
     ArrayAdapter<Book> bookAdapter;
     ArrayList<Book> bookDataList;
     String selectedISBN;
@@ -33,27 +35,27 @@ public class LendTaskActivity extends AppCompatActivity{
     String otherUID;
 
     /**
-     * Gets list of books that the current user accepted the requests of. Displays that
-     * list of book with their title, author and requester. Once the user selects a book, the
-     * scanner will open for them to scan the ISBN.
+     * Gets list of books that the current user has requested that have been accepted. Displays that
+     * list of book with their title, author and owner. Once the user selects a book, the scanner will
+     * open for them to scan the ISBN.
      * @param savedInstanceState
      */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lendtask);
-
+        setContentView(R.layout.activity_borrowtask);
+        
         ListView BookListLV;
 
-        BookListLV = findViewById(R.id.LENDT_LVbooks);
+        BookListLV = findViewById(R.id.BORROWT_LVbooks);
         bookDataList = new ArrayList<>();
-        bookAdapter = new LendTaskCustomList(this, bookDataList);
+        bookAdapter = new BorrowTaskCustomList(this, bookDataList);
         BookListLV.setAdapter(bookAdapter);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         String currentUID = mAuth.getCurrentUser().getUid();
-        collectionReference = db.collection("users" + "/" + currentUID + "/owned");
+        collectionReference = db.collection("users" + "/" + currentUID + "/requested");
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -63,24 +65,28 @@ public class LendTaskActivity extends AppCompatActivity{
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     if (doc.getData().get("status").toString().equals("accepted")) {
-                        ArrayList<String> requestedBy = new ArrayList<>();
-                        requestedBy.add(doc.getData().get("borrowers").toString());
+                        ArrayList<String> owner = new ArrayList<>();
+                        owner.add(doc.getData().get("owners").toString());
 
                         Book book = new Book(doc.getData().get("title").toString(),
                                 doc.getData().get("author").toString(),
-                                requestedBy.get(0), doc.getId().replace("-",""));
+                                owner.get(0), doc.getId().replace("-",""));
+                        //Log.e("ISB", doc.getId());
+                        //Log.e("title", doc.getData().get("title").toString());
                         bookDataList.add(book);
                     }
                 }
                 bookAdapter.notifyDataSetChanged();
             }
         });
+
         BookListLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedISBN = bookDataList.get(i).getISBN();
                 otherUID = bookDataList.get(i).getOwner();
                 Log.e("SELECTED BOOK", bookDataList.get(i).getTitle());
+                Log.e("SELECTED BOOK ISBN", bookDataList.get(i).getISBN());
                 openScanner();
 
             }
@@ -91,7 +97,7 @@ public class LendTaskActivity extends AppCompatActivity{
      * call this method after user taps on a book to open scanner to scan ISBN of book
      */
     public void openScanner(){
-        Intent intent = new Intent(LendTaskActivity.this, BarcodeScannerActivity.class);
+        Intent intent = new Intent(BorrowTaskActivity.this, BarcodeScannerActivity.class);
         startActivityForResult(intent, 0);
     }
 
@@ -110,12 +116,12 @@ public class LendTaskActivity extends AppCompatActivity{
             String result = data.getStringExtra("isbn");
             Log.e("scanned isbn in task", result);
             if(selectedISBN.equals(result)){
-                Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
-                intent.putExtra("LENDER", result);
+                Intent intent = new Intent(BorrowTaskActivity.this, SuccessExchangeActivity.class);
+                intent.putExtra("BORROWER", result);
                 intent.putExtra("OTHER_UID", otherUID);
                 startActivity(intent);
-            }else {
-                Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
+            } else {
+                Toast.makeText(BorrowTaskActivity.this, "ISBN did not match selected book!",
                         Toast.LENGTH_SHORT).show();
             }
         }

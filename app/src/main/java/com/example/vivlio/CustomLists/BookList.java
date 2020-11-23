@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.vivlio.Book;
+import com.example.vivlio.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

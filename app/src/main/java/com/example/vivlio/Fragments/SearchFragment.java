@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import com.example.vivlio.Book;
+import com.example.vivlio.CustomLists.BookList;
 import com.example.vivlio.CustomLists.SearchUserCustomList;
+import com.example.vivlio.R;
+import com.example.vivlio.Activities.SearchDetailActivity;
+import com.example.vivlio.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

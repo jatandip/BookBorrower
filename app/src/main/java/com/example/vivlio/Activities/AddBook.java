@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
+import com.example.vivlio.Book;
+import com.example.vivlio.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;

@@ -3,6 +3,8 @@ import android.app.Activity;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import com.example.vivlio.Activities.MainActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;

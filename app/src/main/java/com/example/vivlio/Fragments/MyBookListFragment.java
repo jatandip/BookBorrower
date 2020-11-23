@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,9 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.vivlio.Activities.AddBook;
+import com.example.vivlio.Book;
+import com.example.vivlio.CustomLists.BookList;
+import com.example.vivlio.Activities.Mybook_Accepted;
+import com.example.vivlio.Activities.Mybook_Avalible;
+import com.example.vivlio.Activities.Mybook_Borrowed;
+import com.example.vivlio.Activities.Mybook_Pending;
+import com.example.vivlio.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

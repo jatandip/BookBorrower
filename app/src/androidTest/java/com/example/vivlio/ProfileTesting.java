@@ -7,6 +7,8 @@ import android.widget.EditText;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.LoginActivity;
+import com.example.vivlio.Activities.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.robotium.solo.Solo;
 

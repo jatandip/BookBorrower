@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Fragments;
 
 import android.os.Bundle;
 
@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.RequestCustomList;
+import com.example.vivlio.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;

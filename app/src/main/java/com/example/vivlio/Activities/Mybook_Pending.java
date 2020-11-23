@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.PendingCustomList;
+import com.example.vivlio.R;
+import com.example.vivlio.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

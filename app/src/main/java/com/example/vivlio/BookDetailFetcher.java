@@ -9,12 +9,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 /**
  * This class fetches information from the google books api.
@@ -26,7 +20,11 @@ public class BookDetailFetcher {
     private HttpURLConnection urlConnection;
     private String title;
     private String authors;
-//    private Map<String, String> parsedData;
+
+    public BookDetailFetcher() {
+        title = null;
+        authors = null;
+    }
 
     /**
      * This method sends a HTTP request to the google books api,
@@ -34,7 +32,7 @@ public class BookDetailFetcher {
      * sequence of bytes.
      * @param isbn The ISBN code used as a search term
      */
-    // TODO: change method returns to hashmap instead of list for better readability
+    // TODO: Consider having request function return a hashmap instead of having two get functions
     public void request(String isbn) {
 
         try {
@@ -70,14 +68,12 @@ public class BookDetailFetcher {
     private void readStream(InputStream inStream) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(inStream, "UTF-8"));
 
-        List<String> parsedDataArray = new ArrayList<String>();
-
         reader.beginObject();
-        while (reader.hasNext() && parsedDataArray.isEmpty()) {
+        while (reader.hasNext()) {
             String name = reader.nextName();
             if (name.equals("items")) {
                 reader.beginArray();
-                parsedDataArray = readItemsArray(reader);
+                readItemsArray(reader);
                 reader.endArray();
             } else {
                 reader.skipValue();
@@ -85,12 +81,6 @@ public class BookDetailFetcher {
         }
         reader.endObject();
         reader.close();
-
-        title = parsedDataArray.get(0);
-        authors = parsedDataArray.get(1);
-
-//        parsedData.put("title", title);
-//        parsedData.put("author", authors);
     }
 
     /**
@@ -99,52 +89,47 @@ public class BookDetailFetcher {
      * @return Returns a list filled with the book's title and author
      * @throws IOException If an I/O error occurs in {@code JsonReader} methods
      */
-    private List<String> readItemsArray(JsonReader reader) throws IOException {
-        List<String> infoArray = new ArrayList<>();
-
-//        reader.beginArray();
-//        while (reader.hasNext() && infoArray == null) {
+    private void readItemsArray(JsonReader reader) throws IOException {
         reader.beginObject();
-        while (reader.hasNext() && infoArray.isEmpty()) {
+
+        while (reader.hasNext()) {
             String name = reader.nextName();
             if (name.equals("volumeInfo")) {
-                infoArray = readVolumeInfo(reader);
+                readVolumeInfo(reader);
             } else {
                 reader.skipValue();
             }
         }
         reader.endObject();
-
-//        reader.endArray();
-
-        return infoArray;
     }
 
     /**
      * Reads volume info within the items array in JSON
      * @param reader JsonReader object from {@code readItemsArray(JsonReader)}
      * @return Returns a list filled with the book's title and author
-     * @throws IOException
+     * @throws IOException If an I/O error occurs in {@code JsonReader} methods
      */
-    private List<String> readVolumeInfo(JsonReader reader) throws IOException {
-        String title = null;
-        String authors = null;
-        List<String> bookInfo = new ArrayList<String>();
-//        List<String> authors = new ArrayList<String>();
-
+    // TODO: needs to handle "subtitle" field in JSON object
+    // TODO: consider handling multiple authors
+    private void readVolumeInfo(JsonReader reader) throws IOException {
         reader.beginObject();
-        while (reader.hasNext() && (title == null || authors == null)) {
+
+        while (reader.hasNext()) {
             String name = reader.nextName();
             if (name.equals("title")) {
                 title = reader.nextString();
+            } else if (name.equals("subtitle")) {
+                String mainTitle = title;
+                String subtitle = reader.nextString();
+                title = titleConcat(mainTitle, subtitle);
             } else if (name.equals("authors")) {
                 reader.beginArray();
-//                while (reader.hasNext()) {
-                while (reader.hasNext() && authors == null) {
+                while (reader.hasNext()) {
 
-                    authors = reader.nextString();
-//                    String author = reader.nextString();
-//                    authors.add(author);
+                    // take first author if multiple exist
+                    if (authors == null) {
+                        authors = reader.nextString();
+                    }
                 }
                 reader.endArray();
             } else {
@@ -152,16 +137,10 @@ public class BookDetailFetcher {
             }
         }
         reader.endObject();
-
-        bookInfo.addAll(Arrays.asList(title, authors));
-
-        return bookInfo;
     }
 
-//    private String readAuthors(JsonReader reader) throws IOException {
-//        reader.beginObject();
-//        while (reader.hasNext()) {
-//
-//        }
-//    }
+    private String titleConcat(String title, String subtitle) {
+        String combinedTitle = title + ": " + subtitle;
+        return combinedTitle;
+    }
 }

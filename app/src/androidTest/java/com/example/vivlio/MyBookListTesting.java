@@ -1,19 +1,15 @@
 package com.example.vivlio;
 import android.app.Activity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
-import androidx.fragment.app.Fragment;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.LoginActivity;
+import com.example.vivlio.Activities.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
 import com.robotium.solo.Solo;
 
 import org.junit.After;

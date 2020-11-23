@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/RTL_TVtitle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="bottom"
+        android:paddingLeft="15dp"
+        android:text="loading..."
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/RTL_TVauthor"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="loading..."
+        android:textColor="#A53131"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/RTL_TVowner"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="20dp"
+        android:text="loading..."
+        android:textColor="#6A6A6A"
+        android:textSize="18sp"
+        android:typeface="sans" />
+</LinearLayout>

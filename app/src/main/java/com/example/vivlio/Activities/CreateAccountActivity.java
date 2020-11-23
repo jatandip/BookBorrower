@@ -87,10 +87,21 @@ public class CreateAccountActivity extends AppCompatActivity {
                                     userInfo.put("fname", firstName);
                                     userInfo.put("lname", lastName);
                                     userInfo.put("phone", phone);
+                                    userInfo.put("scanned isbn","");
                                     userInfo.put("username", username);
                                     db.collection("users")
                                             .document(mAuth.getCurrentUser().getUid())
                                             .set(userInfo);
+                                    HashMap<String, Object> info = new HashMap<>();
+                                    info.put("blank", "BLANK");
+                                    db.collection("users").document(
+                                            mAuth.getCurrentUser().getUid() +
+                                                    "/requested" + "/BLANK_BOOK").set(info);
+                                    db.collection("users").document(
+                                            mAuth.getCurrentUser().getUid() +
+                                                    "/owned" + "/BLANK_BOOK").set(info);
+                                    //collectionReference = db.collection("users" + "/" + currentUID + "/requested");
+
                                     openLoginActivity();
                                 } else {
                                     // If sign in fails, display a message to the user.

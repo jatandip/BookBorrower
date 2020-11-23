@@ -289,6 +289,17 @@ public class AddBook extends AppCompatActivity {
                 uploadFile(imageFileName, contentUri);
             }
         }
+        if (requestCode == 0){
+            if (resultCode == Activity.RESULT_OK){
+                String isbn = data.getStringExtra("isbn");
+                String title = data.getStringExtra("title");
+                String author = data.getStringExtra("author");
+                ISBNEditText.setText(isbn);
+                titleEditText.setText(title);
+                authorEditText.setText(author);
+
+            }
+        }
     }
 
     /**
@@ -325,8 +336,8 @@ public class AddBook extends AppCompatActivity {
     }
 
     public void scanButtonPressed(){
-        Intent addBook = new Intent(AddBook.this.getActivity(), BarcodeScannerActivity.class);
-        startActivityForResult(addBook, 0);
+        Intent scanBook = new Intent(this, BarcodeScannerActivity.class);
+        startActivityForResult(scanBook, 0);
 
     }
 

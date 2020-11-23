@@ -125,7 +125,7 @@ public class AddBook extends AppCompatActivity {
      * @param name
      * @param uri
      */
-    private void uploadFile(String name, Uri uri){
+    private void uploadFile(final String name, final Uri uri){
         final StorageReference image = storageReference.child("pictures/" + name);
         image.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -134,13 +134,13 @@ public class AddBook extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.d("tag", "onSuccess: Uploaded Image URl is " + uri.toString());
+                        currentPath = uri.toString();
                     }
                 });
-
                 Toast.makeText(AddBook.this, "Image Is Uploaded.", Toast.LENGTH_SHORT).show();
                 Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
                 if (downloadUri.isSuccessful()){
-                    currentPath = downloadUri.getResult().toString();
+                    Log.d("tag", "Url for image is " + "gs://vivlio-14a4a-appspot.com/pictures/" + name);
                     //determine if user requires image to upload, otherwise implement setter outside
                 }
             }
@@ -213,7 +213,7 @@ public class AddBook extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        BuildConfig.APPLICATION_ID + ".provider",
+                        "com.example.vivlio.provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);

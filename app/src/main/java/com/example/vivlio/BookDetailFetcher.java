@@ -118,9 +118,15 @@ public class BookDetailFetcher {
             String name = reader.nextName();
             if (name.equals("title")) {
                 title = reader.nextString();
+            } else if (name.equals("subtitle")) {
+                String mainTitle = title;
+                String subtitle = reader.nextString();
+                title = titleConcat(mainTitle, subtitle);
             } else if (name.equals("authors")) {
                 reader.beginArray();
                 while (reader.hasNext()) {
+
+                    // take first author if multiple exist
                     if (authors == null) {
                         authors = reader.nextString();
                     }
@@ -131,5 +137,10 @@ public class BookDetailFetcher {
             }
         }
         reader.endObject();
+    }
+
+    private String titleConcat(String title, String subtitle) {
+        String combinedTitle = title + ": " + subtitle;
+        return combinedTitle;
     }
 }

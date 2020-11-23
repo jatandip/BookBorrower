@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class Mybook_Accepted extends AppCompatActivity {
     public static User currentUser;
     private String nameN;
     private String usernameN;
+    private Button mapsBtn;
 
 
     /**
@@ -62,6 +64,8 @@ public class Mybook_Accepted extends AppCompatActivity {
         authorView = findViewById(R.id.authorViewAccepted);
         isbnView = findViewById(R.id.isbnViewAccepted);
 
+        mapsBtn = findViewById(R.id.mapsBtn);
+
         titleView.setText(book.getTitle());
         authorView.setText(book.getAuthor());
         isbnView.setText(book.getISBN());
@@ -73,6 +77,7 @@ public class Mybook_Accepted extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         String curr = book.getCurrentOwner();
+
 
 
         DocumentReference docRef = db.collection("users")
@@ -91,6 +96,14 @@ public class Mybook_Accepted extends AppCompatActivity {
         });
 
 
+
+        mapsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Mybook_Accepted.this, LocationActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
 

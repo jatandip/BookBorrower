@@ -1,6 +1,7 @@
 package com.example.vivlio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,29 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
@@ -37,6 +56,7 @@ public class PendingCustomList extends ArrayAdapter<User> {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     public FirebaseUser firebaseUser;
+    private int position;
 
 
     public PendingCustomList(Context context, ArrayList<User> users) {
@@ -58,7 +78,7 @@ public class PendingCustomList extends ArrayAdapter<User> {
      */
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         DecimalFormat priceFormat = new DecimalFormat("0.00");
         View view = convertView;
         //if the view is null create and new view and inflate it
@@ -112,11 +132,20 @@ public class PendingCustomList extends ArrayAdapter<User> {
                 Mybook_Pending.bookDataList.clear();
                 Mybook_Pending.bookDataList.add(user);
                 Mybook_Pending.bookAdapter.notifyDataSetChanged();
+
+
+
+                Intent intent = new Intent();
+                intent.setClass(context, LocationActivity.class);
+                view.getContext().startActivity(intent);
+
+
             }
         });
 
+        decline.setTag(position);
 
-        /*
+
         decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +154,7 @@ public class PendingCustomList extends ArrayAdapter<User> {
                 DocumentReference docRef = db.collection("users")
                         .document(uid + "/owned/" + user.getIsbn());
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot document = task.getResult();
@@ -145,18 +175,26 @@ public class PendingCustomList extends ArrayAdapter<User> {
                                 .delete();
 
 
-                        mybook_pending.bookDataList.clear();
-                        mybook_pending.bookDataList.add(user);
-                        mybook_pending.bookAdapter.notifyDataSetChanged();
+                        Mybook_Pending.bookDataList.remove(position);
+                        Mybook_Pending.bookAdapter.notifyDataSetChanged();
 
+
+                        if (borrowers.isEmpty()) {
+                            db.collection("users").document(uid + "/owned/" + user.getIsbn())
+                                    .update(
+                                            "status", "available"
+                                    );
+                        }
 
                     }
 
                 });
             }
+
+
         });
 
-         */
+
 
 
         TextView author = view.findViewById(R.id.pendingNameView);

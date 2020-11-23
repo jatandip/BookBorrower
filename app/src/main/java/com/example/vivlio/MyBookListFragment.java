@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -55,8 +56,8 @@ public class MyBookListFragment extends Fragment {
     private ListView listofBooks;
     private FloatingActionButton add;
     private FirebaseFirestore db;
-    private ArrayAdapter<Book> bookAdapter;
-    private ArrayList<Book> bookDataList;
+    public static ArrayAdapter<Book> bookAdapter;
+    public static ArrayList<Book> bookDataList;
     private FirebaseAuth mAuth;
     private int position;
     private CollectionReference collectionReference;
@@ -121,6 +122,7 @@ public class MyBookListFragment extends Fragment {
         add = view.findViewById(R.id.addBtn);
         taby = view.findViewById(R.id.tabBar);
 
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser Firebaseuser = mAuth.getCurrentUser();
@@ -157,6 +159,222 @@ public class MyBookListFragment extends Fragment {
         taby.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            bookDataList.clear();
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.isEmpty()) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                    bookDataList.add(book);
+                                }else {
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                    bookDataList.add(book);
+                                }
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 1) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            bookDataList.clear();
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                    bookDataList.add(book);
+                                }
+
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 2) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            bookDataList.clear();
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+                                if (doc.getData().get("status").toString().equals("available")) {
+                                    Log.e("status", "available");
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                    bookDataList.add(book);
+                                }
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+
+                if (tab.getPosition() == 3) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            bookDataList.clear();
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+                                if (doc.getData().get("status").toString().equals("pending")) {
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                    bookDataList.add(book);
+                                }
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 4) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            bookDataList.clear();
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                            {
+                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
+                                    String currentOwner = borrowers.get(0);
+                                    Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                    bookDataList.add(book);
+                                }
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                    if (tab.getPosition() == 0) {
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                    FirebaseFirestoreException error) {
+                                bookDataList.clear();
+                                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                                {
+
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty()) {
+                                        String currentOwner = borrowers.get(0);
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                        bookDataList.add(book);
+                                    }else {
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                        bookDataList.add(book);
+                                    }
+                                }
+                                bookAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+
+                    if (tab.getPosition() == 1) {
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                    FirebaseFirestoreException error) {
+                                bookDataList.clear();
+                                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                                {
+
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
+                                        String currentOwner = borrowers.get(0);
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                        bookDataList.add(book);
+                                    }
+
+                                }
+                                bookAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+
+                    if (tab.getPosition() == 2) {
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                    FirebaseFirestoreException error) {
+                                bookDataList.clear();
+                                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                                {
+                                    if (doc.getData().get("status").toString().equals("available")) {
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                        bookDataList.add(book);
+                                    }
+                                }
+                                bookAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+
+
+                    if (tab.getPosition() == 3) {
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                    FirebaseFirestoreException error) {
+                                bookDataList.clear();
+                                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                                {
+                                    if (doc.getData().get("status").toString().equals("pending")) {
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                        bookDataList.add(book);
+                                    }
+                                }
+                                bookAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+
+                    if (tab.getPosition() == 4) {
+                        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                    FirebaseFirestoreException error) {
+                                bookDataList.clear();
+                                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                                {
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
+                                        String currentOwner = borrowers.get(0);
+                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                        bookDataList.add(book);
+                                    }
+                                }
+                                bookAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+
+
+
+
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -260,10 +478,11 @@ public class MyBookListFragment extends Fragment {
                     });
                 }
             }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+
+
+
+
+
         });
 
 
@@ -340,9 +559,6 @@ public class MyBookListFragment extends Fragment {
                 String currentpath = result.get(3);
                 String status = result.get(4);
 
-
-                Log.i("hello", result.get(0));
-
                 db = FirebaseFirestore.getInstance();
                 mAuth = FirebaseAuth.getInstance();
                 FirebaseUser Curruser = mAuth.getCurrentUser();
@@ -350,17 +566,10 @@ public class MyBookListFragment extends Fragment {
                 DocumentReference docRef = db.collection("users")
                         .document(Curruser.getUid());
 
-
-                //final CollectionReference collectionReference = db.collection("users/" + "jj1424" + "/owned/" + isbn);
                 HashMap<String, Object> info = new HashMap<>();
-
                 HashMap<String, Object> BookCollectionInfo = new HashMap<>();
-
-
-
                 ArrayList<String> empty = new ArrayList<String>();
 
-                //empty.add("");
                 info.put("borrowers", empty);
                 GeoPoint location = new GeoPoint(0,0);
                 info.put("location" , location);
@@ -368,6 +577,12 @@ public class MyBookListFragment extends Fragment {
                 info.put("title", title);
                 info.put("status", "available");
                 info.put("path", currentpath);
+
+
+
+                //Log.i("current path", currentpath);
+
+
 
                 ArrayList<String> Owner = new ArrayList<String>();
                 Owner.add(Curruser.getUid());

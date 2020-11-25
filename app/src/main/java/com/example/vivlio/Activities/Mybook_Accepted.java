@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.vivlio.Book;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 
 /**Activity that handles a book the current user owns that is available
@@ -79,6 +81,12 @@ public class Mybook_Accepted extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         String curr = book.getCurrentOwner();
+
+
+
+        ImageView image = (ImageView)findViewById(R.id.imageAccepted);
+        Picasso.with(Mybook_Accepted.this)
+                .load(book.getPhotoURL()).into(image);
 
 
 

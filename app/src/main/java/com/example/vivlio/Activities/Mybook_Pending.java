@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.vivlio.Book;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -85,6 +87,13 @@ public class Mybook_Pending extends AppCompatActivity {
         FirebaseUser Firebaseuser = mAuth.getCurrentUser();
         final String uid = Firebaseuser.getUid();
         //collectionReference = db.collection("users" + "/" + uid + "/owned/" + book.getISBN());
+
+
+        ImageView image = (ImageView)findViewById(R.id.imagePending);
+        Picasso.with(Mybook_Pending.this)
+                .load(book.getPhotoURL()).into(image);
+
+
 
         user = mAuth.getCurrentUser();
         DocumentReference docRef = db.collection("users").document(user.getUid() + "/owned/" + book.getISBN());

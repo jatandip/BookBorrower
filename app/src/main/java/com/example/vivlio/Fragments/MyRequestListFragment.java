@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,8 @@ public class MyRequestListFragment extends Fragment {
         requestAdapter = new RequestCustomList(getActivity(), requestDataList);
         listOfRequests.setAdapter(requestAdapter);
 
+        Log.d("test", "test");
+
         // start by showing all (user will start on All tab)
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -120,6 +123,7 @@ public class MyRequestListFragment extends Fragment {
                 requestDataList.clear();
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
+                    Log.d("test2", "test2");
                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
 
                     if(owner.isEmpty()) {

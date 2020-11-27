@@ -59,6 +59,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         latitude = 53.5225;
         looker = false;
         changed = false;
+        Bundle b = getIntent().getExtras();
+        if (b != null){
+            longitude = b.getDouble("long");
+            latitude = b.getDouble("lat");
+            looker = true;
+        }
     }
 
     /**

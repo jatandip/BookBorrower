@@ -182,7 +182,8 @@ public class AddBook extends AppCompatActivity {
     private void getCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+            ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA},
+                    CAMERA_PERM_CODE);
         }else{
             takePicture();
         }
@@ -197,12 +198,14 @@ public class AddBook extends AppCompatActivity {
      * @param grantResults
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         if(requestCode == CAMERA_PERM_CODE){
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 takePicture();
             }else {
-                Toast.makeText(this, "You must allow camera usage to use this function", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You must allow camera usage to use this function",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -297,9 +300,40 @@ public class AddBook extends AppCompatActivity {
                 ISBNEditText.setText(isbn);
                 titleEditText.setText(title);
                 authorEditText.setText(author);
-
+                ISBNEditText.setFocusable(false);
+                titleEditText.setFocusable(false);
+                authorEditText.setFocusable(false);
+                ISBNEditText.setEnabled(false);
+                titleEditText.setEnabled(false);
+                authorEditText.setEnabled(false);
             }
         }
+        /**
+        if (requestCode == 999){
+            if (resultCode == Activity.RESULT_OK){
+                book = new Book();
+                String title, author, ISBN;
+
+                //get current user to assign book
+                title = titleEditText.getText().toString();
+                author = authorEditText.getText().toString();
+                ISBN = ISBNEditText.getText().toString();
+                String status = "available";
+                Intent intent = new Intent();
+                ArrayList<String> newInfo = new ArrayList<>();
+                newInfo.add(title);
+                newInfo.add(author);
+                newInfo.add(ISBN);
+                newInfo.add(currentPath);
+                newInfo.add(status);
+                intent.putStringArrayListExtra("result", newInfo);
+                setResult(RESULT_OK, intent);
+                finish();
+            }else if (resultCode == Activity.RESULT_CANCELED){
+                Toast.makeText(this, "You must have a valid ISBN to upload",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }**/
     }
 
     /**
@@ -309,7 +343,7 @@ public class AddBook extends AppCompatActivity {
      * information. If the fields are not completed, the user will receive a message stating that
      * there are missing fields required, and will not proceed until they are filled out
      */
-    public void uploadButtonPressed(){
+    private void uploadButtonPressed(){
         book = new Book();
         String title, author, ISBN;
 
@@ -319,6 +353,9 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
+            /**Intent validateBook = new Intent(this, ValidateISBN.class);
+             * startActivityForResult(ValidateISBN, 999);
+             */
             String status = "available";
             Intent intent = new Intent();
             ArrayList<String> newInfo = new ArrayList<>();
@@ -335,10 +372,9 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
-    public void scanButtonPressed(){
+    private void scanButtonPressed(){
         Intent scanBook = new Intent(this, BarcodeScannerActivity.class);
         startActivityForResult(scanBook, 0);
-
     }
 
 }

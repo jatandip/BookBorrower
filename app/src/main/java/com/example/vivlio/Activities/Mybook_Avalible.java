@@ -9,13 +9,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.vivlio.Book;
 import com.example.vivlio.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -35,6 +40,7 @@ public class Mybook_Avalible extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Book updatedBook;
     private Boolean trigger = false;
+    private Button imageDlt;
 
 
     /**
@@ -51,6 +57,18 @@ public class Mybook_Avalible extends AppCompatActivity {
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("book");
 
+
+
+        final ImageView image = (ImageView)findViewById(R.id.imageAvailable);
+        Picasso.with(Mybook_Avalible.this)
+                .load(book.getPhotoURL()).into(image);
+
+
+        Log.i("url", book.getPhotoURL());
+
+        imageDlt = findViewById(R.id.deleteImageBtn);
+
+
         titleView = findViewById(R.id.titleView);
         authorView = findViewById(R.id.authorView);
         isbnView = findViewById(R.id.isbnView);
@@ -59,6 +77,31 @@ public class Mybook_Avalible extends AppCompatActivity {
         titleView.setText(book.getTitle());
         authorView.setText(book.getAuthor());
         isbnView.setText(book.getISBN());
+
+
+        Log.i("isbn", book.getISBN());
+
+        imageDlt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                image.setImageResource(0);
+                Log.i("isbn", book.getISBN());
+
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
+
+                String uid = Firebaseuser.getUid();
+
+                Log.i("uid", uid);
+                db.collection("users").document(uid + "/owned/" + book.getISBN())
+                        .update(
+                                "path", null
+                        );
+            }
+        });
+
+
 
 
         editBtn.setOnClickListener(new View.OnClickListener() {

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.vivlio.Book;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 /**Activity that handles a book the current user owns that is borrowed
  *Gets the information of the book from the Intent and loads the information in
@@ -78,6 +80,13 @@ public class Mybook_Borrowed extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         String curr = book.getCurrentOwner();
+
+
+        ImageView image = (ImageView)findViewById(R.id.imageBorrowed);
+        Picasso.with(Mybook_Borrowed.this)
+                .load(book.getPhotoURL()).into(image);
+
+
 
 
         DocumentReference docRef = db.collection("users")

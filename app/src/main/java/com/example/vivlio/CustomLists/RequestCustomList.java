@@ -112,7 +112,7 @@ public class RequestCustomList extends ArrayAdapter {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
 
-                // make sure that document isn't null (crashes the app if it is)
+                // make sure that document for that user isn't null (crashes the app if it is)
                 if (document.getData() != null) {
                     userName = document.getData().get("username").toString();
                     // Log.d("username", userName);

@@ -20,12 +20,34 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This Activity displays all the information about a book in the user's Request List.
+ *
+ * If there is no image, then a placeholder will be present.
+ *
+ * If a pending request has been accepted by the book's owner, the user will have the option to see
+ * the location the owner has set.
+ *
+ * Issues:
+ * Placeholder image isn't great
+ * Location doesn't work currently.
+ *
+ * Things to consider:
+ * Should the user be able to cancel their request? I could add a button to do that. Would appear
+ * when the status is pending or accepted, but not borrowed.
+ */
+
 public class RequestDetailActivity extends AppCompatActivity {
 
     private Book book;
-
     private FirebaseFirestore db;
 
+    /**
+     * Updates all the text and image fields for the selected book.
+     * If appropriate, displays the location button and listens for a click. If clicked, launches
+     * into LocationActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +80,6 @@ public class RequestDetailActivity extends AppCompatActivity {
             locationButton.setVisibility(View.GONE);
         }
 
-
-
         // turn owner code into the username to display
         // update owner TextViews
         db = FirebaseFirestore.getInstance();
@@ -82,12 +102,13 @@ public class RequestDetailActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
+        // listener for button to launch into LocationActivity
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RequestDetailActivity.this, LocationActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 }

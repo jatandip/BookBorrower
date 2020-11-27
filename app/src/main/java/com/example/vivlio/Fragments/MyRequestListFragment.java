@@ -1,15 +1,19 @@
 package com.example.vivlio.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.vivlio.Activities.RequestDetailActivity;
 import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.RequestCustomList;
 import com.example.vivlio.R;
@@ -23,6 +27,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * MyRequestListFragment.java
@@ -35,6 +40,7 @@ import java.util.ArrayList;
 
 public class MyRequestListFragment extends Fragment {
 
+    private ListView listOfRequests;
     private ArrayList<Book> requestDataList;
     private RequestCustomList requestAdapter;
     private FirebaseFirestore db;
@@ -99,7 +105,7 @@ public class MyRequestListFragment extends Fragment {
      */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceBundle) {
-        ListView listOfRequests = view.findViewById(R.id.request_list_view);
+        listOfRequests = view.findViewById(R.id.request_list_view);
         TabLayout tabBar = view.findViewById(R.id.tab_bar);
 
         // set up firebase access
@@ -244,6 +250,19 @@ public class MyRequestListFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+
+
+        // launch into Request Detail Activity when book selected
+        listOfRequests.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book selected = (Book) listOfRequests.getItemAtPosition(position);
+
+                Intent intent = new Intent(MyRequestListFragment.this.getActivity(), RequestDetailActivity.class);
+                intent.putExtra("book", selected);
+                startActivity(intent);
+            }
+        });
 
 
 

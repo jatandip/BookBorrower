@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:layout_marginTop="600dp"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="56dp"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -25,11 +25,11 @@
         android:id="@+id/confirm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"
-        android:layout_marginTop="600dp"
-        android:layout_marginEnd="16dp"
         android:layout_gravity="right"
-        android:layout_marginRight="16dp" />
+        android:layout_marginTop="600dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:text="Confirm" />
 
 
 </FrameLayout>

@@ -46,6 +46,8 @@ import java.util.Map;
  * found" and then the user will have to delete it.
  * Also, the call to the database is a little slow and so the content in the Listview can look a
  * little off as it recycles the new View before updating it. Not sure what to do, maybe ViewHolder?
+ * Only waiting for the database for owner improved the overall experience, still takes time to load
+ * though.
  *
  */
 
@@ -92,8 +94,17 @@ public class RequestCustomList extends ArrayAdapter {
         final Book book = books.get(position);
         final View finalView = view;
 
+        // set TextViews to the appropriate information
+        TextView titleView = finalView.findViewById(R.id.tv_title);
+        TextView authorView = finalView.findViewById(R.id.tv_author);
+        TextView statusView = finalView.findViewById(R.id.tv_status);
+
+        titleView.setText(book.getTitle());
+        authorView.setText(book.getAuthor());
+        statusView.setText(book.getStatus());
+
         // turn owner code into the username to display
-        // update all the TextViews
+        // update owner TextView
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.document("users/" + book.getOwner());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -106,15 +117,9 @@ public class RequestCustomList extends ArrayAdapter {
                     userName = document.getData().get("username").toString();
                     // Log.d("username", userName);
 
-                    TextView title = finalView.findViewById(R.id.tv_title);
-                    TextView author = finalView.findViewById(R.id.tv_author);
-                    TextView owner = finalView.findViewById(R.id.tv_owner);
-                    TextView status = finalView.findViewById(R.id.tv_status);
+                    TextView ownerView = finalView.findViewById(R.id.tv_owner);
+                    ownerView.setText(userName);
 
-                    title.setText(book.getTitle());
-                    author.setText(book.getAuthor());
-                    owner.setText(userName);
-                    status.setText(book.getStatus());
                 }
 
 

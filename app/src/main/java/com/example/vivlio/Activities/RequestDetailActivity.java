@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class RequestDetailActivity extends AppCompatActivity {
 
@@ -33,24 +34,31 @@ public class RequestDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("book");
 
+        // set book information TextViews
         TextView titleView = findViewById(R.id.tv_request_title);
         TextView authorView = findViewById(R.id.tv_request_author);
         TextView isbnView = findViewById(R.id.tv_request_isbn);
         TextView statusView = findViewById(R.id.tv_request_status);
 
-        ImageView imageView = findViewById(R.id.iv_request_image);
-
-        Button locationButton = findViewById(R.id.btn_request_location);
-
-        // hide button if status not accepted
-        if (!book.getStatus().equals("accepted")) {
-            locationButton.setVisibility(View.GONE);
-        }
-
         titleView.setText(book.getTitle());
         authorView.setText(book.getAuthor());
         isbnView.setText(book.getISBN());
         statusView.setText(book.getStatus());
+
+        // set image
+        ImageView imageView = (ImageView) findViewById(R.id.iv_request_image);
+        Picasso.with(RequestDetailActivity.this)
+                .load(book.getPhotoURL())
+                .placeholder(R.drawable.ic_dashboard_black_24dp)
+                .into(imageView);
+
+        // create location button and hide if status is not accepted
+        Button locationButton = findViewById(R.id.btn_request_location);
+        if (!book.getStatus().equals("accepted")) {
+            locationButton.setVisibility(View.GONE);
+        }
+
+
 
         // turn owner code into the username to display
         // update owner TextViews

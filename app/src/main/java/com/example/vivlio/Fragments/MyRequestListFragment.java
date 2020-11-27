@@ -127,9 +127,13 @@ public class MyRequestListFragment extends Fragment {
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-
-                    if(owner.isEmpty()) {
+                    if (owner.isEmpty()) {
                         owner.add(mAuth.getCurrentUser().getUid());
+                    }
+
+                    String photoPath = null;
+                    if (doc.getData().get("path") != null) {
+                        photoPath = doc.getData().get("path").toString();
                     }
 
                     Book book = new Book(doc.getData().get("title").toString(),
@@ -138,7 +142,7 @@ public class MyRequestListFragment extends Fragment {
                             doc.getData().get("status").toString(),
                             owner.get(0),
                             owner.get(0),
-                            "link");
+                            photoPath);
 
                     requestDataList.add(book);
                 }
@@ -159,9 +163,13 @@ public class MyRequestListFragment extends Fragment {
                             for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
                                 ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-
-                                if(owner.isEmpty()) {
+                                if (owner.isEmpty()) {
                                     owner.add(mAuth.getCurrentUser().getUid());
+                                }
+
+                                String photoPath = null;
+                                if (doc.getData().get("path") != null) {
+                                    photoPath = doc.getData().get("path").toString();
                                 }
 
                                 Book book = new Book(doc.getData().get("title").toString(),
@@ -170,7 +178,7 @@ public class MyRequestListFragment extends Fragment {
                                         doc.getData().get("status").toString(),
                                         owner.get(0),
                                         owner.get(0),
-                                        "link");
+                                        photoPath);
 
                                 requestDataList.add(book);
                             }
@@ -190,9 +198,13 @@ public class MyRequestListFragment extends Fragment {
                                 if (doc.getData().get("status").toString().equals("accepted")) {
 
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-
-                                    if(owner.isEmpty()) {
+                                    if (owner.isEmpty()) {
                                         owner.add(mAuth.getCurrentUser().getUid());
+                                    }
+
+                                    String photoPath = null;
+                                    if (doc.getData().get("path") != null) {
+                                        photoPath = doc.getData().get("path").toString();
                                     }
 
                                     Book book = new Book(doc.getData().get("title").toString(),
@@ -201,7 +213,7 @@ public class MyRequestListFragment extends Fragment {
                                             doc.getData().get("status").toString(),
                                             owner.get(0),
                                             owner.get(0),
-                                            "link");
+                                            photoPath);
 
                                     requestDataList.add(book);
                                 }
@@ -221,9 +233,13 @@ public class MyRequestListFragment extends Fragment {
                                 if (doc.getData().get("status").toString().equals("borrowed")) {
 
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-
                                     if(owner.isEmpty()) {
                                         owner.add(mAuth.getCurrentUser().getUid());
+                                    }
+
+                                    String photoPath = null;
+                                    if (doc.getData().get("path") != null) {
+                                        photoPath = doc.getData().get("path").toString();
                                     }
 
                                     Book book = new Book(doc.getData().get("title").toString(),
@@ -232,7 +248,7 @@ public class MyRequestListFragment extends Fragment {
                                             doc.getData().get("status").toString(),
                                             owner.get(0),
                                             uid,
-                                            "link");
+                                            photoPath);
 
                                     requestDataList.add(book);
                                 }

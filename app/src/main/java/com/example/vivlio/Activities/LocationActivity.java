@@ -38,6 +38,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private Button cancelButton;
     private Button confirmButton;
     private Boolean changed;
+    private int checker;
 
     /**
      * LocationActivity constructor for the borrower
@@ -61,9 +62,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         changed = false;
         Bundle b = getIntent().getExtras();
         if (b != null){
-            longitude = b.getDouble("long");
-            latitude = b.getDouble("lat");
-            looker = true;
+            checker = b.getInt("check");
+            if (checker == 1){
+                longitude = b.getDouble("long");
+                latitude = b.getDouble("lat");
+                looker = true;
+            }
         }
     }
 

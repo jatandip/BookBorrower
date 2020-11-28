@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.vivlio.Book;
 import com.example.vivlio.R;
 import com.example.vivlio.User;
 
@@ -17,22 +18,22 @@ import java.util.ArrayList;
 
 /**
  * This model provides the format of the list of results when searching.
- * The class can create views with the username and name of the users who match the search terms provided.
+ * The class can create views with the book name and author match the search terms provided.
  * These views are used to populate the ListView of search results.
  */
-public class SearchUserCustomList extends ArrayAdapter<User> {
+public class SearchBookCustomList extends ArrayAdapter<Book> {
 
-    public ArrayList<User> users;
+    public ArrayList<Book> books;
     public Context context;
 
-    public SearchUserCustomList(Context context, ArrayList<User> users) {
-        super(context,0,  users);
-        this.users = users;
+    public SearchBookCustomList(Context context, ArrayList<Book> books) {
+        super(context,0,  books);
+        this.books = books;
         this.context = context;
     }
 
     /**
-     * This method returns the view for a single user in the custom list.
+     * This method returns the view for a single book in the custom list.
      * @param position
      * @param convertView
      * @param parent
@@ -47,15 +48,14 @@ public class SearchUserCustomList extends ArrayAdapter<User> {
             view = LayoutInflater.from(context).inflate(R.layout.search_content, parent, false);
         }
 
-        User user = users.get(position);
+        Book book = books.get(position);
 
-        TextView username = view.findViewById(R.id.SL_title);
-        TextView name = view.findViewById(R.id.SL_author);
+        TextView title = view.findViewById(R.id.SL_title);
+        TextView author = view.findViewById(R.id.SL_author);
 
-        username.setText(user.getUsername());
-        name.setText(user.getName());
+        title.setText(book.getTitle());
+        author.setText(book.getAuthor());
 
         return view;
     }
-
 }

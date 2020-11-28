@@ -120,13 +120,15 @@ public class PendingCustomList extends ArrayAdapter<User> {
                         .update("status", "accepted");
 
 
+
                 Mybook_Pending.bookDataList.clear();
                 Mybook_Pending.bookDataList.add(user);
                 Mybook_Pending.bookAdapter.notifyDataSetChanged();
 
 
-
                 Intent intent = new Intent();
+                intent.putExtra(90.0,80.0, 0)
+
                 intent.setClass(context, LocationActivity.class);
                 view.getContext().startActivity(intent);
 

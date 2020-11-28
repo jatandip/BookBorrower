@@ -128,11 +128,12 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
 
                 Bundle bundle = new Bundle();
-                bundle.putString("key1","someValue");
+                bundle.putInt("check",0);
+                bundle.putDouble("lat",1);
+                bundle.putDouble("long",1);
                 Intent intent = new Intent();
-                intent.setClass(context, LocationActivity.class);
-                intent.putExtra("key","value");
                 intent.putExtras(bundle);
+                intent.setClass(context, LocationActivity.class);
                 view.getContext().startActivity(intent);
 
 

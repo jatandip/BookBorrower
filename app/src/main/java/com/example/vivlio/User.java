@@ -11,6 +11,7 @@ public class User implements Serializable {
     private String borrower;
     private String ownedBookStatus;
     private String uid;
+    private String photoUrl;
 
     public User(String name, String username, String email, String phonenumber) {
         this.name = name;
@@ -28,13 +29,21 @@ public class User implements Serializable {
         this.borrower = borrower;
     }
 
-    public User(String uid, String name, String username, String ownedBookStatus, String extra) {
+    public User(String uid, String name, String username, String ownedBookStatus, String photoUrl) {
         this.uid = uid;
         this.name = name;
         this.username = username;
         this.ownedBookStatus = ownedBookStatus;
+        this.photoUrl = photoUrl;
     }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public String getBorrower() {
         return borrower;

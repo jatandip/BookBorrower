@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.vivlio.Activities.Mybook_Accepted;
 import com.example.vivlio.R;
 import com.example.vivlio.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,10 +54,15 @@ public class SearchDetailCustomList extends ArrayAdapter<User> {
 
         TextView username = view.findViewById(R.id.search_detail_username);
         TextView status = view.findViewById(R.id.search_detail_status);
+        ImageView image = view.findViewById(R.id.book_image);
 
         username.setText(user.getUsername());
         status.setText(user.getOwnedBookStatus());
-        Log.e("CUSTOM_LIST_USERNAME", user.getUsername());
+
+        if(user.getPhotoUrl() != null && !user.getPhotoUrl().isEmpty()) {
+            Picasso.with(this.context)
+                    .load(user.getPhotoUrl()).into(image);
+        }
 
         return view;
     }

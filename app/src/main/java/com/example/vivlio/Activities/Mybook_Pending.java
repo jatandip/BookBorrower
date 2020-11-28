@@ -56,6 +56,7 @@ public class Mybook_Pending extends AppCompatActivity {
     private String phonenumber;
     private String emailN;
     private Button backButton;
+    private Boolean passed = false;
 
 
     /**
@@ -124,6 +125,7 @@ public class Mybook_Pending extends AppCompatActivity {
 
                             bookDataList.add(add);
                             bookAdapter.notifyDataSetChanged();
+                            passed = true;
 
 
                         }
@@ -139,7 +141,25 @@ public class Mybook_Pending extends AppCompatActivity {
 
             }
         });
+
+
+
+        if (bookDataList.size() == 0 && passed) {
+            Log.i("working", "working");
+
+
+            finish();
+        }
+
+
+
+
+
+
     }
+
+
+
 
 
 }

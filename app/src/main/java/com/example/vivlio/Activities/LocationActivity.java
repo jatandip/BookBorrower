@@ -48,6 +48,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private Boolean looker;
     private Button cancelButton;
     private Button confirmButton;
+    private Button doneButton;
     private Boolean changed;
     private int checker;
     private FirebaseFirestore db;
@@ -76,7 +77,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         latitude = 53.5225;
         looker = false;
         changed = false;
-
     }
 
     /**
@@ -92,8 +92,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
+        cancelButton = findViewById(R.id.cancel_button);
+        confirmButton = findViewById(R.id.confirm_button);
+        doneButton = findViewById(R.id.done_button);
         Bundle b = getIntent().getExtras();
         if (b != null){
             checker = b.getInt("check");
@@ -102,12 +103,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
                 longitude = b.getDouble("long");
                 latitude = b.getDouble("lat");
                 looker = true;
+                doneButton.setVisibility(View.VISIBLE);
+            }else{
+                confirmButton.setVisibility(View.VISIBLE);
+                cancelButton.setVisibility(View.VISIBLE);
             }
         }
-
-        cancelButton = findViewById(R.id.cancel_button);
-        confirmButton = findViewById(R.id.confirm_button);
-
         cancelButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -119,6 +120,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 checkTask();
+            }
+        });
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

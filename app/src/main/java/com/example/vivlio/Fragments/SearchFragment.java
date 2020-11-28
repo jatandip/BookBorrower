@@ -19,6 +19,7 @@ import android.widget.Switch;
 
 import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.BookList;
+import com.example.vivlio.CustomLists.SearchBookCustomList;
 import com.example.vivlio.CustomLists.SearchUserCustomList;
 import com.example.vivlio.R;
 import com.example.vivlio.Activities.SearchDetailActivity;
@@ -131,7 +132,7 @@ public class SearchFragment extends Fragment {
         resultList = view.findViewById(R.id.result_list_view);
 
         resultDataList = new ArrayList<>();
-        resultAdapter = new BookList(getActivity(), resultDataList);
+        resultAdapter = new SearchBookCustomList(getActivity(), resultDataList);
 
         userDataList = new ArrayList<>();
         userAdapter = new SearchUserCustomList(getActivity(), userDataList);

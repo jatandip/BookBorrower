@@ -40,6 +40,8 @@
             android:name=".Activities.MainActivity"
             android:label="@string/app_name" />
         <activity android:name=".Activities.EditProfileActivity" />
+        <activity android:name=".Activities.ReturningTaskActivity" />
+        <activity android:name=".Activities.RecievingTaskActivity" />
         <activity android:name=".Activities.CreateAccountActivity" />
         <activity android:name=".Activities.BorrowTaskActivity" />
         <activity android:name=".Activities.SuccessExchangeActivity" />

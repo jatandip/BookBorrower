@@ -9,6 +9,7 @@ import android.net.Uri;
 
 import com.example.vivlio.Book;
 import com.example.vivlio.R;
+import com.example.vivlio.ValidateISBN;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -308,32 +309,6 @@ public class AddBook extends AppCompatActivity {
                 authorEditText.setEnabled(false);
             }
         }
-        /**
-        if (requestCode == 999){
-            if (resultCode == Activity.RESULT_OK){
-                book = new Book();
-                String title, author, ISBN;
-
-                //get current user to assign book
-                title = titleEditText.getText().toString();
-                author = authorEditText.getText().toString();
-                ISBN = ISBNEditText.getText().toString();
-                String status = "available";
-                Intent intent = new Intent();
-                ArrayList<String> newInfo = new ArrayList<>();
-                newInfo.add(title);
-                newInfo.add(author);
-                newInfo.add(ISBN);
-                newInfo.add(currentPath);
-                newInfo.add(status);
-                intent.putStringArrayListExtra("result", newInfo);
-                setResult(RESULT_OK, intent);
-                finish();
-            }else if (resultCode == Activity.RESULT_CANCELED){
-                Toast.makeText(this, "You must have a valid ISBN to upload",
-                        Toast.LENGTH_SHORT).show();
-            }
-        }**/
     }
 
     /**
@@ -353,20 +328,22 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            /**Intent validateBook = new Intent(this, ValidateISBN.class);
-             * startActivityForResult(ValidateISBN, 999);
-             */
-            String status = "available";
-            Intent intent = new Intent();
-            ArrayList<String> newInfo = new ArrayList<>();
-            newInfo.add(title);
-            newInfo.add(author);
-            newInfo.add(ISBN);
-            newInfo.add(currentPath);
-            newInfo.add(status);
-            intent.putStringArrayListExtra("result", newInfo);
-            setResult(RESULT_OK, intent);
-            finish();
+            Boolean bool = new ValidateISBN(ISBN);
+            if (bool) {
+                String status = "available";
+                Intent intent = new Intent();
+                ArrayList<String> newInfo = new ArrayList<>();
+                newInfo.add(title);
+                newInfo.add(author);
+                newInfo.add(ISBN);
+                newInfo.add(currentPath);
+                newInfo.add(status);
+                intent.putStringArrayListExtra("result", newInfo);
+                setResult(RESULT_OK, intent);
+                finish();
+            }else{
+                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
         }

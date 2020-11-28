@@ -2,6 +2,7 @@ package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,10 +127,12 @@ public class PendingCustomList extends ArrayAdapter<User> {
                 Mybook_Pending.bookAdapter.notifyDataSetChanged();
 
 
+                Bundle bundle = new Bundle();
+                bundle.putString("key1","someValue");
                 Intent intent = new Intent();
-                intent.putExtra(90.0,80.0, 0)
-
                 intent.setClass(context, LocationActivity.class);
+                intent.putExtra("key","value");
+                intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
 
 

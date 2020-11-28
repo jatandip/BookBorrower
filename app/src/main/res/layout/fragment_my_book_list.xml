@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C8C8C8"
+
     tools:context=".Fragments.MyBookListFragment">
 
     <com.google.android.material.tabs.TabLayout
@@ -21,11 +23,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#00427E"
+
         app:layout_constraintVertical_bias="0.023">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="All" />
 
         <com.google.android.material.tabs.TabItem
@@ -53,8 +58,8 @@
 
     <ListView
         android:id="@+id/bookListView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="407dp"
+        android:layout_height="706dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,12 +70,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addBtn"
-        android:layout_width="60dp"
-        android:layout_height="52dp"
+        android:layout_width="55dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        app:backgroundTint="#FFEB3B"
+
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

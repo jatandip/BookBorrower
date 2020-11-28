@@ -2,6 +2,7 @@ package com.example.vivlio.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,51 +81,58 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         // This finds all the owers of the book with status pending or available and then checks if the book has been requested previously and displays the appropriate status.
         for(final String owner : searchDetailBook.getCurrentOwners()) {
-            Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
-            final CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
-            ownedCollection.document(searchDetailBook.getISBN()).get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            final DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
-                                    userCollection.document(owner).get()
-                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                    final DocumentSnapshot goodUser = task.getResult();
-                                                    if(goodUser.exists()) {
-                                                        //ownerDataList.add(new User(goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), document.getData().get("status").toString()));
-                                                        CollectionReference requester = db.collection("users/" + mAuth.getUid() + "/requested");
-                                                        requester.document(searchDetailBook.getISBN()).get()
-                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                                    @Override
-                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                        final DocumentSnapshot requestedSnapshot = task.getResult();
-                                                                        if(requestedSnapshot.exists()) {
-                                                                            ArrayList<String> checkUser = (ArrayList<String>) requestedSnapshot.get("owners");
-                                                                            if (checkUser.contains(goodUser.getId())) {
-                                                                                ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "pending", ""));
+            if(!owner.equals(mAuth.getUid())) {
+                Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
+                final CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
+                ownedCollection.document(searchDetailBook.getISBN()).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                final DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
+                                        userCollection.document(owner).get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        final DocumentSnapshot goodUser = task.getResult();
+                                                        if (goodUser.exists()) {
+                                                            //ownerDataList.add(new User(goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), document.getData().get("status").toString()));
+                                                            CollectionReference requester = db.collection("users/" + mAuth.getUid() + "/requested");
+                                                            requester.document(searchDetailBook.getISBN()).get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                            final DocumentSnapshot requestedSnapshot = task.getResult();
+                                                                            String goodUserPhotoUrl;
+                                                                            try {
+                                                                                goodUserPhotoUrl = document.getData().get("path").toString();
+                                                                            } catch (Exception e) {
+                                                                                Log.e("PHOTOURL ERROR", e.toString());
+                                                                                goodUserPhotoUrl = "";
                                                                             }
-                                                                            else {
-                                                                                ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "available", ""));
+                                                                            if (requestedSnapshot.exists()) {
+                                                                                ArrayList<String> checkUser = (ArrayList<String>) requestedSnapshot.get("owners");
+                                                                                if (checkUser.contains(goodUser.getId())) {
+                                                                                    ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("fname") + goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "Pending", goodUserPhotoUrl));
+                                                                                } else {
+                                                                                    ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("fname") + goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "Available", goodUserPhotoUrl));
+                                                                                }
+                                                                            } else {
+                                                                                ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("fname") + goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "Available", goodUserPhotoUrl));
                                                                             }
+                                                                            ownerAdapter.notifyDataSetChanged();
                                                                         }
-                                                                        else {
-                                                                            ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "available", ""));
-                                                                        }
-                                                                        ownerAdapter.notifyDataSetChanged();
-                                                                    }
-                                                                });
+                                                                    });
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                    }
                                 }
-                            }
 
-                        }
-                    });
+                            }
+                        });
+            }
         }
 
         // This functions checks if the user clicks on a requestable book and requests it from the owner

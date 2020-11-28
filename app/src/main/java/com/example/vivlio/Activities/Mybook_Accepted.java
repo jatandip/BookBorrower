@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Picasso;
 
 
@@ -47,6 +49,7 @@ public class Mybook_Accepted extends AppCompatActivity {
     private String nameN;
     private String usernameN;
     private Button mapsBtn;
+    private GeoPoint geo;
 
 
     /**
@@ -110,8 +113,36 @@ public class Mybook_Accepted extends AppCompatActivity {
         mapsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Mybook_Accepted.this, LocationActivity.class);
-                view.getContext().startActivity(intent);
+
+                DocumentReference docRef = db.collection("users")
+                        .document(book.getOwner() + "/owned/" + book.getISBN());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot document = task.getResult();
+
+                        assert document != null;
+                        geo = (GeoPoint) document.getData().get("location");
+                        Log.i("geo", String.valueOf(geo));
+
+
+
+                        double lat = geo.getLatitude();
+                        double lng = geo.getLongitude ();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("check",1);
+                        bundle.putDouble("lat",lat);
+                        bundle.putDouble("long",lng);
+                        bundle.putString("isbn" , book.getISBN());
+                        Intent intent = new Intent(Mybook_Accepted.this, LocationActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+
+                });
             }
         });
 

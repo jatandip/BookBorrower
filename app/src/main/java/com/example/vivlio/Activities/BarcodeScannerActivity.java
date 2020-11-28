@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.vivlio.BookDetailFetcher;
 import com.example.vivlio.R;
+import com.example.vivlio.ValidateISBN;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -34,6 +35,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int CAMERA_REQUEST_CODE = 100;
     private String barcodeData;
+    private ValidateISBN validator;
 
     /**
      * ISBN is returned as an intent. To access the ISBN string
@@ -59,6 +61,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         returnedData = new Intent();
         detailFetcher = new BookDetailFetcher();
+        validator = new ValidateISBN();
         initDetectorSources();
     }
 
@@ -122,6 +125,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * Initializes Detector.Processor objects for BarcodeDetector objects
      * @param detector BarcodeDetector object that has already been instantiated
      */
+    // TODO: display toast notification if the ISBN isn't found on google api
+    // TODO: verify ISBN and display toast notification if invalid
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -153,21 +158,21 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Checks if the scanned in barcode is an ISBN code
-     * @param code ISBN code
-     * @return return true if the barcode is an ISBN code, false otherwise
-     */
-    private boolean isISBN(String code) {
-        if (code.length() == 13) {
-
-        } else if (code.length() == 10) {
-
-        } else {
-            return false;
-        }
-        return true;
-    }
+//    /**
+//     * Checks if the scanned in barcode is an ISBN code
+//     * @param code ISBN code
+//     * @return return true if the barcode is an ISBN code, false otherwise
+//     */
+//    private boolean isISBN(String code) {
+//        if (code.length() == 13) {
+//
+//        } else if (code.length() == 10) {
+//
+//        } else {
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * Release camera resources when the activity is paused

@@ -110,7 +110,7 @@ public class BookDetailFetcher {
      * @throws IOException If an I/O error occurs in {@code JsonReader} methods
      */
     // TODO: needs to handle "subtitle" field in JSON object
-    // TODO: consider handling multiple authors
+    // TODO: concatenate multiple authors into one string
     private void readVolumeInfo(JsonReader reader) throws IOException {
         reader.beginObject();
 

@@ -153,6 +153,12 @@ public class BookDetailFetcher {
         return combinedTitle;
     }
 
+    /**
+     * Concatenates two author strings into one
+     * @param concated Previously combined author strings
+     * @param current Author string to be concatenated
+     * @return Combined author string
+     */
     private String authorConcat(String concated, String current) {
         String combinedAuthor = concated + ", " + current;
         return combinedAuthor;

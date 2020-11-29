@@ -146,6 +146,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
                     Boolean isISBN = validator.verify(barcodeData);
+
                     if (isISBN) {
                         detailFetcher.request(barcodeData);
                         System.out.println(detailFetcher.getTitle());

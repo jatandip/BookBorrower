@@ -52,8 +52,8 @@ public class EditProfileActivity extends AppCompatActivity {
         save = findViewById(R.id.saveButton);
         cancel = findViewById(R.id.cancel_button);
 
-        emailEdit.setText(userInfo.get(1));
-        phoneEdit.setText(userInfo.get(0));
+        emailEdit.setText(userInfo.get(0));
+        phoneEdit.setText(userInfo.get(1));
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

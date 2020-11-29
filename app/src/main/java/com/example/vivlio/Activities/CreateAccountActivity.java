@@ -133,7 +133,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                                     "/owned" + "/BLANK_BOOK").set(info);
                                                     //collectionReference = db.collection("users" + "/" + currentUID + "/requested");
 
-                                                    openLoginActivity();
+                                                    finish();
+                                                    //openLoginActivity();
                                                 } else {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w("Login Failed", "signInWithEmail:failure", task.getException());
@@ -154,11 +155,4 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * called to open login activity after successful account creation
-     */
-    private void openLoginActivity(){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
 }

@@ -150,9 +150,14 @@ public class SearchFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 boolean switchState = searchSwitch.isChecked(); //Checked = books, unchecked = users
                 final String[] searchTerms = searchEditText.getText().toString().split("\\s+");
                 Log.d("SEARCHING", "Initiated Search with Term: " + searchTerms[0]);
+                userDataList.clear();
+                userAdapter.notifyDataSetChanged();
+                resultDataList.clear();
+                resultAdapter.notifyDataSetChanged();
 
                 if(switchState) {
                     bookCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {

@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C8C8C8"
+    android:background="@drawable/fg1"
 
     tools:context=".Fragments.MyBookListFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabBar"
+        style="@style/MyBooksTabLayout"
         marginTop="?android:attr/actionBarSize"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="57dp"
 
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
+        android:layout_marginTop="64dp"
         android:textColor="#00427E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView30"
-        app:tabIndicatorColor="#22A3D6">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@color/colorTabBar"
+        app:tabIndicatorColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -54,17 +55,14 @@
 
     <ListView
         android:id="@+id/bookListView"
-        android:layout_width="409dp"
-        android:layout_height="547dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorListBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabBar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/tabBar">
 
     </ListView>
 
@@ -85,31 +83,17 @@
         app:tabIndicatorColor="@android:color/white" />
 
     <TextView
-        android:id="@+id/textView30"
-        android:layout_width="413dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/fg1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-
-
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="300dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="85dp"
-        android:layout_marginRight="85dp"
+        android:id="@+id/my_book_list_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="sans-serif-light"
         android:text="My Books"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tabBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

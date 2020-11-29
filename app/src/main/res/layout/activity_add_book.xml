@@ -32,7 +32,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
+        android:backgroundTint="@android:color/holo_blue_light"
         android:text="CHOOSE FILE" />
 
     <Button
@@ -48,7 +49,8 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="16dp"
-        android:textColor="#FFFFFF"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:textColor="#000000"
         android:text="USE CAMERA" />
 
     <EditText

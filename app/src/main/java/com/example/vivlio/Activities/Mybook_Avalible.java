@@ -64,6 +64,7 @@ public class Mybook_Avalible extends AppCompatActivity {
                 .load(book.getPhotoURL()).into(image);
 
 
+
         Log.i("url", book.getPhotoURL());
 
         imageDlt = findViewById(R.id.deleteImageBtn);

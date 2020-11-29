@@ -20,14 +20,13 @@
         android:id="@+id/EditTextLine1"
         android:layout_width="304dp"
         android:layout_height="31dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginLeft="29dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="49dp"
         android:layout_marginEnd="78dp"
         android:layout_marginRight="78dp"
         android:text="Edit Profile"
         android:textColor="#F8F8F8"
-
 
 
         android:textSize="25dp"
@@ -39,8 +38,8 @@
         android:id="@+id/EditTextLine2"
         android:layout_width="309dp"
         android:layout_height="36dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginLeft="41dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginLeft="42dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="61dp"
         android:layout_marginRight="61dp"
@@ -132,58 +131,47 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
 
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="324dp"
-        android:layout_marginRight="324dp"
         android:text="Email:"
         android:textColor="#2C2A2A"
         android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@+id/emailEdit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/emailEdit" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="123dp"
         android:layout_height="35dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
         android:layout_marginTop="273dp"
-        android:layout_marginEnd="249dp"
-        android:layout_marginRight="249dp"
         android:text="PhoneNumber:"
         android:textColor="#2C2A2A"
         android:textSize="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/phoneNumberEdit"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="94dp"
         android:layout_height="37dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="CANCEL"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/cancel_button"
+        app:layout_constraintEnd_toEndOf="@+id/cancel_button"
+        app:layout_constraintStart_toStartOf="@+id/cancel_button"
+        app:layout_constraintTop_toTopOf="@+id/cancel_button" />
 
     <TextView
         android:id="@+id/textView26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="32dp"
         android:text="SAVE"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="@+id/saveButton"
+        app:layout_constraintStart_toStartOf="@+id/saveButton"
+        app:layout_constraintTop_toTopOf="@+id/saveButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 
+import com.example.vivlio.Activities.SearchUserDetailActivity;
 import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.BookList;
 import com.example.vivlio.CustomLists.SearchBookCustomList;
@@ -219,7 +220,7 @@ public class SearchFragment extends Fragment {
                                 for(String term : searchTerms) {
                                     if(username.toLowerCase().contains(term.toLowerCase())) {
                                         User resultUser;
-                                        resultUser = new User(doc.getData().get("fname").toString() + " " + doc.getData().get("lname").toString(), username, doc.getData().get("username").toString(), doc.getData().get("phone").toString());
+                                        resultUser = new User(doc.getData().get("fname").toString() + " " + doc.getData().get("lname").toString(), username, doc.getData().get("email").toString(), doc.getData().get("phone").toString());
                                         if(userIDList.isEmpty() || !userIDList.contains(doc.getId().toString())) {
                                             userDataList.add(resultUser);
                                             userIDList.add(doc.getId().toString());
@@ -238,11 +239,26 @@ public class SearchFragment extends Fragment {
         resultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(SearchFragment.this.getActivity(), SearchDetailActivity.class);
                 if(searchSwitch.isChecked()) {
+                    Intent intent = new Intent(SearchFragment.this.getActivity(), SearchDetailActivity.class);
                     intent.putExtra("selected book", (Book) adapterView.getItemAtPosition(i));
                     startActivity(intent);
                 }
+                else {
+                    Intent intent = new Intent(SearchFragment.this.getActivity(), SearchUserDetailActivity.class);
+                    intent.putExtra("selected user", (User) adapterView.getItemAtPosition(i));
+                    startActivity(intent);
+                }
+            }
+        });
+
+        searchSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userDataList.clear();
+                userAdapter.notifyDataSetChanged();
+                resultDataList.clear();
+                resultAdapter.notifyDataSetChanged();
             }
         });
 

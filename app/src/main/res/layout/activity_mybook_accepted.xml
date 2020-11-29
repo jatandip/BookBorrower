@@ -13,7 +13,6 @@
         android:layout_width="410dp"
         android:layout_height="72dp"
 
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
         android:background="@drawable/fg1"
@@ -43,7 +42,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="TextView"
-        android:textSize="23dp"
+        android:textColor="@color/colorText4"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +95,8 @@
         android:layout_marginEnd="145dp"
         android:layout_marginRight="145dp"
         android:text="    Accepted By:"
-        android:textSize="25sp"
+        android:textColor="@color/colorText4"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

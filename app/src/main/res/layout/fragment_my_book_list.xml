@@ -92,7 +92,7 @@
         android:fontFamily="sans-serif-light"
 
         android:text="My Books"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorText4"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tabBar"

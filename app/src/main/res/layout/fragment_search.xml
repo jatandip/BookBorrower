@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorListBackground"
     tools:context=".Fragments.SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -16,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/search_switch"
         app:layout_constraintEnd_toEndOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="@+id/searchTermEditText"
-        app:layout_constraintTop_toTopOf="@+id/searchTermEditText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/search_switch"
@@ -34,23 +35,25 @@
         android:id="@+id/searchTermEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Enter Search"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="@+id/search_button"
         app:layout_constraintEnd_toStartOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/SF_page_title" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_search"
         app:backgroundTint="#ffeb3b"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/SF_page_title" />
 
     <ListView
         android:id="@+id/result_list_view"
@@ -80,5 +83,19 @@
         app:layout_constraintBottom_toTopOf="@+id/result_list_view"
         app:layout_constraintEnd_toStartOf="@+id/search_switch"
         app:layout_constraintTop_toBottomOf="@+id/searchTermEditText" />
+
+    <TextView
+        android:id="@+id/SF_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Search"
+        android:textColor="@color/colorText4"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

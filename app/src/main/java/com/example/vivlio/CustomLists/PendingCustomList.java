@@ -130,7 +130,6 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
 
                 String borr = user.getBorrower();
-
                 Bundle bundle = new Bundle();
                 bundle.putInt("check",0);
                 bundle.putDouble("lat",1);

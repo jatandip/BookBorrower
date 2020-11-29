@@ -58,16 +58,19 @@ public class ReturningTaskActivity extends AppCompatActivity {
                 bookDataList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    if (doc.getData().get("status").toString().equals("borrowed")) {
-                        ArrayList<String> owner = new ArrayList<>();
-                        owner.add(doc.getData().get("owners").toString());
+                    if (!doc.getData().containsKey("blank")) {
 
-                        Book book = new Book(doc.getData().get("title").toString(),
-                                doc.getData().get("author").toString(),
-                                owner.get(0), doc.getId().replace("-",""));
-                        //Log.e("ISB", doc.getId());
-                        //Log.e("title", doc.getData().get("title").toString());
-                        bookDataList.add(book);
+                        if (doc.getData().get("status").toString().equals("borrowed")) {
+                            ArrayList<String> owner = new ArrayList<>();
+                            owner.add(doc.getData().get("owners").toString());
+
+                            Book book = new Book(doc.getData().get("title").toString(),
+                                    doc.getData().get("author").toString(),
+                                    owner.get(0), doc.getId().replace("-", ""));
+                            //Log.e("ISB", doc.getId());
+                            //Log.e("title", doc.getData().get("title").toString());
+                            bookDataList.add(book);
+                        }
                     }
                 }
                 bookAdapter.notifyDataSetChanged();

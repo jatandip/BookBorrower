@@ -130,7 +130,6 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
 
                 String borr = user.getBorrower();
-
                 Bundle bundle = new Bundle();
                 bundle.putInt("check",0);
                 bundle.putDouble("lat",1);
@@ -162,6 +161,7 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                         DocumentSnapshot document = task.getResult();
                         ArrayList<String> borrowers = (ArrayList<String>) document.getData().get("borrowers");
 

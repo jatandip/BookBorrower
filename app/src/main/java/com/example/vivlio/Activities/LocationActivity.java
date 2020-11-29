@@ -75,6 +75,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     public LocationActivity(){
         looker = false;
         changed = false;
+        longitude = -113.6242;
+        latitude = 53.5225;
     }
 
     /**
@@ -98,9 +100,10 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             checker = b.getInt("check");
             isbn = b.getString("isbn");
             borrower = b.getString("borrower");
-            longitude = b.getDouble("long");
-            latitude = b.getDouble("lat");
+
             if (checker == 1){
+                longitude = b.getDouble("long");
+                latitude = b.getDouble("lat");
                 looker = true;
                 doneButton.setVisibility(View.VISIBLE);
             }else{

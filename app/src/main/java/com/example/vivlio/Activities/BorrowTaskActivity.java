@@ -64,16 +64,25 @@ public class BorrowTaskActivity extends AppCompatActivity {
                 bookDataList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    if (doc.getData().get("status").toString().equals("accepted")) {
-                        ArrayList<String> owner = new ArrayList<>();
-                        owner.add(doc.getData().get("owners").toString());
+                    Log.e("current book id", doc.getId());
+                    if (!doc.getData().containsKey("blank")) {
 
-                        Book book = new Book(doc.getData().get("title").toString(),
-                                doc.getData().get("author").toString(),
-                                owner.get(0), doc.getId().replace("-",""));
-                        //Log.e("ISB", doc.getId());
-                        //Log.e("title", doc.getData().get("title").toString());
-                        bookDataList.add(book);
+                        Log.e("current book id", "in if blank");
+
+                        if (doc.getData().get("status").toString().equals("accepted")) {
+
+                            Log.e("current book id", "in if acc");
+
+                            ArrayList<String> owner = new ArrayList<>();
+                            owner.add(doc.getData().get("owners").toString());
+
+                            Book book = new Book(doc.getData().get("title").toString(),
+                                    doc.getData().get("author").toString(),
+                                    owner.get(0), doc.getId().replace("-",""));
+                            //Log.e("ISB", doc.getId());
+                            //Log.e("title", doc.getData().get("title").toString());
+                            bookDataList.add(book);
+                        }
                     }
                 }
                 bookAdapter.notifyDataSetChanged();

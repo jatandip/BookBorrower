@@ -18,7 +18,10 @@
         android:layout_marginTop="156dp"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_text_border"
+
+
         android:text="TextView"
 
         android:textColor="#2C2A2A"
@@ -34,10 +37,10 @@
         android:layout_marginStart="37dp"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="252dp"
-
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_text_border"
         android:layout_marginEnd="294dp"
         android:layout_marginRight="294dp"
-        android:paddingLeft="10dp"
         android:text="TextView"
         android:textColor="#2C2A2A"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,13 +52,13 @@
         android:id="@+id/isbnBox"
         android:layout_width="348dp"
         android:layout_height="46dp"
-
+        android:paddingLeft="5dp"
+        android:background="@drawable/edit_text_border"
         android:layout_marginStart="37dp"
         android:layout_marginLeft="37dp"
         android:layout_marginTop="346dp"
         android:layout_marginEnd="26dp"
         android:layout_marginRight="26dp"
-        android:paddingLeft="10dp"
         android:text="TextView"
         android:textColor="#2C2A2A"
         app:layout_constraintEnd_toEndOf="parent"

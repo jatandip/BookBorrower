@@ -143,6 +143,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
                 MarkerOptions options = new MarkerOptions();
                 options.position(latLng);
                 options.title(latLng.latitude + ":" + latLng.longitude);
+                longitude = latLng.longitude;
+                latitude = latLng.latitude;
                 options.draggable(true);
                 mMap.clear();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
@@ -248,9 +250,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             try {
                 List<Address> addresses =
                         geocoder.getFromLocation(latitude, longitude, 1);
+
+
+
                 String location = addresses.get(0).getLocality()+ ":"
                         + addresses.get(0).getCountryName();
                 LatLng latLng = new LatLng(latitude, longitude);
+
                 mMap.addMarker(new MarkerOptions().position(latLng).title(location));
                 mMap.setMaxZoomPreference(20);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));

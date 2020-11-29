@@ -87,9 +87,15 @@ public class EditBook extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (author.getText().length() == 0 || isbn.getText().toString().length() == 0 || title.getText().toString().length() == 0) {
+                    finish();
+                }
+
+
                 book.setAuthor(author.getText().toString());
                 book.setISBN(isbn.getText().toString());
                 book.setTitle(title.getText().toString());
+
 
                 Intent sendBack = new Intent();
                 sendBack.putExtra("book", book);

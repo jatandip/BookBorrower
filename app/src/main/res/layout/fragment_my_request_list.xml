@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fg1"
     tools:context=".Fragments.MyRequestListFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorTabBar"
+        app:layout_constraintBottom_toTopOf="@+id/request_list_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="All" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_pending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_accepted"
@@ -34,6 +46,24 @@
     <ListView
         android:id="@+id/request_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="48dp" />
-</FrameLayout>
+        android:layout_height="0dp"
+        android:layout_marginTop="112dp"
+        android:background="@color/colorListBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="sans-serif-light"
+        android:text="My Request List"
+        android:textColor="@color/colorText4"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tab_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

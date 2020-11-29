@@ -200,7 +200,7 @@ public class MyRequestListFragment extends Fragment {
 
                             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                                 if (!doc.getData().containsKey("blank")) {
-                                    if (doc.getData().get("status").toString().equals("accepted")) {
+                                    if (doc.getData().get("status").toString().equals("pending")) {
 
                                         ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
                                         if (owner.isEmpty()) {
@@ -230,6 +230,43 @@ public class MyRequestListFragment extends Fragment {
                 }
 
                 if (tab.getPosition() == 2) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                            requestDataList.clear();
+
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
+                                    if (doc.getData().get("status").toString().equals("accepted")) {
+
+                                        ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+                                        if (owner.isEmpty()) {
+                                            owner.add(mAuth.getCurrentUser().getUid());
+                                        }
+
+                                        String photoPath = null;
+                                        if (doc.getData().get("path") != null) {
+                                            photoPath = doc.getData().get("path").toString();
+                                        }
+
+                                        Book book = new Book(doc.getData().get("title").toString(),
+                                                doc.getData().get("author").toString(),
+                                                doc.getId(),
+                                                doc.getData().get("status").toString(),
+                                                owner.get(0),
+                                                owner.get(0),
+                                                photoPath);
+
+                                        requestDataList.add(book);
+                                    }
+                                }
+                            }
+                            requestAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 3) {
                     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
@@ -284,6 +321,7 @@ public class MyRequestListFragment extends Fragment {
 
                 Intent intent = new Intent(MyRequestListFragment.this.getActivity(), RequestDetailActivity.class);
                 intent.putExtra("book", selected);
+                intent.putExtra("user", uid);
                 startActivity(intent);
             }
         });

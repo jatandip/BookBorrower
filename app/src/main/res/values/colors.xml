@@ -9,5 +9,7 @@
     <color name="colorText2">#A53131</color>
     <color name="colorText3">#6A6A6A</color>
     <color name="colorText4">#EDEDED</color>
+    <color name="colorButton">#33DDFF</color>
+    <color name="colorTabSelected">#22A3D6</color>
 
 </resources>

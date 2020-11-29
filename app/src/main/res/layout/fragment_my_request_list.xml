@@ -18,6 +18,12 @@
             android:text="All" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_pending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pending" />
+
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_accepted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

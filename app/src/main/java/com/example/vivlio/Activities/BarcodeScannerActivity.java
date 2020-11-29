@@ -126,8 +126,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * Initializes Detector.Processor objects for BarcodeDetector objects
      * @param detector BarcodeDetector object that has already been instantiated
      */
-    // TODO: display toast notification if the ISBN isn't found on google api
-    // TODO: temporarily halt killing the activity to let toast message linger
+
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -151,12 +150,24 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                         detailFetcher.request(barcodeData);
                         System.out.println(detailFetcher.getTitle());
                         System.out.println(detailFetcher.getAuthor());
+
+                        if (!detailFetcher.isFound()) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Not available in Google Books API",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
                         returnedData.putExtra("isbn", barcodeData);
                         returnedData.putExtra("title", detailFetcher.getTitle());
                         returnedData.putExtra("author", detailFetcher.getAuthor());
                         setResult(RESULT_OK, returnedData);
+
                     } else {
-                        
+
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(getApplicationContext(), "Not a valid ISBN",

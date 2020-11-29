@@ -183,7 +183,10 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // update hashmap
-                    oldBookData.put(doc.getId(), doc.getData().get("status").toString());
+                    if (doc.getData().containsKey("status")) {
+                        oldBookData.put(doc.getId(), doc.getData().get("status").toString());
+                    }
+
                 }
             }
         });
@@ -218,7 +221,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     // update hashmap
-                    oldRequestData.put(doc.getId(), doc.getData().get("status").toString());
+                    if (doc.getData().containsKey("status")) {
+                        oldRequestData.put(doc.getId(), doc.getData().get("status").toString());
+                    }
                 }
             }
         });

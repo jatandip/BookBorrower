@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -106,8 +107,41 @@ public class RequestDetailActivity extends AppCompatActivity {
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RequestDetailActivity.this, LocationActivity.class);
-                v.getContext().startActivity(intent);
+                // get location from database
+                db = FirebaseFirestore.getInstance();
+                DocumentReference docRef = db.document("users/" + book.getOwner()
+                    + "/requested/" + book.getISBN());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot document = task.getResult();
+
+                        // make sure that document isn't null (crashes the app if it is)
+                        // if it is, there's no location, the button shouldn't do anything
+                        if (document.getData() != null) {
+                            GeoPoint geo = (GeoPoint) document.getData().get("location");
+
+                            Log.d("location", geo.toString());
+
+                            Intent intent = new Intent(RequestDetailActivity.this, LocationActivity.class);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putDouble("long", geo.getLongitude());
+                            bundle.putDouble("lat", geo.getLatitude());
+                            bundle.putInt("check", 1);
+                            bundle.putString("isbn", book.getISBN());
+
+                            intent.putExtras(bundle);
+
+                            startActivity(intent);
+                        }
+                        else {
+                            Log.d("null", "location was null");
+                        }
+
+
+                    }
+                });
             }
         });
     }

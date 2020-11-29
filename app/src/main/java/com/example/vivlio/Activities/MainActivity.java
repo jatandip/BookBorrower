@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         requestsNotificationBadge.setVisible(false);
         booksNotificationBadge.setVisible(false);
 
-
         // bottom navigation bar listener
         // replaces fragment in nav_host_fragment with the fragment corresponding to the option pressed
         navView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -136,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        // launch scan activity right away
+        navView.setSelectedItemId(R.id.navigation_scan);
 
         // handle notifications
         // notification should show in two cases:

@@ -127,7 +127,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * @param detector BarcodeDetector object that has already been instantiated
      */
     // TODO: display toast notification if the ISBN isn't found on google api
-    // TODO: verify ISBN and display toast notification if invalid
     // TODO: temporarily halt killing the activity to let toast message linger
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
@@ -157,8 +156,14 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                         returnedData.putExtra("author", detailFetcher.getAuthor());
                         setResult(RESULT_OK, returnedData);
                     } else {
-                        Toast.makeText(getApplicationContext(), "Not a valid ISBN",
-                                        Toast.LENGTH_SHORT).show();
+                        
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Not a valid ISBN",
+                                                Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         returnedData.putExtra("isbn", (String)null);
                         returnedData.putExtra("title", (String)null);
                         returnedData.putExtra("author", (String)null);
@@ -171,22 +176,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             }
         });
     }
-
-//    /**
-//     * Checks if the scanned in barcode is an ISBN code
-//     * @param code ISBN code
-//     * @return return true if the barcode is an ISBN code, false otherwise
-//     */
-//    private boolean isISBN(String code) {
-//        if (code.length() == 13) {
-//
-//        } else if (code.length() == 10) {
-//
-//        } else {
-//            return false;
-//        }
-//        return true;
-//    }
 
     /**
      * Release camera resources when the activity is paused

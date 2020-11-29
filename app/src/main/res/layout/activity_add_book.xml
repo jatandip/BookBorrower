@@ -4,8 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@color/white"
     >
+
+    <TextView
+        android:id="@+id/backgroundColor"
+        android:layout_width="441dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="-30dp"
+        android:layout_marginLeft="-30dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginEnd="-30dp"
+        android:layout_marginRight="-30dp"
+        android:layout_marginBottom="-30dp"
+        android:background="@drawable/fg1" />
 
     <Button
         android:id="@+id/button_choose_image"
@@ -14,13 +26,14 @@
         android:layout_below="@id/button_camera_image"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
-        android:text="Choose file" />
+        android:textColor="#FFFFFF"
+        android:text="CHOOSE FILE" />
 
     <Button
         android:id="@+id/button_camera_image"
@@ -29,74 +42,127 @@
         android:layout_below="@id/edit_isbn"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="16dp"
-        android:text="Use Camera" />
+        android:textColor="#FFFFFF"
+        android:text="USE CAMERA" />
 
     <EditText
         android:id="@+id/edit_isbn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="261dp"
+        android:layout_marginTop="291dp"
         android:layout_marginRight="16dp"
+        android:textColorHint="#000000"
+        android:textColor="#000000"
+        android:background="@drawable/edit_text_border"
         android:hint="ISBN"
-        />
 
     <EditText
         android:id="@+id/edit_author"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="181dp"
+        android:layout_marginTop="211dp"
         android:layout_marginRight="16dp"
+        android:textColorHint="#000000"
+        android:textColor="#000000"
+        android:background="@drawable/edit_text_border"
         android:hint="Author" />
 
     <EditText
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="101dp"
+        android:layout_marginTop="131dp"
         android:layout_marginRight="16dp"
+        android:textColor="#000000"
+        android:background="@drawable/edit_text_border"
+        android:textColorHint="#000000"
         android:hint="Title" />
 
     <ImageView
         android:id="@+id/image_view"
+        android:background="@drawable/edit_text_border"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginLeft="150dp"
+        android:layout_marginLeft="160dp"
         android:layout_alignLeft="@id/button_choose_image"
-        android:layout_marginTop="340dp" />
+        android:layout_marginTop="370dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_upload"
         android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/login_loginbuttonround"
+        android:layout_marginRight="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="231dp"
-        android:layout_marginBottom="28dp"
-        android:text="Upload" />
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="42dp"
+        android:fontFamily="sans-serif"
+        android:text="UPLOAD"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginRight="50dp" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginBottom="28dp"
-        android:text="Scan Book" />
+        android:background="@drawable/login_loginbuttonround"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginBottom="42dp"
+        android:fontFamily="sans-serif"
+        android:text="SCAN BOOK"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="42dp"
+        android:fontFamily="sans-serif"
+        android:text="Add Book!"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp" />
 
 </RelativeLayout>

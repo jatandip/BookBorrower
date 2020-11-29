@@ -25,6 +25,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -57,8 +58,8 @@ public class AddBook extends AppCompatActivity {
     private EditText ISBNEditText;
     private Button galleryPictureButton;
     private Button cameraPictureButton;
-    private Button uploadButton;
-    private Button scanButton;
+    private ImageButton uploadButton;
+    private ImageButton scanButton;
     private ImageView bookImageView;
     private String currentPath;
     private Uri uri;

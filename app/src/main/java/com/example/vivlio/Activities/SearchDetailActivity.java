@@ -166,7 +166,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                                     newRequestedBook.put("status", "pending");
                                     GeoPoint location = new GeoPoint(0, 0);
                                     newRequestedBook.put("location", location);
-                                    newRequestedBook.put("path", searchDetailBook.getPhotoURL());
+                                    newRequestedBook.put("path", chosenOne.getPhotoUrl());
                                     newRequestedBook.put("owners", new ArrayList<String>());
 
                                     requestedCollection.document(searchDetailBook.getISBN()).set(newRequestedBook);

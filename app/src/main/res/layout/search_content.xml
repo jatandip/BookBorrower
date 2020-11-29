@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/SL_title"
@@ -11,6 +11,7 @@
         android:layout_height="40dp"
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="bottom"
+        android:maxLines="1"
         android:paddingLeft="15dp"
         android:text="loading..."
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -25,10 +26,10 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
         android:text="loading..."
         android:textColor="#A53131"
-        android:textStyle="italic"
-        android:paddingBottom="10dp"/>
+        android:textStyle="italic" />
 
 
 </LinearLayout>

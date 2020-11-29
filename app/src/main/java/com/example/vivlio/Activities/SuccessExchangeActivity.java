@@ -116,33 +116,35 @@ public class SuccessExchangeActivity extends AppCompatActivity {
 
                         //TODO CHANGE FOR BORROWER "accepted" > "borrowed"
                         if(isBorrower){
+                            Log.e("change", "borrower");
                             db.collection("users")
                                     .document(mAuth.getCurrentUser().getUid() +
-                                    "/requested/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                    "/requested/" + myISBN)
                             .update("status","borrowed");
 
                         } else if (isExchange) {
                             //TODO CHANGE FOR OWNER "accepted" > "borrowed"
+                            Log.e("change", "owner");
                             db.collection("users")
                                     .document(mAuth.getCurrentUser().getUid() +
-                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                            "/owned/" + myISBN)
                                     .update("status","borrowed");
                         } else if (isReturner) {
                             //TODO for returner delete from requested
+                            Log.e("change", "returner");
                             db.collection("users")
                                     .document(mAuth.getCurrentUser().getUid() +
-                                            "/requested/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                            "/requested/" + myISBN)
                                     .delete();
                         } else {
                             //TODO for owner remove borrower and change status borrowed > available
+                            Log.e("change", "reviecver");
                             db.collection("users")
                                     .document(mAuth.getCurrentUser().getUid() +
-                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
+                                            "/owned/" + myISBN)
                                     .update("status","available");
-                            db.collection("users")
-                                    .document(mAuth.getCurrentUser().getUid() +
-                                            "/owned/" + myISBN.substring(0,3) + "-" + myISBN.substring(3))
-                                    .update("borrowers","");
+                        // doesnt delete after return, check reviever
+                        // check status update with lend borrow
                         }
 
                     } else if (otherISBN == ""){

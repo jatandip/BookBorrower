@@ -60,8 +60,8 @@
         android:layout_marginTop="172dp"
         android:layout_marginEnd="52dp"
         android:textCursorDrawable="@android:color/background_dark"
+        android:paddingLeft="5dp"
         android:background="@drawable/edit_text_border"
-
         android:layout_marginRight="52dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -87,8 +87,8 @@
         android:text="phonenumber"
         android:textColor="#2C2A2A"
         android:textCursorDrawable="@android:color/background_dark"
+        android:paddingLeft="5dp"
         android:background="@drawable/edit_text_border"
-
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -78,16 +78,16 @@ public class CreateAccountActivity extends AppCompatActivity {
                 final String phone = phoneET.getText().toString().trim();
                 final String password = passwordET.getText().toString().trim();
                 String repassword = repasswordET.getText().toString().trim();
-                //tester
+
                 if(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(username) ||
                         TextUtils.isEmpty(email) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) ||
                         TextUtils.isEmpty(repassword)) {
                     Toast.makeText(CreateAccountActivity.this, "Please fill in all fields",
                             Toast.LENGTH_SHORT).show();
-                }else if(password.equals(repassword) == false) {
+                }else if(!password.equals(repassword)) {
                     Toast.makeText(CreateAccountActivity.this, "Passwords do not match!",
                             Toast.LENGTH_SHORT).show();
-                }else if (email.contains("@") == false || email.contains(".") == false){
+                }else if (!email.contains("@") || (!email.contains("."))){
                     Toast.makeText(CreateAccountActivity.this, "Invalid email!",
                             Toast.LENGTH_SHORT).show();
                 } else {
@@ -143,13 +143,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                 }
                                             }
                                         });
-                            } else {
+                            } else if (!uniqueUsername) {
                                 Toast.makeText(CreateAccountActivity.this, "Username already in use!",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }});
-
-
                 }
             }
         });

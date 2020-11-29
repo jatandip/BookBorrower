@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -63,6 +64,17 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         returnedData = new Intent();
         detailFetcher = new BookDetailFetcher();
         validator = new ValidateISBN();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                returnedData.putExtra("isbn", (String)null);
+                setResult(RESULT_CANCELED, returnedData);
+                finish();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         initDetectorSources();
     }
 
@@ -206,4 +218,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         super.onResume();
         initDetectorSources();
     }
+
+
 }

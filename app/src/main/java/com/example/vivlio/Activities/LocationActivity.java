@@ -75,8 +75,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     public LocationActivity(){
         looker = false;
         changed = false;
-        longitude = -113.6242;
-        latitude = 53.5225;
+
     }
 
     /**
@@ -100,10 +99,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             checker = b.getInt("check");
             isbn = b.getString("isbn");
             borrower = b.getString("borrower");
-
+            longitude = b.getDouble("long");
+            latitude = b.getDouble("lat");
             if (checker == 1){
-                longitude = b.getDouble("long");
-                latitude = b.getDouble("lat");
                 looker = true;
                 doneButton.setVisibility(View.VISIBLE);
             }else{
@@ -241,6 +239,11 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         if (looker == false){
             getLocation();
         }else{
+
+            Log.i("lat", String.valueOf(latitude));
+            Log.i("long", String.valueOf(longitude));
+
+
             Geocoder geocoder = new Geocoder(getApplicationContext());
             try {
                 List<Address> addresses =
@@ -254,6 +257,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            catch (Exception e) {
+                LatLng latlong = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(latlong));
+                mMap.setMaxZoomPreference(20);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 12.0f));
             }
         }
     }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.vivlio.Activities.LocationActivity;
@@ -82,8 +83,8 @@ public class PendingCustomList extends ArrayAdapter<User> {
         final User user = users.get(position);
         Log.i("user", String.valueOf(user.getName()));
 
-        Button decline = view.findViewById(R.id.declineButtonPending);
-        Button accept = view.findViewById(R.id.acceptButtonPending);
+        ImageButton decline = view.findViewById(R.id.declineButtonPending);
+        ImageButton accept = view.findViewById(R.id.acceptButtonPending);
 
 
         db = FirebaseFirestore.getInstance();

@@ -55,7 +55,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private FirebaseAuth mAuth;
     public FirebaseUser firebaseUser;
     private String isbn;
-
+    private String borrower;
 
     /**
      * LocationActivity constructor for the borrower
@@ -73,8 +73,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
      * West Edmonton Mall
      */
     public LocationActivity(){
-        longitude = -113.6242;
-        latitude = 53.5225;
         looker = false;
         changed = false;
     }
@@ -99,9 +97,10 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         if (b != null){
             checker = b.getInt("check");
             isbn = b.getString("isbn");
+            borrower = b.getString("borrower");
+            longitude = b.getDouble("long");
+            latitude = b.getDouble("lat");
             if (checker == 1){
-                longitude = b.getDouble("long");
-                latitude = b.getDouble("lat");
                 looker = true;
                 doneButton.setVisibility(View.VISIBLE);
             }else{
@@ -193,10 +192,34 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
             });
 
+
+            if (!borrower.equals(uid)) {
+
+
+                DocumentReference doc = db.collection("users")
+                        .document(borrower + "/requested/" + isbn);
+                doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot document = task.getResult();
+                        GeoPoint geo = new GeoPoint(latitude, longitude);
+
+                        db.collection("users").document(borrower + "/requested/" + isbn)
+                                .update(
+                                        "location", geo
+                                );
+                    }
+
+                });
+
+
+            }
+
             finish();
 
 
-        }else if (looker == false){
+        }else if (!looker){
             Toast.makeText(this,"You have not selected a location yet", Toast.LENGTH_SHORT).show();
         }else{
             finish();

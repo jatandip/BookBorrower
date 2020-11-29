@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.vivlio.R;
 
@@ -26,8 +27,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     EditText emailEdit;
     EditText phoneEdit;
-    Button save;
-    Button cancel;
+    ImageButton save;
+    ImageButton cancel;
     String newEmail;
     String newPhone;
 

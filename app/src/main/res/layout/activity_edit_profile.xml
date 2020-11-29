@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    android:background="#C8C8C8">
+    android:background="#F8F8F8">
 
     <TextView
         android:id="@+id/backgroundColor"
@@ -27,6 +27,9 @@
         android:layout_marginRight="78dp"
         android:text="Edit Profile"
         android:textColor="#F8F8F8"
+
+
+
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +59,8 @@
         android:layout_marginLeft="51dp"
         android:layout_marginTop="172dp"
         android:layout_marginEnd="52dp"
+        android:textCursorDrawable="@android:color/background_dark"
+        android:background="@drawable/edit_text_border"
 
         android:layout_marginRight="52dp"
         android:ems="10"
@@ -81,12 +86,15 @@
         android:inputType="textPersonName"
         android:text="phonenumber"
         android:textColor="#2C2A2A"
+        android:textCursorDrawable="@android:color/background_dark"
+        android:background="@drawable/edit_text_border"
+
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/cancel_button"
         android:layout_width="113dp"
         android:layout_height="38dp"
@@ -98,15 +106,14 @@
 
         android:layout_marginBottom="27dp"
         android:background="@drawable/login_loginbuttonround"
-        android:scaleType="centerCrop"
+
+
         android:text="CANCEL"
         android:textColor="#FFFFFF"
-        app:backgroundTint="@drawable/fg1"
-        app:iconTint="#A56E6E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/saveButton"
         android:layout_width="113dp"
         android:layout_height="38dp"
@@ -115,9 +122,9 @@
 
         android:layout_marginBottom="27dp"
         android:background="@drawable/login_loginbuttonround"
+
         android:text="SAVE"
         android:textColor="#FFFFFF"
-        app:backgroundTint="@drawable/fg1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -132,7 +139,7 @@
         android:layout_marginEnd="324dp"
         android:layout_marginRight="324dp"
         android:text="Email:"
-        android:textColor="#A53131"
+        android:textColor="#2C2A2A"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,10 +155,34 @@
         android:layout_marginEnd="249dp"
         android:layout_marginRight="249dp"
         android:text="PhoneNumber:"
-        android:textColor="#A53131"
+        android:textColor="#2C2A2A"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="94dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginBottom="23dp"
+        android:text="CANCEL"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="32dp"
+        android:text="SAVE"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

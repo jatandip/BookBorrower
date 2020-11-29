@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.vivlio.Book;
 import com.example.vivlio.R;
@@ -32,9 +33,9 @@ public class EditBook extends AppCompatActivity {
     private EditText title;
     private EditText author;
     private EditText isbn;
-    private Button delete;
-    private Button cancel;
-    private Button save;
+    private ImageButton delete;
+    private ImageButton cancel;
+    private ImageButton save;
     private Book book;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;

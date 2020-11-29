@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +37,6 @@ public class Mybook_Accepted extends AppCompatActivity {
     private TextView titleView;
     private TextView authorView;
     private TextView isbnView;
-    private Button editBtn;
     private Book book;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
@@ -48,7 +48,7 @@ public class Mybook_Accepted extends AppCompatActivity {
     public static User currentUser;
     private String nameN;
     private String usernameN;
-    private Button mapsBtn;
+    private ImageButton mapsBtn;
     private GeoPoint geo;
 
 

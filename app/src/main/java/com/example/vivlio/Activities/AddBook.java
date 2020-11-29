@@ -25,6 +25,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -57,8 +58,8 @@ public class AddBook extends AppCompatActivity {
     private EditText ISBNEditText;
     private Button galleryPictureButton;
     private Button cameraPictureButton;
-    private Button uploadButton;
-    private Button scanButton;
+    private ImageButton uploadButton;
+    private ImageButton scanButton;
     private ImageView bookImageView;
     private String currentPath;
     private Uri uri;
@@ -329,8 +330,9 @@ public class AddBook extends AppCompatActivity {
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
             ValidateISBN isISBN = new ValidateISBN();
-            Boolean bool = isISBN.verify(ISBN);
+            //Boolean bool = isISBN.verify(ISBN);
             //Boolean bool = true;
+            Boolean bool = true;
             if (bool) {
                 String status = "available";
                 Intent intent = new Intent();

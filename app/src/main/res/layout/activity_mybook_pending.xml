@@ -66,9 +66,7 @@
         android:text="TextView"
         android:textColor="#BDB1B1"
         android:textSize="20dp"
-        android:background="@drawable/edit_text_border"
         android:paddingLeft="5dp"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,9 +79,7 @@
         android:layout_marginTop="229dp"
         android:text="TextView"
         android:textColor="#BDB1B1"
-        android:background="@drawable/edit_text_border"
         android:paddingLeft="5dp"
-
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

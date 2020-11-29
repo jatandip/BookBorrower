@@ -141,6 +141,7 @@
         android:text="Email:"
         android:textColor="#2C2A2A"
         android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

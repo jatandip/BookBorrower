@@ -32,7 +32,6 @@ public class BookDetailFetcher {
      * sequence of bytes.
      * @param isbn The ISBN code used as a search term
      */
-    // TODO: Consider having request function return a hashmap instead of having two get functions
     public void request(String isbn) {
 
         try {
@@ -109,8 +108,6 @@ public class BookDetailFetcher {
      * @return Returns a list filled with the book's title and author
      * @throws IOException If an I/O error occurs in {@code JsonReader} methods
      */
-    // TODO: needs to handle "subtitle" field in JSON object
-    // TODO: concatenate multiple authors into one string
     private void readVolumeInfo(JsonReader reader) throws IOException {
         reader.beginObject();
 
@@ -125,10 +122,11 @@ public class BookDetailFetcher {
             } else if (name.equals("authors")) {
                 reader.beginArray();
                 while (reader.hasNext()) {
-
-                    // take first author if multiple exist
                     if (authors == null) {
                         authors = reader.nextString();
+                    } else {
+                        String additionalAuthor = reader.nextString();
+                        authors = authorConcat(authors, additionalAuthor);
                     }
                 }
                 reader.endArray();
@@ -144,8 +142,8 @@ public class BookDetailFetcher {
         return combinedTitle;
     }
 
-    private String authorConcat(String previous, String current) {
-        String combinedAuthor = previous + ", " + current;
+    private String authorConcat(String concated, String current) {
+        String combinedAuthor = concated + ", " + current;
         return combinedAuthor;
     }
 }

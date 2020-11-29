@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -133,6 +134,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             @Override
             public void release() {
                 // TODO: display small popup to inform user the scanner has been stopped
+//                Toast.makeText(getApplicationContext(), " ", Toast.LENGTH_SHORT).show();
             }
 
             /**
@@ -145,14 +147,25 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
-                    detailFetcher.request(barcodeData);
-                    System.out.println(barcodes.size());
-                    System.out.println(detailFetcher.getTitle());
-                    System.out.println(detailFetcher.getAuthor());
-                    returnedData.putExtra("isbn", barcodeData);
-                    returnedData.putExtra("title", detailFetcher.getTitle());
-                    returnedData.putExtra("author", detailFetcher.getAuthor());
-                    setResult(RESULT_OK, returnedData);
+                    Boolean isISBN = validator.verify(barcodeData);
+                    if (isISBN) {
+                        detailFetcher.request(barcodeData);
+                        System.out.println(detailFetcher.getTitle());
+                        System.out.println(detailFetcher.getAuthor());
+                        returnedData.putExtra("isbn", barcodeData);
+                        returnedData.putExtra("title", detailFetcher.getTitle());
+                        returnedData.putExtra("author", detailFetcher.getAuthor());
+                        setResult(RESULT_OK, returnedData);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Not a valid ISBN",
+                                        Toast.LENGTH_SHORT).show();
+                        returnedData.putExtra("isbn", (String)null);
+                        returnedData.putExtra("title", (String)null);
+                        returnedData.putExtra("author", (String)null);
+
+                        // TODO: might wanna return different request code
+                        setResult(RESULT_OK, returnedData);
+                    }
                     finish();
                 }
             }

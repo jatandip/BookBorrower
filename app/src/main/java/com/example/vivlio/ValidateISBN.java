@@ -1,7 +1,15 @@
 package com.example.vivlio;
 
+/**
+ * Verifies ISBN 13 or ISBN 10 using their check digit.
+ */
 public class ValidateISBN {
 
+    /**
+     *
+     * @param code THe ISBN code to be checked
+     * @return Return {@code true} if check digit matches, {@code false} otherwise
+     */
     public boolean verify(String code) {
         if (code.length() == 13 && isIsbn13(code)) {
             return true;

@@ -42,6 +42,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private CollectionReference collectionReference;
     private boolean uniqueUsername = true;
+    private boolean closed = false;
 
     /**
      * Handles creation of a new account. ocne all the fields have been properly filled, will call
@@ -132,10 +133,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                             mAuth.getCurrentUser().getUid() +
                                                                     "/owned" + "/BLANK_BOOK").set(info);
                                                     //collectionReference = db.collection("users" + "/" + currentUID + "/requested");
-
+                                                    closed = true;
                                                     finish();
                                                     //openLoginActivity();
-                                                } else {
+                                                } else if (!closed) {
                                                     // If sign in fails, display a message to the user.
                                                     Log.w("Login Failed", "signInWithEmail:failure", task.getException());
                                                     Toast.makeText(CreateAccountActivity.this, "Weak password!",
@@ -143,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                 }
                                             }
                                         });
-                            } else if (!uniqueUsername) {
+                            } else if (!uniqueUsername && !closed) {
                                 Toast.makeText(CreateAccountActivity.this, "Username already in use!",
                                         Toast.LENGTH_SHORT).show();
                             }

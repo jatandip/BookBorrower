@@ -41,6 +41,7 @@ import com.squareup.picasso.Picasso;
 public class RequestDetailActivity extends AppCompatActivity {
 
     private Book book;
+    private String uid;
     private FirebaseFirestore db;
 
     /**
@@ -56,6 +57,8 @@ public class RequestDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("book");
+        uid = (String) intent.getSerializableExtra("user");
+
 
         // set book information TextViews
         TextView titleView = findViewById(R.id.tv_request_title);
@@ -72,7 +75,6 @@ public class RequestDetailActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.iv_request_image);
         Picasso.with(RequestDetailActivity.this)
                 .load(book.getPhotoURL())
-                .placeholder(R.drawable.ic_dashboard_black_24dp)
                 .into(imageView);
 
         // create location button and hide if status is not accepted
@@ -109,7 +111,7 @@ public class RequestDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // get location from database
                 db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.document("users/" + book.getOwner()
+                DocumentReference docRef = db.document("users/" + uid
                     + "/requested/" + book.getISBN());
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override

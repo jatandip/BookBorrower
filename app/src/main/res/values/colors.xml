@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2e2e2e</color>
+    <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#ffffff</color>
+    <color name="colorTabBar">#3f94f2</color>
+    <color name="colorListBackground">#C8C8C8</color>
+    <color name="colorText1">#000000</color>
+    <color name="colorText2">#A53131</color>
+    <color name="colorText3">#6A6A6A</color>
+    <color name="colorText4">#EDEDED</color>
+
 </resources>

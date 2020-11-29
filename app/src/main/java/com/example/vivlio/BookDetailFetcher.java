@@ -143,4 +143,9 @@ public class BookDetailFetcher {
         String combinedTitle = title + ": " + subtitle;
         return combinedTitle;
     }
+
+    private String authorConcat(String previous, String current) {
+        String combinedAuthor = previous + ", " + current;
+        return combinedAuthor;
+    }
 }

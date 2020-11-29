@@ -127,6 +127,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      */
     // TODO: display toast notification if the ISBN isn't found on google api
     // TODO: verify ISBN and display toast notification if invalid
+    // TODO: temporarily halt killing the activity to let toast message linger
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
             @Override

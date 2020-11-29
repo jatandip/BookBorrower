@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-light"
-            android:text="RECIEVING"
+            android:text="RECEIVING"
             android:textColor="#2196F3"
             android:textSize="24sp"
             android:textStyle="bold"

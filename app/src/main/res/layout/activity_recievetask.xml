@@ -13,7 +13,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:fontFamily="sans-serif-light"
-        android:text="Which book are you recieving?"
+        android:text="Which book are you receiving?"
         android:textColor="#ededed"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/RETURNT_LVbooks"

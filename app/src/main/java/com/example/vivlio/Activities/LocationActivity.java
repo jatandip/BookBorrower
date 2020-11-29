@@ -258,6 +258,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            catch (Exception e) {
+                LatLng latlong = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(latlong));
+                mMap.setMaxZoomPreference(20);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 12.0f));
+            }
         }
     }
 }

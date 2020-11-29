@@ -320,6 +320,7 @@ public class MyRequestListFragment extends Fragment {
 
                 Intent intent = new Intent(MyRequestListFragment.this.getActivity(), RequestDetailActivity.class);
                 intent.putExtra("book", selected);
+                intent.putExtra("user", uid);
                 startActivity(intent);
             }
         });

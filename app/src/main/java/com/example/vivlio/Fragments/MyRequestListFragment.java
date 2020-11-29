@@ -124,27 +124,28 @@ public class MyRequestListFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 requestDataList.clear();
-                for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                {
-                    ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-                    if (owner.isEmpty()) {
-                        owner.add(mAuth.getCurrentUser().getUid());
+                for (QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                    if (!doc.getData().containsKey("blank")) {
+                        ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+                        if (owner.isEmpty()) {
+                            owner.add(mAuth.getCurrentUser().getUid());
+                        }
+
+                        String photoPath = null;
+                        if (doc.getData().get("path") != null) {
+                            photoPath = doc.getData().get("path").toString();
+                        }
+
+                        Book book = new Book(doc.getData().get("title").toString(),
+                                doc.getData().get("author").toString(),
+                                doc.getId(),
+                                doc.getData().get("status").toString(),
+                                owner.get(0),
+                                owner.get(0),
+                                photoPath);
+
+                        requestDataList.add(book);
                     }
-
-                    String photoPath = null;
-                    if (doc.getData().get("path") != null) {
-                        photoPath = doc.getData().get("path").toString();
-                    }
-
-                    Book book = new Book(doc.getData().get("title").toString(),
-                            doc.getData().get("author").toString(),
-                            doc.getId(),
-                            doc.getData().get("status").toString(),
-                            owner.get(0),
-                            owner.get(0),
-                            photoPath);
-
-                    requestDataList.add(book);
                 }
                 requestAdapter.notifyDataSetChanged();
             }
@@ -162,41 +163,7 @@ public class MyRequestListFragment extends Fragment {
 
                             for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-                                if (owner.isEmpty()) {
-                                    owner.add(mAuth.getCurrentUser().getUid());
-                                }
-
-                                String photoPath = null;
-                                if (doc.getData().get("path") != null) {
-                                    photoPath = doc.getData().get("path").toString();
-                                }
-
-                                Book book = new Book(doc.getData().get("title").toString(),
-                                        doc.getData().get("author").toString(),
-                                        doc.getId(),
-                                        doc.getData().get("status").toString(),
-                                        owner.get(0),
-                                        owner.get(0),
-                                        photoPath);
-
-                                requestDataList.add(book);
-                            }
-                            requestAdapter.notifyDataSetChanged();
-
-                        }
-                    });
-                }
-
-                if (tab.getPosition() == 1) {
-                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
-                            requestDataList.clear();
-
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                if (doc.getData().get("status").toString().equals("accepted")) {
-
+                                if (!doc.getData().containsKey("blank")) {
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
                                     if (owner.isEmpty()) {
                                         owner.add(mAuth.getCurrentUser().getUid());
@@ -219,6 +186,44 @@ public class MyRequestListFragment extends Fragment {
                                 }
                             }
                             requestAdapter.notifyDataSetChanged();
+
+                        }
+                    });
+                }
+
+                if (tab.getPosition() == 1) {
+                    collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
+                            requestDataList.clear();
+
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
+                                    if (doc.getData().get("status").toString().equals("accepted")) {
+
+                                        ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+                                        if (owner.isEmpty()) {
+                                            owner.add(mAuth.getCurrentUser().getUid());
+                                        }
+
+                                        String photoPath = null;
+                                        if (doc.getData().get("path") != null) {
+                                            photoPath = doc.getData().get("path").toString();
+                                        }
+
+                                        Book book = new Book(doc.getData().get("title").toString(),
+                                                doc.getData().get("author").toString(),
+                                                doc.getId(),
+                                                doc.getData().get("status").toString(),
+                                                owner.get(0),
+                                                owner.get(0),
+                                                photoPath);
+
+                                        requestDataList.add(book);
+                                    }
+                                }
+                            }
+                            requestAdapter.notifyDataSetChanged();
                         }
                     });
                 }
@@ -230,27 +235,29 @@ public class MyRequestListFragment extends Fragment {
                             requestDataList.clear();
 
                             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                if (doc.getData().get("status").toString().equals("borrowed")) {
+                                if (!doc.getData().containsKey("blank")) {
+                                    if (doc.getData().get("status").toString().equals("borrowed")) {
 
-                                    ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
-                                    if(owner.isEmpty()) {
-                                        owner.add(mAuth.getCurrentUser().getUid());
+                                        ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
+                                        if (owner.isEmpty()) {
+                                            owner.add(mAuth.getCurrentUser().getUid());
+                                        }
+
+                                        String photoPath = null;
+                                        if (doc.getData().get("path") != null) {
+                                            photoPath = doc.getData().get("path").toString();
+                                        }
+
+                                        Book book = new Book(doc.getData().get("title").toString(),
+                                                doc.getData().get("author").toString(),
+                                                doc.getId(),
+                                                doc.getData().get("status").toString(),
+                                                owner.get(0),
+                                                uid,
+                                                photoPath);
+
+                                        requestDataList.add(book);
                                     }
-
-                                    String photoPath = null;
-                                    if (doc.getData().get("path") != null) {
-                                        photoPath = doc.getData().get("path").toString();
-                                    }
-
-                                    Book book = new Book(doc.getData().get("title").toString(),
-                                            doc.getData().get("author").toString(),
-                                            doc.getId(),
-                                            doc.getData().get("status").toString(),
-                                            owner.get(0),
-                                            uid,
-                                            photoPath);
-
-                                    requestDataList.add(book);
                                 }
                             }
                             requestAdapter.notifyDataSetChanged();

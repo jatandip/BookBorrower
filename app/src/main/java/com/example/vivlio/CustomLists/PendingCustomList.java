@@ -162,6 +162,7 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
                         DocumentSnapshot document = task.getResult();
                         ArrayList<String> borrowers = (ArrayList<String>) document.getData().get("borrowers");
 

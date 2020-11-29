@@ -147,27 +147,29 @@ public class MyBookListFragment extends Fragment {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
                 bookDataList.clear();
-                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                {
-                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                    if (!borrowers.isEmpty()) {
-                        String currentOwner = borrowers.get(0);
+                for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                    if (!doc.getData().containsKey("blank")) {
 
-                        try {
-                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
-                            bookDataList.add(book);
-                        } catch (Exception e){
-                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
-                            bookDataList.add(book);
-                        }
+                        ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                        if (!borrowers.isEmpty()) {
+                            String currentOwner = borrowers.get(0);
 
-                    }else {
-                        try {
-                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
-                            bookDataList.add(book);
-                        } catch (Exception e){
-                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
-                            bookDataList.add(book);
+                            try {
+                                Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
+                                bookDataList.add(book);
+                            } catch (Exception e) {
+                                Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                bookDataList.add(book);
+                            }
+
+                        } else {
+                            try {
+                                Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
+                                bookDataList.add(book);
+                            } catch (Exception e) {
+                                Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                bookDataList.add(book);
+                            }
                         }
                     }
                 }
@@ -185,33 +187,35 @@ public class MyBookListFragment extends Fragment {
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
                             bookDataList.clear();
-                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                            {
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
 
-                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.isEmpty()) {
-                                    String currentOwner = borrowers.get(0);
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty()) {
+                                        String currentOwner = borrowers.get(0);
 
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
-                                        bookDataList.add(book);
-                                    }
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                            bookDataList.add(book);
+                                        }
 
-                                }else {
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
-                                        bookDataList.add(book);
+                                    } else {
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                            bookDataList.add(book);
+                                        }
                                     }
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
                         }
+
                     });
                 }
 
@@ -221,23 +225,24 @@ public class MyBookListFragment extends Fragment {
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
                             bookDataList.clear();
-                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                            {
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
 
-                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
-                                    String currentOwner = borrowers.get(0);
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("accepted")) {
+                                        String currentOwner = borrowers.get(0);
 
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
-                                        bookDataList.add(book);
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                            bookDataList.add(book);
+                                        }
+
                                     }
 
                                 }
-
                             }
                             bookAdapter.notifyDataSetChanged();
                         }
@@ -252,17 +257,19 @@ public class MyBookListFragment extends Fragment {
                             bookDataList.clear();
                             for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
-                                if (doc.getData().get("status").toString().equals("available")) {
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
-                                        bookDataList.add(book);
+                                if (!doc.getData().containsKey("blank")) {
+
+                                    if (doc.getData().get("status").toString().equals("available")) {
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                            bookDataList.add(book);
+                                        }
+
+
                                     }
-
-
-
                                 }
                             }
                             bookAdapter.notifyDataSetChanged();
@@ -277,15 +284,17 @@ public class MyBookListFragment extends Fragment {
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
                             bookDataList.clear();
-                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                            {
-                                if (doc.getData().get("status").toString().equals("pending")) {
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
-                                        bookDataList.add(book);
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
+
+                                    if (doc.getData().get("status").toString().equals("pending")) {
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, uid, "link");
+                                            bookDataList.add(book);
+                                        }
                                     }
                                 }
                             }
@@ -300,18 +309,20 @@ public class MyBookListFragment extends Fragment {
                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                                 FirebaseFirestoreException error) {
                             bookDataList.clear();
-                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                            {
-                                ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
-                                if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
-                                    String currentOwner = borrowers.get(0);
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                                if (!doc.getData().containsKey("blank")) {
 
-                                    try {
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
-                                        bookDataList.add(book);
-                                    } catch (Exception e){
-                                        Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
-                                        bookDataList.add(book);
+                                    ArrayList<String> borrowers = (ArrayList<String>) doc.getData().get("borrowers");
+                                    if (!borrowers.isEmpty() && doc.getData().get("status").toString().equals("borrowed")) {
+                                        String currentOwner = borrowers.get(0);
+
+                                        try {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, doc.getData().get("path").toString());
+                                            bookDataList.add(book);
+                                        } catch (Exception e) {
+                                            Book book = new Book(doc.getData().get("title").toString(), doc.getData().get("author").toString(), doc.getId(), doc.getData().get("status").toString(), uid, currentOwner, "link");
+                                            bookDataList.add(book);
+                                        }
                                     }
                                 }
                             }

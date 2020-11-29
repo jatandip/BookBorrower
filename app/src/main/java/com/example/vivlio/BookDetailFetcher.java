@@ -20,10 +20,12 @@ public class BookDetailFetcher {
     private HttpURLConnection urlConnection;
     private String title;
     private String authors;
+    private Boolean found;
 
     public BookDetailFetcher() {
         title = null;
         authors = null;
+        found = false;
     }
 
     /**
@@ -58,6 +60,8 @@ public class BookDetailFetcher {
         return authors;
     }
 
+    public Boolean isFound() {return found;}
+
     /**
      * Turns the input stream into a JSON object and reads/parses for the book's
      * title and authors. Saves them under their respective class attributes.
@@ -74,6 +78,13 @@ public class BookDetailFetcher {
                 reader.beginArray();
                 readItemsArray(reader);
                 reader.endArray();
+            } else if (name.equals("totalItems")) {
+                // if the api doesn't find the book
+                if (reader.nextInt() == 0) {
+                    found = false;
+                } else {
+                    found = true;
+                }
             } else {
                 reader.skipValue();
             }
@@ -142,6 +153,12 @@ public class BookDetailFetcher {
         return combinedTitle;
     }
 
+    /**
+     * Concatenates two author strings into one
+     * @param concated Previously combined author strings
+     * @param current Author string to be concatenated
+     * @return Combined author string
+     */
     private String authorConcat(String concated, String current) {
         String combinedAuthor = concated + ", " + current;
         return combinedAuthor;

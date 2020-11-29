@@ -68,12 +68,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
+                returnedData.putExtra("isbn", (String)null);
                 setResult(RESULT_CANCELED, returnedData);
                 finish();
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
-        
+
         initDetectorSources();
     }
 

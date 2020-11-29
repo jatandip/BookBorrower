@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
 
@@ -10,12 +11,27 @@
         android:id="@+id/bookName_View"
         android:layout_width="99dp"
         android:layout_height="30dp"
-        android:textSize="15sp">
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:text="loading..."
+        android:fontFamily="sans-serif-smallcaps"
+        android:paddingLeft="15dp"
+
+        android:textStyle="bold"
+        >
 
     </TextView>
 
     <TextView
         android:id="@+id/maker_View"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="loading..."
+        android:textColor="#A53131"
+        android:textStyle="italic"
+        android:paddingBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="31dp"
         android:textSize="15sp"></TextView>
@@ -23,6 +39,13 @@
     <TextView
         android:id="@+id/request_View"
         android:layout_width="match_parent"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="loading..."
+        android:textColor="#A53131"
+        android:textStyle="italic"
+        android:paddingBottom="10dp"
         android:layout_height="31dp"
         android:textSize="15sp"></TextView>
 

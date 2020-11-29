@@ -64,8 +64,6 @@
         android:background="@drawable/edit_text_border"
         android:hint="ISBN"
 
-        android:inputType="number"/>
-
     <EditText
         android:id="@+id/edit_author"
         android:layout_width="match_parent"

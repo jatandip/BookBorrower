@@ -2,77 +2,81 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <TextView
         android:id="@+id/usernameView"
-        android:layout_width="0dp"
+        android:textColor="#2C2A2A"
+        android:layout_width="311dp"
         android:layout_height="27dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView21"
-        app:layout_constraintEnd_toEndOf="@+id/mobileView"
-        app:layout_constraintStart_toStartOf="@+id/textView22"
-        app:layout_constraintTop_toTopOf="@+id/textView22" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/mobileView"
+        android:textColor="#2C2A2A"
+
         android:layout_width="312dp"
         android:layout_height="28dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="185dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="24dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView21" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/emailView"
-        android:layout_width="0dp"
+        android:textColor="#2C2A2A"
+
+        android:layout_width="310dp"
         android:layout_height="25dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="255dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
         android:text="TextView"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/mobileView"
-        app:layout_constraintStart_toStartOf="@+id/mobileView"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/backgroundColor"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="411dp"
+        android:layout_height="87dp"
         android:background="@drawable/fg1"
-        app:layout_constraintBottom_toTopOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="0dp"
+        android:textColor="#FFFFFF"
+
+        android:layout_width="274dp"
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="31dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="34dp"
         android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView22"
-        app:layout_constraintEnd_toStartOf="@+id/editButton"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,39 +84,48 @@
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="55dp"
-        android:layout_marginRight="55dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="54dp"
+
+
+        android:layout_marginRight="54dp"
         android:background="@drawable/editpencil"
         android:backgroundTint="#FFEB3B"
-
-
         android:clickable="true"
         android:src="@drawable/editpencil"
         app:backgroundTint="#FFEB3B"
-        app:layout_constraintBottom_toTopOf="@+id/usernameView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/nameView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="237dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginRight="303dp"
         android:text="Email:"
-        app:layout_constraintBottom_toBottomOf="@+id/emailView"
-        app:layout_constraintStart_toStartOf="@+id/emailView" />
+        android:textColor="#2C2A2A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="167dp"
+        android:layout_marginEnd="298dp"
+        android:layout_marginRight="298dp"
         android:text="Mobile"
-        app:layout_constraintStart_toStartOf="@+id/mobileView"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        android:textColor="#2C2A2A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView22"
@@ -121,7 +134,11 @@
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="103dp"
+        android:layout_marginEnd="277dp"
+        android:layout_marginRight="277dp"
         android:text="Username"
-        app:layout_constraintStart_toStartOf="@+id/backgroundColor"
+        android:textColor="#2C2A2A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

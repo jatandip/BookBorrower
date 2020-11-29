@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.PendingCustomList;
@@ -55,8 +57,12 @@ public class Mybook_Pending extends AppCompatActivity {
     private String usernameN;
     private String phonenumber;
     private String emailN;
-    private Button backButton;
+    private ImageButton backButton;
     private Boolean passed = false;
+    private TextView authorView;
+    private TextView titleView;
+    private TextView isbnView;
+
 
 
     /**
@@ -73,6 +79,10 @@ public class Mybook_Pending extends AppCompatActivity {
         setContentView(R.layout.activity_mybook_pending);
 
         backButton = findViewById(R.id.backButtonPending);
+        authorView = findViewById(R.id.authorPending);
+        titleView = findViewById(R.id.titlePending);
+        isbnView = findViewById(R.id.isbnPending);
+
 
 
 
@@ -82,6 +92,13 @@ public class Mybook_Pending extends AppCompatActivity {
         listofBooks.setAdapter(bookAdapter);
         Intent intent = getIntent();
         book = (Book) intent.getSerializableExtra("book");
+
+        authorView.setText(book.getAuthor());
+        titleView.setText(book.getTitle());
+        isbnView.setText(book.getISBN());
+
+
+
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -96,12 +113,22 @@ public class Mybook_Pending extends AppCompatActivity {
 
 
 
+
+
+
+
+
         user = mAuth.getCurrentUser();
         DocumentReference docRef = db.collection("users").document(user.getUid() + "/owned/" + book.getISBN());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot document = task.getResult();
+
+
+
+
+
                 borrowers = (ArrayList<String>) document.getData().get("borrowers");
                 //Log.i("borrowers", String.valueOf(borrowers));
 
@@ -126,6 +153,10 @@ public class Mybook_Pending extends AppCompatActivity {
                             bookDataList.add(add);
                             bookAdapter.notifyDataSetChanged();
                             passed = true;
+
+
+
+
 
 
                         }

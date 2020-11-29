@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background"
     android:clickable="true">
 
     <TextView
         android:id="@+id/pendingNameView"
-        android:layout_width="141dp"
-        android:layout_height="28dp"
+        android:layout_width="197dp"
+        android:layout_height="31dp"
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="18dp"
         android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,41 +27,70 @@
         android:layout_marginStart="17dp"
         android:layout_marginLeft="17dp"
         android:layout_marginTop="48dp"
+        android:textColor="#A53131"
+        android:textStyle="italic"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/declineButtonPending"
-        android:layout_width="90dp"
-        android:layout_height="33dp"
+        android:layout_width="74dp"
+        android:layout_height="30dp"
         android:layout_marginStart="232dp"
         android:layout_marginLeft="232dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="110dp"
         android:layout_marginRight="110dp"
         android:layout_marginBottom="22dp"
+        android:background="@drawable/login_loginbuttonround"
         android:text="DECLINE"
+
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/acceptButtonPending"
-        android:layout_width="89dp"
-        android:layout_height="34dp"
+        android:layout_width="77dp"
+        android:layout_height="31dp"
         android:layout_marginStart="322dp"
         android:layout_marginLeft="322dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="21dp"
+        android:background="@drawable/login_loginbuttonround"
         android:text="ACCEPT"
+
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView43"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="DECLINE"
+        app:layout_constraintEnd_toEndOf="@+id/declineButtonPending"
+        app:layout_constraintStart_toStartOf="@+id/declineButtonPending"
+        app:layout_constraintTop_toTopOf="@+id/declineButtonPending" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="ACCEPT"
+        app:layout_constraintEnd_toEndOf="@+id/acceptButtonPending"
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="@+id/acceptButtonPending"
+        app:layout_constraintTop_toTopOf="@+id/acceptButtonPending" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,8 +73,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
      * West Edmonton Mall
      */
     public LocationActivity(){
-        longitude = -113.6242;
-        latitude = 53.5225;
         looker = false;
         changed = false;
     }
@@ -100,9 +98,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             checker = b.getInt("check");
             isbn = b.getString("isbn");
             borrower = b.getString("borrower");
+            longitude = b.getDouble("long");
+            latitude = b.getDouble("lat");
             if (checker == 1){
-                longitude = b.getDouble("long");
-                latitude = b.getDouble("lat");
                 looker = true;
                 doneButton.setVisibility(View.VISIBLE);
             }else{

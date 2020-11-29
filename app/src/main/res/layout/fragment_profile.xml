@@ -93,9 +93,11 @@
         android:backgroundTint="#FFEB3B"
         android:clickable="true"
         android:src="@drawable/editpencil"
+        app:tint="@color/white"
         app:backgroundTint="#FFEB3B"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="#9F2B2B" />
 
     <TextView
         android:id="@+id/textView20"

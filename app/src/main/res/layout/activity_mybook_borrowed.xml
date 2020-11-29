@@ -144,13 +144,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="328dp"
         android:layout_marginEnd="248dp"
         android:layout_marginRight="248dp"
+        android:paddingLeft="7dp"
         android:text="Borrowed By:"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

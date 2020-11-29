@@ -51,6 +51,9 @@
         <activity
             android:name=".Activities.SearchDetailActivity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity
+            android:name=".Activities.SearchUserDetailActivity"
+            android:parentActivityName=".Activities.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

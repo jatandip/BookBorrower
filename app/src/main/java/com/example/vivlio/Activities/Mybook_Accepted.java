@@ -92,7 +92,6 @@ public class Mybook_Accepted extends AppCompatActivity {
                 .load(book.getPhotoURL()).into(image);
 
 
-
         DocumentReference docRef = db.collection("users")
                 .document(curr);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

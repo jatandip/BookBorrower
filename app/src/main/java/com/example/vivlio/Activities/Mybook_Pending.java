@@ -113,11 +113,6 @@ public class Mybook_Pending extends AppCompatActivity {
 
 
 
-
-
-
-
-
         user = mAuth.getCurrentUser();
         DocumentReference docRef = db.collection("users").document(user.getUid() + "/owned/" + book.getISBN());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

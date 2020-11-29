@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -55,7 +56,7 @@ public class Mybook_Pending extends AppCompatActivity {
     private String usernameN;
     private String phonenumber;
     private String emailN;
-    private Button backButton;
+    private ImageButton backButton;
     private Boolean passed = false;
 
 

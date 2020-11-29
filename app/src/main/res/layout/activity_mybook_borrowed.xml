@@ -8,56 +8,28 @@
     tools:context=".Activities.Mybook_Avalible">
 
 
-    <TextView
-        android:id="@+id/titleViewBorrowed"
-        android:layout_width="256dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="139dp"
-        android:layout_marginRight="139dp"
-        android:layout_marginBottom="590dp"
-        android:text="TextView"
-        android:textColor="#050505"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <ImageView
         android:id="@+id/imageBorrowed"
-        android:layout_width="116dp"
-        android:layout_height="127dp"
-        android:layout_marginStart="278dp"
-        android:layout_marginLeft="278dp"
-        android:textColor="#050505"
+        android:layout_width="175dp"
+        android:layout_height="207dp"
+        android:layout_marginTop="85dp"
 
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginRight="17dp"
-        android:layout_marginBottom="519dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#050505"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/authorViewBorrowed"
         android:layout_width="173dp"
         android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="222dp"
-        android:textColor="#050505"
+        android:layout_marginStart="32dp"
 
-        android:layout_marginRight="222dp"
-        android:layout_marginBottom="531dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="140dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#BDB1B1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,59 +37,44 @@
         android:id="@+id/isbnViewBorrowed"
         android:layout_width="170dp"
         android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="159dp"
-        android:textColor="#050505"
+        android:layout_marginStart="32dp"
 
-        android:layout_marginEnd="225dp"
-        android:layout_marginRight="225dp"
-        android:layout_marginBottom="467dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="228dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/pendingView"
-        android:layout_width="243dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginTop="234dp"
-
-        android:layout_marginEnd="167dp"
-        android:layout_marginRight="167dp"
-        android:layout_marginBottom="398dp"
-        android:text="   Borrowed By:"
-        android:textColor="#050505"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#BDB1B1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/borrowName"
-        android:layout_width="138dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="17dp"
-        android:textColor="#050505"
+        android:layout_width="262dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
 
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="277dp"
+        android:layout_marginLeft="16dp"
+
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="133dp"
+        android:layout_marginRight="133dp"
+        android:textColor="#050505"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/borrowUserName"
-        android:layout_width="136dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="329dp"
+        android:layout_width="262dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
 
-        android:textColor="#050505"
+
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="420dp"
+        android:textColor="#BDB1B1"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,32 +84,77 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:textColor="#050505"
-
-        android:layout_marginTop="77dp"
-        android:layout_marginEnd="353dp"
-        android:layout_marginRight="353dp"
-        android:layout_marginBottom="563dp"
+        android:layout_marginTop="113dp"
         android:text="Author"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#050505"
+        android:textSize="20dp"
+        android:textStyle="bold"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
-        android:textColor="#050505"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="202dp"
+        android:text="ISBN"
+        android:textStyle="bold"
+
+        android:textColor="#050505"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="411dp"
+        android:layout_height="85dp"
+        android:background="@drawable/fg1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleViewBorrowed"
+
+        android:layout_width="392dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="23dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="413dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="292dp"
+
+        android:background="@drawable/fg1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="364dp"
-        android:layout_marginRight="364dp"
-        android:layout_marginBottom="500dp"
-        android:text="ISBN"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="332dp"
+        android:layout_marginEnd="248dp"
+        android:layout_marginRight="248dp"
+        android:text="Borrowed By:"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

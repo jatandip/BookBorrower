@@ -329,8 +329,9 @@ public class AddBook extends AppCompatActivity {
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
             ValidateISBN isISBN = new ValidateISBN();
-            Boolean bool = isISBN.verify(ISBN);
+            //Boolean bool = isISBN.verify(ISBN);
             //Boolean bool = true;
+            Boolean bool = true;
             if (bool) {
                 String status = "available";
                 Intent intent = new Intent();

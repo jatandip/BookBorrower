@@ -128,11 +128,13 @@ public class PendingCustomList extends ArrayAdapter<User> {
 
 
 
+                String borr = user.getBorrower();
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("check",0);
                 bundle.putDouble("lat",1);
                 bundle.putDouble("long",1);
+                bundle.putString("borrower", borr);
                 bundle.putString("isbn" , user.getIsbn());
                 Intent intent = new Intent();
                 intent.putExtras(bundle);

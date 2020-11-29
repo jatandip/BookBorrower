@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.vivlio.R;
@@ -17,6 +20,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +48,14 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private Boolean looker;
     private Button cancelButton;
     private Button confirmButton;
+    private Button doneButton;
     private Boolean changed;
     private int checker;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    public FirebaseUser firebaseUser;
+    private String isbn;
+
 
     /**
      * LocationActivity constructor for the borrower
@@ -60,15 +77,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         latitude = 53.5225;
         looker = false;
         changed = false;
-        Bundle b = getIntent().getExtras();
-        if (b != null){
-            checker = b.getInt("check");
-            if (checker == 1){
-                longitude = b.getDouble("long");
-                latitude = b.getDouble("lat");
-                looker = true;
-            }
-        }
     }
 
     /**
@@ -86,7 +94,21 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
         cancelButton = findViewById(R.id.cancel_button);
         confirmButton = findViewById(R.id.confirm_button);
-
+        doneButton = findViewById(R.id.done_button);
+        Bundle b = getIntent().getExtras();
+        if (b != null){
+            checker = b.getInt("check");
+            isbn = b.getString("isbn");
+            if (checker == 1){
+                longitude = b.getDouble("long");
+                latitude = b.getDouble("lat");
+                looker = true;
+                doneButton.setVisibility(View.VISIBLE);
+            }else{
+                confirmButton.setVisibility(View.VISIBLE);
+                cancelButton.setVisibility(View.VISIBLE);
+            }
+        }
         cancelButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -98,6 +120,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 checkTask();
+            }
+        });
+
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -138,7 +167,35 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             latLong.add(latitude);
             intent.putExtra("latLong arraylist", latLong);
             setResult(RESULT_OK, intent);
+
+            db = FirebaseFirestore.getInstance();
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser Firebaseuser = mAuth.getCurrentUser();
+            final String uid = Firebaseuser.getUid();
+            firebaseUser = mAuth.getCurrentUser();
+
+
+
+            DocumentReference docRef = db.collection("users")
+                    .document(uid + "/owned/" + isbn);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    DocumentSnapshot document = task.getResult();
+                    GeoPoint geo = new GeoPoint(latitude,longitude);
+
+                    db.collection("users").document(uid + "/owned/" + isbn)
+                            .update(
+                                    "location", geo
+                            );
+                }
+
+            });
+
             finish();
+
+
         }else if (looker == false){
             Toast.makeText(this,"You have not selected a location yet", Toast.LENGTH_SHORT).show();
         }else{

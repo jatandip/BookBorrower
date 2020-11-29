@@ -66,9 +66,9 @@ public class LendTaskCustomList extends ArrayAdapter<Book>{
                         document.getData().get("lname");
                 Log.e("socument", document.getData().get("fname").toString());
 
-                TextView titleTV = finalView.findViewById(R.id.BTL_TVtitle);
-                TextView authorTV = finalView.findViewById(R.id.BTL_TVauthor);
-                TextView ownerTV = finalView.findViewById(R.id.BTL_TVowner);
+                TextView titleTV = finalView.findViewById(R.id.LTL_TVtitle);
+                TextView authorTV = finalView.findViewById(R.id.LTL_TVauthor);
+                TextView ownerTV = finalView.findViewById(R.id.LTL_TVborrower);
 
                 String ownerText = "Requested by: " + ownerName;
 

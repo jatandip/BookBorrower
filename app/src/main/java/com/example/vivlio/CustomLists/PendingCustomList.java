@@ -2,6 +2,7 @@ package com.example.vivlio.CustomLists;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,15 +121,25 @@ public class PendingCustomList extends ArrayAdapter<User> {
                         .update("status", "accepted");
 
 
+
                 Mybook_Pending.bookDataList.clear();
-                Mybook_Pending.bookDataList.add(user);
+                //Mybook_Pending.bookDataList.add(user);
                 Mybook_Pending.bookAdapter.notifyDataSetChanged();
 
 
 
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("check",0);
+                bundle.putDouble("lat",1);
+                bundle.putDouble("long",1);
+                bundle.putString("isbn" , user.getIsbn());
                 Intent intent = new Intent();
+                intent.putExtras(bundle);
                 intent.setClass(context, LocationActivity.class);
-                view.getContext().startActivity(intent);
+                context.startActivity(intent);
+
+
 
 
             }

@@ -19,6 +19,7 @@ import android.widget.Switch;
 
 import com.example.vivlio.Book;
 import com.example.vivlio.CustomLists.BookList;
+import com.example.vivlio.CustomLists.SearchBookCustomList;
 import com.example.vivlio.CustomLists.SearchUserCustomList;
 import com.example.vivlio.R;
 import com.example.vivlio.Activities.SearchDetailActivity;
@@ -131,7 +132,7 @@ public class SearchFragment extends Fragment {
         resultList = view.findViewById(R.id.result_list_view);
 
         resultDataList = new ArrayList<>();
-        resultAdapter = new BookList(getActivity(), resultDataList);
+        resultAdapter = new SearchBookCustomList(getActivity(), resultDataList);
 
         userDataList = new ArrayList<>();
         userAdapter = new SearchUserCustomList(getActivity(), userDataList);
@@ -170,32 +171,34 @@ public class SearchFragment extends Fragment {
                                         final ArrayList<String> owners = (ArrayList<String>) doc.getData().get("owners");
 
                                         for(String owner : owners) {
-                                            Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
-                                            CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
-                                            Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
-                                            ownedCollection.document(doc.getId().toString()).get()
-                                                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                            DocumentSnapshot document = task.getResult();
-                                                            if (document.exists()) {
-                                                                if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
-                                                                    available = true;
-                                                                    Book resultBook;
-                                                                    resultBook = new Book(title, author, doc.getId().toString(), owners);
-                                                                    Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
-                                                                    if ((ISBNList.isEmpty() || !ISBNList.contains(doc.getId().toString())) && available) {
-                                                                        resultDataList.add(resultBook);
-                                                                        ISBNList.add(doc.getId().toString());
-                                                                        available = false;
+                                            if(!owner.equals(mAuth.getUid())) {
+                                                Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
+                                                CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
+                                                Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
+                                                ownedCollection.document(doc.getId().toString()).get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                DocumentSnapshot document = task.getResult();
+                                                                if (document.exists()) {
+                                                                    if (document.get("status").toString().equals("available") || document.get("status").toString().equals("pending")) {
+                                                                        available = true;
+                                                                        Book resultBook;
+                                                                        resultBook = new Book(title, author, doc.getId().toString(), owners);
+                                                                        Log.d("POS_RESULT", resultBook.getTitle() + ", " + resultBook.getAuthor());
+                                                                        if ((ISBNList.isEmpty() || !ISBNList.contains(doc.getId().toString())) && available) {
+                                                                            resultDataList.add(resultBook);
+                                                                            ISBNList.add(doc.getId().toString());
+                                                                            available = false;
+                                                                        }
+                                                                        Log.e("TASK RESULT", document.get("status").toString() + available.toString());
+                                                                        resultAdapter.notifyDataSetChanged();
                                                                     }
-                                                                    Log.e("TASK RESULT", document.get("status").toString() + available.toString());
-                                                                    resultAdapter.notifyDataSetChanged();
                                                                 }
-                                                            }
 
-                                                        }
-                                                    });
+                                                            }
+                                                        });
+                                            }
                                         }
                                     }
                                 }

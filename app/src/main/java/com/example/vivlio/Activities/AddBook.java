@@ -329,11 +329,11 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            ValidateISBN isISBN = new ValidateISBN();
+            ValidateISBN validator = new ValidateISBN();
             //Boolean bool = isISBN.verify(ISBN);
             //Boolean bool = true;
-            Boolean bool = true;
-            if (bool) {
+            Boolean isISBN = validator.verify(ISBN);
+            if (isISBN) {
                 String status = "available";
                 Intent intent = new Intent();
                 ArrayList<String> newInfo = new ArrayList<>();
@@ -345,8 +345,9 @@ public class AddBook extends AppCompatActivity {
                 intent.putStringArrayListExtra("result", newInfo);
                 setResult(RESULT_OK, intent);
                 finish();
-            }else{
-                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
+            } else {
+//                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();

@@ -126,8 +126,8 @@ public class RequestDetailActivity extends AppCompatActivity {
                             Intent intent = new Intent(RequestDetailActivity.this, LocationActivity.class);
 
                             Bundle bundle = new Bundle();
-                            bundle.putDouble("long", geo.getLongitude());
                             bundle.putDouble("lat", geo.getLatitude());
+                            bundle.putDouble("long", geo.getLongitude());
                             bundle.putInt("check", 1);
                             bundle.putString("isbn", book.getISBN());
 

@@ -153,7 +153,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                 final CollectionReference requestedCollection = db.collection("users/" + mAuth.getUid() + "/requested/");
                 final CollectionReference ownerCollection = db.collection("users/" + chosenOne.getUid() + "/owned/");
 
-                if(chosenOne.getOwnedBookStatus().equals("available")) {
+                if(chosenOne.getOwnedBookStatus().equals("Available")) {
                     requestedCollection.document(searchDetailBook.getISBN()).get()
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -196,7 +196,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
                                 }
                             });
-                    chosenOne.setOwnedBookStatus("pending");
+                    chosenOne.setOwnedBookStatus("Pending");
                     ownerDataList.set(i, chosenOne);
                 }
                 ownerAdapter.notifyDataSetChanged();

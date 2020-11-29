@@ -54,6 +54,8 @@
         android:layout_height="187dp"
         android:layout_marginTop="73dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:rotation="360"
+
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

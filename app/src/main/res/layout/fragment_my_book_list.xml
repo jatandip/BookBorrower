@@ -14,8 +14,8 @@
         marginTop="?android:attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="57dp"
-
         android:layout_marginTop="64dp"
+
         android:textColor="#00427E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -27,7 +27,6 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:text="All" />
 
         <com.google.android.material.tabs.TabItem
@@ -58,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorListBackground"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -69,6 +69,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addBtn"
         android:layout_width="55dp"
+        app:tint="@color/white"
 
         android:layout_height="56dp"
         android:layout_marginEnd="16dp"
@@ -89,6 +90,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:fontFamily="sans-serif-light"
+
         android:text="My Books"
         android:textColor="#FFFFFF"
         android:textSize="24sp"

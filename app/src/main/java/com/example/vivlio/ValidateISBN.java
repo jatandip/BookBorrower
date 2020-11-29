@@ -44,6 +44,8 @@ public class ValidateISBN {
 
             if (10 - (digitSum % 10) == lastDigit) {
                 return true;
+            } else if ((digitSum % 10) == 0 && lastDigit == 0) {
+                return true;
             } else {
                 return false;
             }

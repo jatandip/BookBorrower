@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -63,6 +64,17 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         returnedData = new Intent();
         detailFetcher = new BookDetailFetcher();
         validator = new ValidateISBN();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                returnedData.putExtra("isbn", (String)null);
+                setResult(RESULT_CANCELED, returnedData);
+                finish();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         initDetectorSources();
     }
 
@@ -126,9 +138,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
      * Initializes Detector.Processor objects for BarcodeDetector objects
      * @param detector BarcodeDetector object that has already been instantiated
      */
-    // TODO: display toast notification if the ISBN isn't found on google api
-    // TODO: verify ISBN and display toast notification if invalid
-    // TODO: temporarily halt killing the activity to let toast message linger
+
     private void initDetectorProcessor(BarcodeDetector detector) {
         detector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -148,17 +158,36 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 if (barcodes.size() != 0) {
                     barcodeData = barcodes.valueAt(0).displayValue;
                     Boolean isISBN = validator.verify(barcodeData);
+
                     if (isISBN) {
                         detailFetcher.request(barcodeData);
                         System.out.println(detailFetcher.getTitle());
                         System.out.println(detailFetcher.getAuthor());
+
+                        if (!detailFetcher.isFound()) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Not available in Google Books API",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
                         returnedData.putExtra("isbn", barcodeData);
                         returnedData.putExtra("title", detailFetcher.getTitle());
                         returnedData.putExtra("author", detailFetcher.getAuthor());
                         setResult(RESULT_OK, returnedData);
+
                     } else {
-                        Toast.makeText(getApplicationContext(), "Not a valid ISBN",
-                                        Toast.LENGTH_SHORT).show();
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Not a valid ISBN",
+                                                Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         returnedData.putExtra("isbn", (String)null);
                         returnedData.putExtra("title", (String)null);
                         returnedData.putExtra("author", (String)null);
@@ -171,22 +200,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             }
         });
     }
-
-//    /**
-//     * Checks if the scanned in barcode is an ISBN code
-//     * @param code ISBN code
-//     * @return return true if the barcode is an ISBN code, false otherwise
-//     */
-//    private boolean isISBN(String code) {
-//        if (code.length() == 13) {
-//
-//        } else if (code.length() == 10) {
-//
-//        } else {
-//            return false;
-//        }
-//        return true;
-//    }
 
     /**
      * Release camera resources when the activity is paused
@@ -205,4 +218,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         super.onResume();
         initDetectorSources();
     }
+
+
 }

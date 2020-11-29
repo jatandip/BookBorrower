@@ -67,7 +67,6 @@
         android:textColor="#BDB1B1"
         android:textSize="15dp"
         android:paddingLeft="5dp"
-        android:background="@drawable/edit_text_border"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,7 +81,6 @@
         android:textColor="#BDB1B1"
         android:textSize="15dp"
         android:paddingLeft="5dp"
-        android:background="@drawable/edit_text_border"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,7 +108,6 @@
         android:textColor="#BDB1B1"
         android:textSize="20dp"
         android:paddingLeft="5dp"
-        android:background="@drawable/edit_text_border"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,7 +120,6 @@
         android:layout_marginTop="433dp"
         android:textColor="#BDB1B1"
         android:paddingLeft="5dp"
-        android:background="@drawable/edit_text_border"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

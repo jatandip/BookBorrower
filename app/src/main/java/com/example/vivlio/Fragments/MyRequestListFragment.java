@@ -163,6 +163,7 @@ public class MyRequestListFragment extends Fragment {
 
                             for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                             {
+
                                 if (!doc.getData().containsKey("blank")) {
                                     ArrayList<String> owner = (ArrayList<String>) doc.getData().get("owners");
                                     if (owner.isEmpty()) {

@@ -11,10 +11,18 @@
     </style>
 
     <style name="MyBooksTabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabTextAppearance">@style/MyTabTextAppearance</item>
+        <item name="tabTextAppearance">@style/MyBooksTabTextAppearance</item>
     </style>
 
-    <style name="MyTabTextAppearance" parent="TextAppearance.Design.Tab">
+    <style name="MyBooksTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="MyRequestsTabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/MyRequestsTabTextAppearance</item>
+    </style>
+
+    <style name="MyRequestsTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">10sp</item>
     </style>
 

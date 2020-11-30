@@ -1,10 +1,12 @@
 package com.example.vivlio;
 
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.LocationActivity;
 import com.example.vivlio.Activities.LoginActivity;
 import com.example.vivlio.Activities.MainActivity;
 import com.example.vivlio.Activities.RequestDetailActivity;
@@ -67,13 +69,23 @@ public class RequestListTest {
         solo.clickOnText("All");
         solo.sleep(1000);
 
-        solo.clickInList(0);
+        solo.clickOnText("Accepted");
+        solo.sleep(1000);
 
+        solo.clickInList(0);
         solo.assertCurrentActivity("Didn't click", RequestDetailActivity.class);
 
         solo.sleep(1000);
 
+        solo.clickOnView((Button) solo.getView(R.id.btn_request_location));
+        solo.assertCurrentActivity("Location activity didn't launch", LocationActivity.class);
 
+        solo.sleep(1000);
+
+        solo.clickOnView(solo.getView(R.id.done_button));
+        solo.assertCurrentActivity("Didn't return from location", RequestDetailActivity.class);
+
+        solo.sleep(1000);
     }
 
     /**

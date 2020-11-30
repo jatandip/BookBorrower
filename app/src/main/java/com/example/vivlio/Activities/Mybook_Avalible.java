@@ -251,6 +251,20 @@ public class Mybook_Avalible extends AppCompatActivity {
                         currentPath = uri.toString();
                         book.setPhotoURL(currentPath);
                         Log.d("tag", "UPLOADED SETPHOTOURL" + currentPath);
+
+
+                        db = FirebaseFirestore.getInstance();
+                        mAuth = FirebaseAuth.getInstance();
+                        final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
+                        String uid = Firebaseuser.getUid();
+
+
+                        Log.i("uid", uid);
+                        db.collection("users").document(uid + "/owned/" + book.getISBN())
+                                .update(
+                                        "path", currentPath
+                                );
+
                     }
                 });
                 Toast.makeText(Mybook_Avalible.this, "Image Is Uploaded.", Toast.LENGTH_SHORT).show();

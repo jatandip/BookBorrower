@@ -1,5 +1,6 @@
 package com.example.vivlio.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class LendTaskActivity extends AppCompatActivity{
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
+    private static final int RESULT_INVALID = 30000;
+    private static final int RESULT_INCOMPLETE = 30001;
     String otherUID;
 
     /**
@@ -111,15 +114,21 @@ public class LendTaskActivity extends AppCompatActivity{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            String result = data.getStringExtra("isbn");
 //            Log.e("scanned isbn in task", result);
-            if(selectedISBN.equals(result)){
-                Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
-                intent.putExtra("LENDER", result);
-                intent.putExtra("OTHER_UID", otherUID);
-                startActivity(intent);
-            }else {
-                Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
+            if (resultCode == Activity.RESULT_OK || resultCode == RESULT_INCOMPLETE) {
+                String result = data.getStringExtra("isbn");
+
+                if (selectedISBN.equals(result)) {
+                    Intent intent = new Intent(LendTaskActivity.this, SuccessExchangeActivity.class);
+                    intent.putExtra("LENDER", result);
+                    intent.putExtra("OTHER_UID", otherUID);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(LendTaskActivity.this, "ISBN did not match selected book!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else if (resultCode == RESULT_INVALID) {
+                Toast.makeText(LendTaskActivity.this, "ISBN is not valid",
                         Toast.LENGTH_SHORT).show();
             }
         }

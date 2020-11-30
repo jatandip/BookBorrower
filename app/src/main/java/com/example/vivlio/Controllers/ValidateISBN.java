@@ -20,14 +20,30 @@ public class ValidateISBN {
         }
     }
 
+    /**
+     * Checks if the isbn is identified as isbn13
+     * @param code Barcode string
+     * @return True if it is a valid code, false otherwise
+     */
     private boolean isIsbn13(String code) {
         return checkDigit(code, 13);
     }
 
+    /**
+     * Checks if the isbn is identified as isbn13
+     * @param code Barcode string
+     * @return True if it is a valid code, false otherwise
+     */
     private boolean isIsbn10(String code) {
         return checkDigit(code, 10);
     }
 
+    /**
+     * Checks if the last digit check digit matches up
+     * @param code Barcode string
+     * @param length Length of barcode
+     * @return True if it is a valid code, false otherwise
+     */
     private boolean checkDigit(String code, int length) {
         int len = length - 1;
         int[] digits = new int[len];

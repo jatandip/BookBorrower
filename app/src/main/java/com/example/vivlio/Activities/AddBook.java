@@ -18,6 +18,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -63,6 +64,8 @@ public class AddBook extends AppCompatActivity {
     private String currentPath;
     private Uri uri;
     private Book book;
+    private Boolean checker = Boolean.FALSE;
+
 
     StorageReference storageReference;
 
@@ -104,6 +107,7 @@ public class AddBook extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 uploadButtonPressed();
             }
         });
@@ -151,6 +155,7 @@ public class AddBook extends AppCompatActivity {
                     }
                 });
                 Toast.makeText(AddBook.this, "Image Is Uploaded.", Toast.LENGTH_SHORT).show();
+                checker = true;
                 Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
                 if (downloadUri.isSuccessful()){
                     Log.d("tag", "Url for image is " + "gs://vivlio-14a4a-appspot.com/pictures/" + name);
@@ -262,7 +267,9 @@ public class AddBook extends AppCompatActivity {
     /**
      * handles the result after a picture has been selected from either a camera taken picture, or
      * from the gallery. It then creates an intent to scan the file, before sending all relevant
-     * information to the function uploadFile to upload
+     * information to the function uploadFile to upload. Also handles the result for when the scan
+     * book button is pressed. Depending on whether or not the book scanned is in the google books
+     * api, certain fields will be locked and the user will not be able to edit them anymore.
      * @param requestCode
      * @param resultCode
      * @param data
@@ -328,31 +335,41 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            ValidateISBN validator = new ValidateISBN();
-            //Boolean bool = isISBN.verify(ISBN);
-            //Boolean bool = true;
-            Boolean isISBN = validator.verify(ISBN);
-            if (isISBN) {
-                String status = "available";
-                Intent intent = new Intent();
-                ArrayList<String> newInfo = new ArrayList<>();
-                newInfo.add(title);
-                newInfo.add(author);
-                newInfo.add(ISBN);
-                newInfo.add(currentPath);
-                newInfo.add(status);
-                intent.putStringArrayListExtra("result", newInfo);
-                setResult(RESULT_OK, intent);
-                finish();
-            } else {
+            if (bookImageView.getDrawable() != null){
+                if (checker){
+                    ValidateISBN validator = new ValidateISBN();
+                    //Boolean bool = isISBN.verify(ISBN);
+                    //Boolean bool = true;
+                    Boolean isISBN = validator.verify(ISBN);
+                    if (isISBN) {
+                        String status = "available";
+                        Intent intent = new Intent();
+                        ArrayList<String> newInfo = new ArrayList<>();
+                        newInfo.add(title);
+                        newInfo.add(author);
+                        newInfo.add(ISBN);
+                        newInfo.add(currentPath);
+                        newInfo.add(status);
+                        intent.putStringArrayListExtra("result", newInfo);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
 //                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Photo not finished uploading yet", Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
         }
     }
 
+    /**
+     * handles when the scan button is pressed. Will start an activity to scan the barcode before
+     * going to onactivityresult to process the result
+     */
     private void scanButtonPressed(){
         Intent scanBook = new Intent(this, BarcodeScannerActivity.class);
         startActivityForResult(scanBook, 0);

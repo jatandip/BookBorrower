@@ -11,6 +11,10 @@ import com.example.vivlio.R;
 import com.example.vivlio.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This is the activity is used to display the details for a searched user.
+ * The activity will show the contact information for the user.
+ */
 public class SearchUserDetailActivity extends AppCompatActivity {
 
     private TextView nameEditText;
@@ -19,6 +23,10 @@ public class SearchUserDetailActivity extends AppCompatActivity {
     private TextView emailEditText;
     private FirebaseAuth mAuth;
 
+    /**
+     * General onCreate method, this enters the information into the necessary text fields.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

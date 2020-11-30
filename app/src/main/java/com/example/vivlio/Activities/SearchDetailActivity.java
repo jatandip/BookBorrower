@@ -81,7 +81,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
         userCollection = db.collection("users/");
 
-        // This finds all the owers of the book with status pending or available and then checks if the book has been requested previously and displays the appropriate status.
+        // This finds all the owners of the book with status pending or available and then checks if the book has been requested previously and displays the appropriate status.
         for(final String owner : searchDetailBook.getCurrentOwners()) {
             if(!owner.equals(mAuth.getUid())) {
                 Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
@@ -99,7 +99,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                         final DocumentSnapshot goodUser = task.getResult();
                                                         if (goodUser.exists()) {
-                                                            //ownerDataList.add(new User(goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), document.getData().get("status").toString()));
+
                                                             CollectionReference requester = db.collection("users/" + mAuth.getUid() + "/requested");
                                                             requester.document(searchDetailBook.getISBN()).get()
                                                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

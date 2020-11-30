@@ -60,18 +60,4 @@ public class CreateAccountActivityTest {
         solo.assertCurrentActivity("Created account", CreateAccountActivity.class);
     }
 
-    //YOU GOTTA MANUALLY DELETE THE USER FROM AUTH AND FIRESTORE AFTER YOU RUN THIS
-    @Test
-    public void createAccount() {
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETemail), "test6969@vivlio.com");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETusername), "Kiriyu.Coco");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETfirstName), "Coco");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETlastName), "Kaichou");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETphone), "11490");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETpassword), "pass1234");
-        solo.enterText((EditText) solo.getView(R.id.CREACC_ETrepassword), "pass1234");
-        solo.clickOnImageButton(0);
-
-        solo.assertCurrentActivity("Account creation failed", LoginActivity.class);
-    }
 }

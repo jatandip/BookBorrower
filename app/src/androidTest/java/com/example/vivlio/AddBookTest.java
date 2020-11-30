@@ -40,6 +40,7 @@ public class AddBookTest {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnView(solo.getView(R.id.LOGIN_TVlogin));
+        solo.sleep(1000);
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
         solo.clickOnView(solo.getView(R.id.addBtn));
     }

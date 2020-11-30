@@ -187,13 +187,7 @@ public class Mybook_Avalible extends AppCompatActivity {
                         );
 
 
-                /*
-                db.collection("users").document(uid + "/owned/")
-                        .update(
-                                book.getISBN(), updatedBook.getISBN()
-                        );
 
-                 */
             }
             if (resultCode == 5) {
 

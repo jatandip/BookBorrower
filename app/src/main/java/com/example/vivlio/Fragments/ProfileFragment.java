@@ -103,14 +103,14 @@ public class ProfileFragment extends Fragment {
             if(resultCode == Activity.RESULT_OK){
                 ArrayList<String> result=data.getStringArrayListExtra("result");
 
-                phoneNumTextView.setText(result.get(0));
-                emailTextView.setText(result.get(1));
+                emailTextView.setText(result.get(0));
+                phoneNumTextView.setText(result.get(1));
 
                 //user.setPhonenumber(result.get(0));
                 //user.setEmail(result.get(1));
 
-                LoginActivity.currentUser.setPhonenumber(result.get(0));
-                LoginActivity.currentUser.setEmail(result.get(1));
+                LoginActivity.currentUser.setEmail(result.get(0));
+                LoginActivity.currentUser.setPhonenumber(result.get(1));
 
 
 

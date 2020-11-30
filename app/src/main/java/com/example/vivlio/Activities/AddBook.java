@@ -312,36 +312,21 @@ public class AddBook extends AppCompatActivity {
                 titleEditText.setText(title);
                 authorEditText.setText(author);
 
-                ISBNEditText.setFocusable(false);
-                titleEditText.setFocusable(false);
-                authorEditText.setFocusable(false);
                 ISBNEditText.setEnabled(false);
-                titleEditText.setEnabled(false);
-                authorEditText.setEnabled(false);
 
             } else if (resultCode == RESULT_INCOMPLETE) {
                 ISBNEditText.setText(isbn);
-                ISBNEditText.setFocusable(false);
-                ISBNEditText.setEnabled(false);
-
                 titleEditText.setText("");
                 authorEditText.setText("");
-                titleEditText.setFocusable(true);
-                authorEditText.setFocusable(true);
-                titleEditText.setEnabled(true);
-                authorEditText.setEnabled(true);
-                
+
+                ISBNEditText.setEnabled(false);
+
             } else if (resultCode == RESULT_INVALID) {
                 ISBNEditText.setText("");
                 titleEditText.setText("");
                 authorEditText.setText("");
 
-                ISBNEditText.setFocusable(true);
-                titleEditText.setFocusable(true);
-                authorEditText.setFocusable(true);
                 ISBNEditText.setEnabled(true);
-                titleEditText.setEnabled(true);
-                authorEditText.setEnabled(true);
             }
         }
     }

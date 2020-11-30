@@ -24,14 +24,17 @@ import com.example.vivlio.Activities.Mybook_Avalible;
 import com.example.vivlio.Activities.Mybook_Borrowed;
 import com.example.vivlio.Activities.Mybook_Pending;
 import com.example.vivlio.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -417,7 +420,7 @@ public class MyBookListFragment extends Fragment {
 
                 String title = result.get(0);
                 String author = result.get(1);
-                String isbn = result.get(2);
+                final String isbn = result.get(2);
                 String currentpath = result.get(3);
                 String status = result.get(4);
 
@@ -429,7 +432,7 @@ public class MyBookListFragment extends Fragment {
                         .document(Curruser.getUid());
 
                 HashMap<String, Object> info = new HashMap<>();
-                HashMap<String, Object> BookCollectionInfo = new HashMap<>();
+                final HashMap<String, Object> BookCollectionInfo = new HashMap<>();
                 ArrayList<String> empty = new ArrayList<String>();
 
                 info.put("borrowers", empty);
@@ -440,11 +443,7 @@ public class MyBookListFragment extends Fragment {
                 info.put("status", "available");
                 info.put("path", currentpath);
 
-
-
                 //Log.i("current path", currentpath);
-
-
 
                 ArrayList<String> Owner = new ArrayList<String>();
                 Owner.add(Curruser.getUid());
@@ -452,6 +451,24 @@ public class MyBookListFragment extends Fragment {
                 BookCollectionInfo.put("title", title);
                 BookCollectionInfo.put("author", author);
                 BookCollectionInfo.put("owners", Owner);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 db.collection("users").document(Curruser.getUid() + "/" + "owned/" + isbn)
                         .set(info)
@@ -470,18 +487,52 @@ public class MyBookListFragment extends Fragment {
 
 
 
-                db.collection("books").document(isbn)
-                        .set(BookCollectionInfo)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                db.collection("books").document(isbn).get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully written!");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error writing document", e);
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot snap = task.getResult();
+                                    if (snap.exists()) {
+                                        ArrayList<String> own = (ArrayList<String>) snap.getData().get("owners");
+                                        if (!own.contains(mAuth.getUid())) {
+                                            own.add(mAuth.getUid());
+                                            db.collection("books").document(isbn)
+                                                    .update("owners",own)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w(TAG, "Error writing document", e);
+                                                        }
+                                                    });
+
+                                        }
+
+                                    } else {
+                                        db.collection("books").document(isbn)
+                                                .set(BookCollectionInfo)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error writing document", e);
+                                                    }
+                                                });
+                                    }
+
+                                }
                             }
                         });
 

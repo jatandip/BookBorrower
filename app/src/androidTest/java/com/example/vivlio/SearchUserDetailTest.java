@@ -8,6 +8,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.vivlio.Activities.MainActivity;
 import com.example.vivlio.Activities.SearchDetailActivity;
+import com.example.vivlio.Activities.SearchUserDetailActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -16,15 +17,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
-/**
- * Test class for the Search Detail Activity
- */
 @RunWith(AndroidJUnit4.class)
-public class SearchDetailTest {
+public class SearchUserDetailTest {
 
     private Solo solo;
 
@@ -58,17 +54,12 @@ public class SearchDetailTest {
     public void checkSearchDetail() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
-        solo.clickOnView(solo.getView(R.id.search_switch));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "f");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Ground",1,2000));
-        solo.clickOnText("Ground");
-        solo.assertCurrentActivity("Wrong Activity", SearchDetailActivity.class);
         assertTrue(solo.waitForText("tim",1,2000));
-        if(solo.waitForText("Available", 1, 2000)) {
-            solo.clickOnText("Available");
-            assertTrue((solo.waitForText("Pending",1,2000)));
-        }
+        solo.clickOnText("tim");
+        solo.assertCurrentActivity("Wrong Activity", SearchUserDetailActivity.class);
+        assertTrue(solo.waitForText("vanmaren",1,2000));
 
     }
 

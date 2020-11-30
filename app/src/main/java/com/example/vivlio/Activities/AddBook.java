@@ -51,6 +51,8 @@ public class AddBook extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int GALLERY_REQUEST_CODE = 2;
     private static final int CAMERA_PERM_CODE = 3;
+    private static final int RESULT_INVALID = 30000;
+    private static final int RESULT_INCOMPLETE = 30001;
 
 
     private EditText titleEditText;
@@ -301,19 +303,45 @@ public class AddBook extends AppCompatActivity {
             }
         }
         if (requestCode == 0){
+            String isbn = data.getStringExtra("isbn");
+            String title = data.getStringExtra("title");
+            String author = data.getStringExtra("author");
+
             if (resultCode == Activity.RESULT_OK){
-                String isbn = data.getStringExtra("isbn");
-                String title = data.getStringExtra("title");
-                String author = data.getStringExtra("author");
                 ISBNEditText.setText(isbn);
                 titleEditText.setText(title);
                 authorEditText.setText(author);
+
                 ISBNEditText.setFocusable(false);
                 titleEditText.setFocusable(false);
                 authorEditText.setFocusable(false);
                 ISBNEditText.setEnabled(false);
                 titleEditText.setEnabled(false);
                 authorEditText.setEnabled(false);
+
+            } else if (resultCode == RESULT_INCOMPLETE) {
+                ISBNEditText.setText(isbn);
+                ISBNEditText.setFocusable(false);
+                ISBNEditText.setEnabled(false);
+
+                titleEditText.setText("");
+                authorEditText.setText("");
+                titleEditText.setFocusable(true);
+                authorEditText.setFocusable(true);
+                titleEditText.setEnabled(true);
+                authorEditText.setEnabled(true);
+                
+            } else if (resultCode == RESULT_INVALID) {
+                ISBNEditText.setText("");
+                titleEditText.setText("");
+                authorEditText.setText("");
+
+                ISBNEditText.setFocusable(true);
+                titleEditText.setFocusable(true);
+                authorEditText.setFocusable(true);
+                ISBNEditText.setEnabled(true);
+                titleEditText.setEnabled(true);
+                authorEditText.setEnabled(true);
             }
         }
     }

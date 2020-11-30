@@ -65,8 +65,8 @@ public class MyBookListTesting {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
 
         solo.clickOnImageButton(0);
 
@@ -82,8 +82,7 @@ public class MyBookListTesting {
         solo.enterText((EditText) solo.getView(R.id.edit_title), "testingTitle");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "testingIsbn");
 
-        Button confirm = (Button) solo.getView(R.id.button_upload);
-        solo.clickOnView(confirm);
+        solo.clickOnView(solo.getView(R.id.button_upload));
 
         solo.clickOnText("Accepted");
         solo.clickOnText("Available");

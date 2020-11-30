@@ -43,14 +43,6 @@ public class BookTest {
     }
 
     /**
-     * tests current activity to make sure it's book
-     */
-    @Test
-    public void checkActivity(){
-        solo.assertCurrentActivity("Wrong Activity", Book.class);
-    }
-
-    /**
      * tests getting book description
      */
     @Test

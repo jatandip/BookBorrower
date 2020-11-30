@@ -160,19 +160,6 @@ public class MainActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    /*
-                    try {
-                        Log.d("old book data", oldBookData.get(doc.getId()));
-                    } catch (Exception e) {
-                        Log.d("old book data", "fail");
-                    }
-                    try {
-                        Log.d("current book data", doc.getData().get("status").toString());
-                    } catch (Exception e) {
-                        Log.d("current book data", "fail");
-                    }
-                    */
-
                     // see if book is in hashmap
                     try {
                         if (oldBookData.get(doc.getId()).equals("available") && doc.getData().get("status").toString().equals("pending")) {
@@ -197,20 +184,6 @@ public class MainActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException error) {
                 for (QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
-                    /*
-                    try {
-                        Log.d("old request data", oldRequestData.get(doc.getId()));
-                    } catch (Exception e) {
-                        Log.d("old request data", "fail");
-                    }
-
-                    try {
-                        Log.d("current request data", doc.getData().get("status").toString());
-                    } catch (Exception e) {
-                        Log.d("current request data", "fail");
-                    }
-                    */
-
                     // see if book is in hashmap
                     try {
                         if (oldRequestData.get(doc.getId()).equals("pending") && doc.getData().get("status").toString().equals("accepted")) {

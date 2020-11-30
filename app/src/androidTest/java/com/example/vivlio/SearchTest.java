@@ -56,14 +56,14 @@ public class SearchTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
         assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "j");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("test", 1, 2000));
+        assertTrue(solo.waitForText("jatan", 1, 2000));
         solo.clickOnView(solo.getView(R.id.search_switch));
         solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "g");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "y");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Game",1,2000));
+        assertTrue(solo.waitForText("Year",1,2000));
 
     }
 

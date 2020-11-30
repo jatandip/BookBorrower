@@ -51,15 +51,27 @@ public class BarcodeScannerTest {
     }
 
     /**
-     * tests to see if you can click on scan
+     * tests to see if you can enter scan through AddBook
      */
     @Test
-    public void successAdd(){
+    public void enterScanFromAddBook(){
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
         solo.clickOnView(solo.getView(R.id.addBtn));
         solo.clickOnView(solo.getView(R.id.button_scan));
+        solo.assertCurrentActivity("Didn't enter scan", BarcodeScannerActivity.class);
+    }
 
-
+    /**
+     * tests to see if you can enter scan through Borrow
+     */
+    @Test
+    public void enterScanFromBorrow(){
+        solo.clickOnView(solo.getView(R.id.navigation_scan));
+        solo.sleep(1000);
+        FloatingActionButton borrow = (FloatingActionButton) solo.getView(R.id.EXCHANGE_FABborrow);
+        solo.clickOnView(borrow);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't enter scan", BarcodeScannerActivity.class);
     }
 
 

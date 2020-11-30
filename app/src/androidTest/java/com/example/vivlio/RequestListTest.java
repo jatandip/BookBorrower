@@ -39,10 +39,12 @@ public class RequestListTest {
     /**
      * Starts on main activity
      * Selects My Requests tab on the bottom nav bar
-     * Waits 2 seconds
-     * Switches to Accepted tab and waits 2 seconds
-     * Switches to Borrowed tab and waits 2 seconds
-     * Switches to All tab and waits 2 seconds
+     * Clicks through tabs
+     * Switches to Accepted tab and clicks on the first item in the list
+     * Checks to make sure it goes into RequestDetailActivity
+     * Clicks the Location button
+     * Checks to make sure it goes into LocationActivity
+     * Exits LocationActivity and checks to make sure it successfully returned
      */
     @Test
     public void checkMyRequestListFragment() {

@@ -90,7 +90,6 @@ public class PendingCustomList extends ArrayAdapter<User> {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser Firebaseuser = mAuth.getCurrentUser();
         final String uid = Firebaseuser.getUid();
-        //collectionReference = db.collection("users" + "/" + uid + "/owned/" + book.getISBN());
 
         firebaseUser = mAuth.getCurrentUser();
 

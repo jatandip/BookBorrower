@@ -204,11 +204,22 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
         });
     }
 
+    /**
+     * Checks if the camera permission is granted
+     * @return true if permission is granted, false otherwise
+     */
     private Boolean checkPermission() {
         return ActivityCompat.checkSelfPermission(BarcodeScannerActivity.this,
                         Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Initializes the camera sources, surface view etc if the permission is granted,
+     * will finish the activity otherwise.
+     * @param requestCode Request code
+     * @param permissions A String array containing various permission types
+     * @param grantResults An int array containing permission results
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,

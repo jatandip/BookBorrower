@@ -2,6 +2,7 @@ package com.example.vivlio;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -61,15 +62,9 @@ public class MyBookListTesting {
     @Test
     public void checkShow() {
         solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
-
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
-
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
         solo.clickOnImageButton(0);
-
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
@@ -82,7 +77,8 @@ public class MyBookListTesting {
         solo.enterText((EditText) solo.getView(R.id.edit_title), "testingTitle");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "testingIsbn");
 
-        solo.clickOnView(solo.getView(R.id.button_upload));
+        ImageButton confirm = (ImageButton) solo.getView(R.id.button_upload);
+        solo.clickOnView(confirm);
 
         solo.clickOnText("Accepted");
         solo.clickOnText("Available");

@@ -3,6 +3,7 @@ package com.example.vivlio;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -54,27 +55,21 @@ public class ProfileTesting {
     @Test
     public void checkShow() {
         solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
-
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
-
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
         solo.clickOnImageButton(0);
-
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        solo.sleep(5000);
+        solo.sleep(1000);
         solo.clickOnView(solo.getView(R.id.navigation_profile));
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
         FloatingActionButton edit = (FloatingActionButton)solo.getView(R.id.editButton);
         solo.clickOnView(edit);
 
-        Button confirm = (Button) solo.getView(R.id.saveButton);
+        ImageButton confirm = (ImageButton) solo.getView(R.id.saveButton);
         solo.clickOnView(confirm);
 
     }

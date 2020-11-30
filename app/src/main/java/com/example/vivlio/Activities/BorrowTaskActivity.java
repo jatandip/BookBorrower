@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.vivlio.Book;
+import com.example.vivlio.Models.Book;
 import com.example.vivlio.CustomLists.BorrowTaskCustomList;
 import com.example.vivlio.R;
 import com.google.firebase.auth.FirebaseAuth;

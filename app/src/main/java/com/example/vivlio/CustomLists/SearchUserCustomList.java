@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.vivlio.Activities.AddBook;
-import com.example.vivlio.Book;
+import com.example.vivlio.Models.Book;
 import com.example.vivlio.CustomLists.BookList;
 import com.example.vivlio.Activities.Mybook_Accepted;
 import com.example.vivlio.Activities.Mybook_Avalible;

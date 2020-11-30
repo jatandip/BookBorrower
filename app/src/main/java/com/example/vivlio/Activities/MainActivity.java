@@ -10,7 +10,7 @@ import com.example.vivlio.Fragments.ProfileFragment;
 import com.example.vivlio.Fragments.ScanFragment;
 import com.example.vivlio.Fragments.SearchFragment;
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

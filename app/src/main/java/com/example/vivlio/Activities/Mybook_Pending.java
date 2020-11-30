@@ -8,16 +8,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.vivlio.Book;
+import com.example.vivlio.Models.Book;
 import com.example.vivlio.CustomLists.PendingCustomList;
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

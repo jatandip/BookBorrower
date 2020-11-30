@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Models;
 
 public class Upload {
     private String name;

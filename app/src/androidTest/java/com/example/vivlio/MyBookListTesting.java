@@ -8,8 +8,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.LocationActivity;
 import com.example.vivlio.Activities.LoginActivity;
 import com.example.vivlio.Activities.MainActivity;
+import com.example.vivlio.Activities.Mybook_Accepted;
+import com.example.vivlio.Activities.Mybook_Avalible;
+import com.example.vivlio.Activities.Mybook_Borrowed;
+import com.example.vivlio.Activities.Mybook_Pending;
+import com.example.vivlio.Activities.RequestDetailActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.robotium.solo.Solo;
 
@@ -62,8 +68,8 @@ public class MyBookListTesting {
     @Test
     public void checkShow() {
         solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
@@ -86,6 +92,46 @@ public class MyBookListTesting {
         solo.clickOnText("Borrowed");
         solo.clickOnText("All");
 
+
+        // test details for avalible
+        solo.clickOnText("Available");
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't click", Mybook_Avalible.class);
+        solo.sleep(1000);
+        solo.goBack();
+
+        // test details for accepted
+        solo.clickOnText("Accepted");
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't click", Mybook_Accepted.class);
+        solo.sleep(1000);
+
+        solo.clickOnView(solo.getView(R.id.mapsBtn));
+        solo.assertCurrentActivity("Location activity didn't launch", LocationActivity.class);
+        solo.sleep(1000);
+
+        solo.clickOnView(solo.getView(R.id.done_button));
+        solo.assertCurrentActivity("Didn't return from location", Mybook_Accepted.class);
+        solo.sleep(1000);
+
+        solo.goBack();
+
+        // test details for pending
+        solo.clickOnText("Pending");
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't click", Mybook_Pending.class);
+        solo.sleep(1000);
+        solo.goBack();
+
+        // test details for borrowed
+        solo.clickOnText("Borrowed");
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't click", Mybook_Borrowed.class);
+        solo.sleep(1000);
     }
 
     /**

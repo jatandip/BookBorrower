@@ -19,6 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +65,8 @@ public class AddBook extends AppCompatActivity {
     private String currentPath;
     private Uri uri;
     private Book book;
+    private Boolean checker = Boolean.FALSE;
+
 
     StorageReference storageReference;
 
@@ -105,6 +108,7 @@ public class AddBook extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 uploadButtonPressed();
             }
         });
@@ -152,6 +156,7 @@ public class AddBook extends AppCompatActivity {
                     }
                 });
                 Toast.makeText(AddBook.this, "Image Is Uploaded.", Toast.LENGTH_SHORT).show();
+                checker = true;
                 Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
                 if (downloadUri.isSuccessful()){
                     Log.d("tag", "Url for image is " + "gs://vivlio-14a4a-appspot.com/pictures/" + name);
@@ -331,25 +336,31 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            ValidateISBN validator = new ValidateISBN();
-            //Boolean bool = isISBN.verify(ISBN);
-            //Boolean bool = true;
-            Boolean isISBN = validator.verify(ISBN);
-            if (isISBN) {
-                String status = "available";
-                Intent intent = new Intent();
-                ArrayList<String> newInfo = new ArrayList<>();
-                newInfo.add(title);
-                newInfo.add(author);
-                newInfo.add(ISBN);
-                newInfo.add(currentPath);
-                newInfo.add(status);
-                intent.putStringArrayListExtra("result", newInfo);
-                setResult(RESULT_OK, intent);
-                finish();
-            } else {
+            if (bookImageView.getDrawable() != null){
+                if (checker){
+                    ValidateISBN validator = new ValidateISBN();
+                    //Boolean bool = isISBN.verify(ISBN);
+                    //Boolean bool = true;
+                    Boolean isISBN = validator.verify(ISBN);
+                    if (isISBN) {
+                        String status = "available";
+                        Intent intent = new Intent();
+                        ArrayList<String> newInfo = new ArrayList<>();
+                        newInfo.add(title);
+                        newInfo.add(author);
+                        newInfo.add(ISBN);
+                        newInfo.add(currentPath);
+                        newInfo.add(status);
+                        intent.putStringArrayListExtra("result", newInfo);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    } else {
 //                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Photo not finished uploading yet", Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();

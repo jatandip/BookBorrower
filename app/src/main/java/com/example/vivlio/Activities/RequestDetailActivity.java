@@ -21,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 /**
  * This Activity displays all the information about a book in the user's Request List.
  *
@@ -86,7 +88,7 @@ public class RequestDetailActivity extends AppCompatActivity {
         // turn owner code into the username to display
         // update owner TextViews
         db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.document("users/" + book.getOwner());
+        final DocumentReference docRef = db.document("users/" + book.getOwner());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -95,9 +97,15 @@ public class RequestDetailActivity extends AppCompatActivity {
                 // make sure that document isn't null (crashes the app if it is)
                 if (document.getData() != null) {
                     String userName = document.getData().get("username").toString();
+                    String fname = document.getData().get("fname").toString();
+                    String lname = document.getData().get("lname").toString();
+                    String name = fname + " " + lname;
                     // Log.d("username", userName);
 
+                    TextView nameView = findViewById(R.id.tv_request_name);
                     TextView ownerView = findViewById(R.id.tv_request_owner);
+
+                    nameView.setText(name);
                     ownerView.setText(userName);
                 }
 

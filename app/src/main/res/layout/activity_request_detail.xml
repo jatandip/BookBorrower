@@ -28,6 +28,7 @@
         android:layout_height="200dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimary"
+        android:textColor="@color/colorText3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_request_title" />
+
+    <TextView
+        android:id="@+id/tv_request_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="4dp"
+        android:text="Loading..."
+        android:textColor="@color/colorText3"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_request_name" />
 
     <TextView
         android:id="@+id/tv_request_title"
@@ -79,7 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_request_author_header" />
 
     <TextView
-        android:id="@+id/tv_request_owner"
+        android:id="@+id/tv_request_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -97,14 +111,14 @@
         android:id="@+id/tv_request_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:fontFamily="sans-serif-light"
         android:text="@string/text_loading"
         android:textColor="@color/colorText3"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_request_owner" />
+        app:layout_constraintTop_toTopOf="@+id/tv_request_name" />
 
     <ImageView
         android:id="@+id/iv_request_image"

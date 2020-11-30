@@ -46,20 +46,36 @@ public class BarcodeScannerTest {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnView(solo.getView(R.id.LOGIN_TVlogin));
+        solo.sleep(1000);
 
 
     }
 
     /**
-     * tests to see if you can click on scan
+     * tests to see if you can enter scan through AddBook
      */
     @Test
-    public void successAdd(){
+    public void enterScanFromAddBook(){
         solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
+        solo.sleep(1000);
         solo.clickOnView(solo.getView(R.id.addBtn));
+        solo.sleep(1000);
         solo.clickOnView(solo.getView(R.id.button_scan));
+        solo.assertCurrentActivity("Didn't enter scan", BarcodeScannerActivity.class);
+    }
 
-
+    /**
+     * tests to see if you can enter scan through Borrow
+     */
+    @Test
+    public void enterScanFromBorrow(){
+        solo.clickOnView(solo.getView(R.id.navigation_scan));
+        solo.sleep(1000);
+        FloatingActionButton borrow = (FloatingActionButton) solo.getView(R.id.EXCHANGE_FABborrow);
+        solo.clickOnView(borrow);
+        solo.sleep(1000);
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Didn't enter scan", BarcodeScannerActivity.class);
     }
 
 

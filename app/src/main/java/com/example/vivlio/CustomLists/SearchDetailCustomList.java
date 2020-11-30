@@ -1,7 +1,6 @@
 package com.example.vivlio.CustomLists;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.vivlio.Activities.Mybook_Accepted;
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

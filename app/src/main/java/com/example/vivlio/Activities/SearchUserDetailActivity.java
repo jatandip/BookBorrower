@@ -2,15 +2,13 @@ package com.example.vivlio.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.vivlio.Book;
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**

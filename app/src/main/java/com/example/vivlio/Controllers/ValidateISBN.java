@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Controllers;
 
 /**
  * Verifies ISBN 13 or ISBN 10 using their check digit.

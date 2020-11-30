@@ -13,9 +13,9 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.vivlio.BookDetailFetcher;
+import com.example.vivlio.Controllers.BookDetailFetcher;
 import com.example.vivlio.R;
-import com.example.vivlio.ValidateISBN;
+import com.example.vivlio.Controllers.ValidateISBN;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

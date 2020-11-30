@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.vivlio.Activities.EditProfileActivity;
 import com.example.vivlio.Activities.LoginActivity;
 import com.example.vivlio.R;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

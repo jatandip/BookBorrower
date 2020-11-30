@@ -18,13 +18,12 @@ import android.widget.ListView;
 import android.widget.Switch;
 
 import com.example.vivlio.Activities.SearchUserDetailActivity;
-import com.example.vivlio.Book;
-import com.example.vivlio.CustomLists.BookList;
+import com.example.vivlio.Models.Book;
 import com.example.vivlio.CustomLists.SearchBookCustomList;
 import com.example.vivlio.CustomLists.SearchUserCustomList;
 import com.example.vivlio.R;
 import com.example.vivlio.Activities.SearchDetailActivity;
-import com.example.vivlio.User;
+import com.example.vivlio.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

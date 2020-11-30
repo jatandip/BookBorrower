@@ -1,4 +1,4 @@
-package com.example.vivlio;
+package com.example.vivlio.Models;
 
 import java.io.Serializable;
 

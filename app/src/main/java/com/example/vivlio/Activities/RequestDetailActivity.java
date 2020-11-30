@@ -26,18 +26,15 @@ import org.w3c.dom.Text;
 /**
  * This Activity displays all the information about a book in the user's Request List.
  *
- * If there is no image, then a placeholder will be present.
- *
- * If a pending request has been accepted by the book's owner, the user will have the option to see
- * the location the owner has set.
+ * If there is no image, then no placeholder will be present. If a pending request has been accepted
+ * by the book's owner, the user will have the option to see the location the owner has set.
  *
  * Issues:
- * Placeholder image isn't great
- * Location doesn't work currently.
+ * None that I'm currently aware of.
  *
  * Things to consider:
- * Should the user be able to cancel their request? I could add a button to do that. Would appear
- * when the status is pending or accepted, but not borrowed.
+ * Should the user be able to cancel their request? Maybe a button to do that could appear when the
+ * status is pending or accepted, but not borrowed.
  */
 
 public class RequestDetailActivity extends AppCompatActivity {

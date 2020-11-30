@@ -2,6 +2,7 @@ package com.example.vivlio;
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -65,8 +66,8 @@ public class MyBookListTesting {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
 
         solo.clickOnImageButton(0);
 
@@ -82,7 +83,7 @@ public class MyBookListTesting {
         solo.enterText((EditText) solo.getView(R.id.edit_title), "testingTitle");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "testingIsbn");
 
-        Button confirm = (Button) solo.getView(R.id.button_upload);
+        ImageButton confirm = (ImageButton) solo.getView(R.id.button_upload);
         solo.clickOnView(confirm);
 
         solo.clickOnText("Accepted");

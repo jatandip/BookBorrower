@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -29,7 +30,7 @@ import java.io.IOException;
  * for any barcode from the camera and upon first detection
  * the data is saved in the intent and the activity is terminated.
  */
-public class BarcodeScannerActivity extends AppCompatActivity {
+public class BarcodeScannerActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
     private BookDetailFetcher detailFetcher;
     private SurfaceView surfaceView;
     private BarcodeDetector barcodeDetector;
@@ -51,15 +52,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barcode_scanner);
 
         /**
          * SurfaceView is used because it can create a drawing surface
          * on a separate thread. A camera preview screen requires the screen
          * to be updated constantly, which would bottleneck the main thread.
          */
-        surfaceView = findViewById(R.id.surface_view);
-
         returnedData = new Intent();
         detailFetcher = new BookDetailFetcher();
         validator = new ValidateISBN();
@@ -67,20 +65,29 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                returnedData.putExtra("isbn", (String)null);
+                returnedData.putExtra("isbn", (String) null);
                 setResult(RESULT_CANCELED, returnedData);
                 finish();
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
 
-        initDetectorSources();
+        if (checkPermission() == true) {
+            initDetectorSources();
+        } else {
+            ActivityCompat.requestPermissions(BarcodeScannerActivity.this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_REQUEST_CODE);
+        }
     }
 
     /**
      * Initializes the BarcodeDetector, CameraSource, SurfaceHolder.Callback objects
      */
     private void initDetectorSources() {
+        setContentView(R.layout.activity_barcode_scanner);
+        surfaceView = findViewById(R.id.surface_view);
+
         // initialize and build detector, enable all barcode formats
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -101,22 +108,33 @@ public class BarcodeScannerActivity extends AppCompatActivity {
              */
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                try {
-                    if (ActivityCompat.checkSelfPermission(BarcodeScannerActivity.this,
-                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
 
+                try {
+                    if (checkPermission()) {
                         cameraSource.start(surfaceView.getHolder());
                     }
-                    // TODO: displays a screen telling why the user needs to enable permission
-//                    else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {}
-                    else {
-                        ActivityCompat.requestPermissions(BarcodeScannerActivity.this,
-                                new String[] {Manifest.permission.CAMERA},
-                                CAMERA_REQUEST_CODE);
-                    }
-                } catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+//                try {
+//                    if (checkPermission() == true) {
+//                        cameraSource.start(surfaceView.getHolder());
+//                    } else {
+//                        ActivityCompat.requestPermissions(BarcodeScannerActivity.this,
+//                                new String[] {Manifest.permission.CAMERA},
+//                                CAMERA_REQUEST_CODE);
+//
+////                        if (checkPermission() == true) {
+////                            cameraSource.start(surfaceView.getHolder());
+////                        } else {
+////                            finish();
+////                        }
+//
+//                    }
+//                } catch (IOException e){
+//                    e.printStackTrace();
+//                }
             }
 
             @Override
@@ -198,6 +216,27 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private Boolean checkPermission() {
+        return ActivityCompat.checkSelfPermission(BarcodeScannerActivity.this,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initDetectorSources();
+            } else {
+                finish();
+            }
+        }
     }
 
     /**

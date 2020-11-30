@@ -134,15 +134,17 @@ public class MyRequestListFragment extends Fragment {
                             photoPath = doc.getData().get("path").toString();
                         }
 
-                        Book book = new Book(doc.getData().get("title").toString(),
-                                doc.getData().get("author").toString(),
-                                doc.getId(),
-                                doc.getData().get("status").toString(),
-                                owner.get(0),
-                                owner.get(0),
-                                photoPath);
+                        for (int i=0; i<owner.size(); i++) {
+                            Book book = new Book(doc.getData().get("title").toString(),
+                                    doc.getData().get("author").toString(),
+                                    doc.getId(),
+                                    doc.getData().get("status").toString(),
+                                    owner.get(i),
+                                    owner.get(i),
+                                    photoPath);
 
-                        requestDataList.add(book);
+                            requestDataList.add(book);
+                        }
                     }
                 }
                 requestAdapter.notifyDataSetChanged();
@@ -173,15 +175,17 @@ public class MyRequestListFragment extends Fragment {
                                         photoPath = doc.getData().get("path").toString();
                                     }
 
-                                    Book book = new Book(doc.getData().get("title").toString(),
-                                            doc.getData().get("author").toString(),
-                                            doc.getId(),
-                                            doc.getData().get("status").toString(),
-                                            owner.get(0),
-                                            owner.get(0),
-                                            photoPath);
+                                    for (int i=0; i<owner.size(); i++) {
+                                        Book book = new Book(doc.getData().get("title").toString(),
+                                                doc.getData().get("author").toString(),
+                                                doc.getId(),
+                                                doc.getData().get("status").toString(),
+                                                owner.get(i),
+                                                owner.get(i),
+                                                photoPath);
 
-                                    requestDataList.add(book);
+                                        requestDataList.add(book);
+                                    }
                                 }
                             }
                             requestAdapter.notifyDataSetChanged();
@@ -210,15 +214,17 @@ public class MyRequestListFragment extends Fragment {
                                             photoPath = doc.getData().get("path").toString();
                                         }
 
-                                        Book book = new Book(doc.getData().get("title").toString(),
-                                                doc.getData().get("author").toString(),
-                                                doc.getId(),
-                                                doc.getData().get("status").toString(),
-                                                owner.get(0),
-                                                owner.get(0),
-                                                photoPath);
+                                        for (int i=0; i<owner.size(); i++) {
+                                            Book book = new Book(doc.getData().get("title").toString(),
+                                                    doc.getData().get("author").toString(),
+                                                    doc.getId(),
+                                                    doc.getData().get("status").toString(),
+                                                    owner.get(i),
+                                                    owner.get(i),
+                                                    photoPath);
 
-                                        requestDataList.add(book);
+                                            requestDataList.add(book);
+                                        }
                                     }
                                 }
                             }
@@ -247,15 +253,17 @@ public class MyRequestListFragment extends Fragment {
                                             photoPath = doc.getData().get("path").toString();
                                         }
 
-                                        Book book = new Book(doc.getData().get("title").toString(),
-                                                doc.getData().get("author").toString(),
-                                                doc.getId(),
-                                                doc.getData().get("status").toString(),
-                                                owner.get(0),
-                                                owner.get(0),
-                                                photoPath);
+                                        for (int i=0; i<owner.size(); i++) {
+                                            Book book = new Book(doc.getData().get("title").toString(),
+                                                    doc.getData().get("author").toString(),
+                                                    doc.getId(),
+                                                    doc.getData().get("status").toString(),
+                                                    owner.get(i),
+                                                    owner.get(i),
+                                                    photoPath);
 
-                                        requestDataList.add(book);
+                                            requestDataList.add(book);
+                                        }
                                     }
                                 }
                             }
@@ -284,15 +292,17 @@ public class MyRequestListFragment extends Fragment {
                                             photoPath = doc.getData().get("path").toString();
                                         }
 
-                                        Book book = new Book(doc.getData().get("title").toString(),
-                                                doc.getData().get("author").toString(),
-                                                doc.getId(),
-                                                doc.getData().get("status").toString(),
-                                                owner.get(0),
-                                                uid,
-                                                photoPath);
+                                        for (int i=0; i<owner.size(); i++) {
+                                            Book book = new Book(doc.getData().get("title").toString(),
+                                                    doc.getData().get("author").toString(),
+                                                    doc.getId(),
+                                                    doc.getData().get("status").toString(),
+                                                    owner.get(i),
+                                                    owner.get(i),
+                                                    photoPath);
 
-                                        requestDataList.add(book);
+                                            requestDataList.add(book);
+                                        }
                                     }
                                 }
                             }

@@ -116,9 +116,10 @@ public class RequestCustomList extends ArrayAdapter {
                 if (document.getData() != null) {
                     userName = document.getData().get("username").toString();
                     // Log.d("username", userName);
+                    String ownerText = "Owner: " + userName;
 
                     TextView ownerView = finalView.findViewById(R.id.tv_owner);
-                    ownerView.setText(userName);
+                    ownerView.setText(ownerText);
 
                 }
 

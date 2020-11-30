@@ -20,6 +20,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * A test that checks if the user can edit a book.
+ */
 public class EditBookTest {
     private Solo solo;
 
@@ -47,7 +50,7 @@ public class EditBookTest {
      * Tests to make sure it is in the correct activity
      * Clicks on the MyBookList fragment
      * Adds the information for a new book and clicks confirm to add the book
-     * Clicks on the different tabs to make sure the navigation between tabs works
+     * Checks to see if you can edit the book information
      */
     @Test
     public void checkShow() {

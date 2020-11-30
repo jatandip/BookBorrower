@@ -20,11 +20,12 @@
         android:id="@+id/imageView6"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/search_detail_isbn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/author_text" />
+        app:layout_constraintTop_toBottomOf="@+id/search_detail_title" />
 
     <TextView
         android:id="@+id/search_detail_title"
@@ -55,10 +56,9 @@
         android:text="author"
         android:textColor="@color/colorText3"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/searchOwnersList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_detail_title" />
+        app:layout_constraintTop_toBottomOf="@+id/author_text" />
 
     <TextView
         android:id="@+id/search_detail_isbn"
@@ -79,13 +79,13 @@
     <ListView
         android:id="@+id/searchOwnersList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:background="@color/colorListBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/search_detail_isbn">
 
     </ListView>
 
@@ -99,8 +99,8 @@
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/search_detail_author"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <TextView
         android:id="@+id/ISBN_text"

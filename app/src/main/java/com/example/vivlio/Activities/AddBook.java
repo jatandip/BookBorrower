@@ -263,7 +263,9 @@ public class AddBook extends AppCompatActivity {
     /**
      * handles the result after a picture has been selected from either a camera taken picture, or
      * from the gallery. It then creates an intent to scan the file, before sending all relevant
-     * information to the function uploadFile to upload
+     * information to the function uploadFile to upload. Also handles the result for when the scan
+     * book button is pressed. Depending on whether or not the book scanned is in the google books
+     * api, certain fields will be locked and the user will not be able to edit them anymore.
      * @param requestCode
      * @param resultCode
      * @param data
@@ -354,6 +356,10 @@ public class AddBook extends AppCompatActivity {
         }
     }
 
+    /**
+     * handles when the scan button is pressed. Will start an activity to scan the barcode before
+     * going to onactivityresult to process the result
+     */
     private void scanButtonPressed(){
         Intent scanBook = new Intent(this, BarcodeScannerActivity.class);
         startActivityForResult(scanBook, 0);

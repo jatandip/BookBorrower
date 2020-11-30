@@ -79,8 +79,10 @@ public class BookDetailFetcher {
                 readItemsArray(reader);
                 reader.endArray();
             } else if (name.equals("totalItems")) {
+                int totalItems = reader.nextInt();
+
                 // if the api doesn't find the book
-                if (reader.nextInt() == 0) {
+                if (totalItems == 0) {
                     found = false;
                 } else {
                     found = true;

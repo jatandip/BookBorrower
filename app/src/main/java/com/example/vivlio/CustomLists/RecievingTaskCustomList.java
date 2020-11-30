@@ -33,6 +33,13 @@ public class RecievingTaskCustomList extends ArrayAdapter<Book> {
         this.context = context;
     }
 
+    /**
+     * Sets up custom list for RecievingTask with the book's title, author and borrower.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

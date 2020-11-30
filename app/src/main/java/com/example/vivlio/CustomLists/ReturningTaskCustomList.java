@@ -33,6 +33,13 @@ public class ReturningTaskCustomList extends ArrayAdapter<Book> {
         this.context = context;
     }
 
+    /**
+     * Sets up custom list for ReturningTask with the book's title, author and owner.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

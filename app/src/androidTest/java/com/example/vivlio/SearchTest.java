@@ -54,20 +54,20 @@ public class SearchTest {
     @Test
     public void checkShow() {
         solo.assertCurrentActivity("Didn't open to Login Activity", LoginActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
         assertTrue(solo.waitForText("Users", 1, 2000));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "j");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "jat");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
         assertTrue(solo.waitForText("jatan", 1, 2000));
         solo.clickOnView(solo.getView(R.id.search_switch));
         solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "c");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "can");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
         assertTrue(solo.waitForText("Candy",1,2000));
 

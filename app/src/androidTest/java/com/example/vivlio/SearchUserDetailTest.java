@@ -52,19 +52,19 @@ public class SearchUserDetailTest {
     @Test
     public void checkSearchDetail() {
         solo.assertCurrentActivity("Didn't open to Login Activity", LoginActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "jat");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("tim",1,2000));
-        solo.clickOnText("tim");
+        assertTrue(solo.waitForText("jatan",1,2000));
+        solo.clickOnText("jatan");
         solo.assertCurrentActivity("Wrong Activity", SearchUserDetailActivity.class);
-        assertTrue(solo.waitForText("vanmaren",1,2000));
+        assertTrue(solo.waitForText("jatandip",1,2000));
 
     }
 

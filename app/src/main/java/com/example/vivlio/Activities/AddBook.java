@@ -302,24 +302,27 @@ public class AddBook extends AppCompatActivity {
                 uploadFile(imageFileName, contentUri);
             }
         }
-        if (requestCode == 0){
-            String isbn = data.getStringExtra("isbn");
-            String title = data.getStringExtra("title");
-            String author = data.getStringExtra("author");
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK || resultCode == RESULT_INCOMPLETE) {
 
-            if (resultCode == Activity.RESULT_OK){
-                ISBNEditText.setText(isbn);
-                titleEditText.setText(title);
-                authorEditText.setText(author);
+                String isbn = data.getStringExtra("isbn");
+                String title = data.getStringExtra("title");
+                String author = data.getStringExtra("author");
 
-                ISBNEditText.setEnabled(false);
+                if (resultCode == Activity.RESULT_OK){
+                    ISBNEditText.setText(isbn);
+                    titleEditText.setText(title);
+                    authorEditText.setText(author);
 
-            } else if (resultCode == RESULT_INCOMPLETE) {
-                ISBNEditText.setText(isbn);
-                titleEditText.setText("");
-                authorEditText.setText("");
+                    ISBNEditText.setEnabled(false);
 
-                ISBNEditText.setEnabled(false);
+                } else {
+                    ISBNEditText.setText(isbn);
+                    titleEditText.setText("");
+                    authorEditText.setText("");
+
+                    ISBNEditText.setEnabled(false);
+                }
 
             } else if (resultCode == RESULT_INVALID) {
                 ISBNEditText.setText("");

@@ -96,7 +96,7 @@ public class RecievingTaskActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             String result = data.getStringExtra("isbn");
-            Log.e("scanned isbn in task", result);
+//            Log.e("scanned isbn in task", result);
             if(selectedISBN.equals(result)){
                 Intent intent = new Intent(RecievingTaskActivity.this, SuccessExchangeActivity.class);
                 intent.putExtra("RECIEVER", result);

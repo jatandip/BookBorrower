@@ -44,6 +44,7 @@ public class SearchDetailActivity extends AppCompatActivity {
     private ArrayList<User> ownerDataList;
     private ListView resultList;
     private Boolean available = false;
+    private int count;
 
 
     /**
@@ -53,6 +54,7 @@ public class SearchDetailActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        count = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_detail);
 
@@ -114,6 +116,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                                                                             if (requestedSnapshot.exists()) {
                                                                                 ArrayList<String> checkUser = (ArrayList<String>) requestedSnapshot.get("owners");
                                                                                 if (checkUser.contains(goodUser.getId())) {
+                                                                                    count++;
                                                                                     ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("fname") + goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "Pending", goodUserPhotoUrl));
                                                                                 } else {
                                                                                     ownerDataList.add(new User(goodUser.getId(), goodUser.getData().get("fname") + goodUser.getData().get("lname").toString(), goodUser.getData().get("username").toString(), "Available", goodUserPhotoUrl));
@@ -153,7 +156,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                 final CollectionReference requestedCollection = db.collection("users/" + mAuth.getUid() + "/requested/");
                 final CollectionReference ownerCollection = db.collection("users/" + chosenOne.getUid() + "/owned/");
 
-                if(chosenOne.getOwnedBookStatus().equals("Available")) {
+                if(chosenOne.getOwnedBookStatus().equals("Available") && count == 0) {
                     requestedCollection.document(searchDetailBook.getISBN()).get()
                             .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -196,6 +199,7 @@ public class SearchDetailActivity extends AppCompatActivity {
 
                                 }
                             });
+                    count++;
                     chosenOne.setOwnedBookStatus("Pending");
                     ownerDataList.set(i, chosenOne);
                 }

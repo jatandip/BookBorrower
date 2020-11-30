@@ -38,8 +38,8 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
 
         solo.clickOnImageButton(0);
 
@@ -51,7 +51,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass12");
 
         solo.clickOnImageButton(0);
@@ -69,18 +69,18 @@ public class LoginActivityTest {
         solo.assertCurrentActivity("Login succeeded", LoginActivity.class);
 
         //empty password
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login succeeded", LoginActivity.class);
 
         //empty username
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass1234");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login succeeded", LoginActivity.class);
 
         //login
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login failed", MainActivity.class);
     }

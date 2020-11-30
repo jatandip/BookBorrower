@@ -51,7 +51,7 @@ public class SearchDetailTest {
     }
 
     /**
-     * Searches for c which should return the Lion, The With and the Wardrobe by C.S. Lewis. Clicking on the book should open SearchDetailActivity which should have the owner test2
+     * Searches for c which should return the Candy Shop War, Clicking on the book should open SearchDetailActivity which should have the owner
      * with status pending or available.
      */
     @Test
@@ -59,12 +59,12 @@ public class SearchDetailTest {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
         solo.clickOnView(solo.getView(R.id.search_switch));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "f");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "c");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Ground",1,2000));
-        solo.clickOnText("Ground");
+        assertTrue(solo.waitForText("Candy",1,2000));
+        solo.clickOnText("Candy");
         solo.assertCurrentActivity("Wrong Activity", SearchDetailActivity.class);
-        assertTrue(solo.waitForText("tim",1,2000));
+        assertTrue(solo.waitForText("Available",1,2000) || solo.waitForText("Pending",1,2000));
         if(solo.waitForText("Available", 1, 2000)) {
             solo.clickOnText("Available");
             assertTrue((solo.waitForText("Pending",1,2000)));

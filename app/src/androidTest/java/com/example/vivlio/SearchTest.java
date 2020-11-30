@@ -49,7 +49,7 @@ public class SearchTest {
     }
 
     /**
-     * Searches for t, should return result test. Then switches to search books and then finds "g" which shpuld return Game of Thrones.
+     * Searches for j, should return result jatandip. Then switches to search books and then finds "c" which should return the Candy Shop Wars.
      */
     @Test
     public void checkShow() {
@@ -61,9 +61,9 @@ public class SearchTest {
         assertTrue(solo.waitForText("jatan", 1, 2000));
         solo.clickOnView(solo.getView(R.id.search_switch));
         solo.clearEditText((EditText) solo.getView(R.id.searchTermEditText));
-        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "y");
+        solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "c");
         solo.clickOnView(solo.getCurrentActivity().findViewById(R.id.search_button));
-        assertTrue(solo.waitForText("Year",1,2000));
+        assertTrue(solo.waitForText("Candy",1,2000));
 
     }
 

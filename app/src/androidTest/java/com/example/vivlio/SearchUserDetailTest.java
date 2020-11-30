@@ -47,8 +47,7 @@ public class SearchUserDetailTest {
     }
 
     /**
-     * Searches for c which should return the Lion, The With and the Wardrobe by C.S. Lewis. Clicking on the book should open SearchDetailActivity which should have the owner test2
-     * with status pending or available.
+     * Searches for t which should return TIMVM Clicking on the user should open SearchUserDetailActivity which should have the contact details
      */
     @Test
     public void checkSearchDetail() {

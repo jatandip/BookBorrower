@@ -51,7 +51,7 @@ public class LoginActivityTest {
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
 
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@vivlio.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "pass12");
 
         solo.clickOnImageButton(0);
@@ -76,6 +76,7 @@ public class LoginActivityTest {
         //empty username
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+
         solo.clickOnImageButton(0);
         solo.assertCurrentActivity("Login succeeded", LoginActivity.class);
 

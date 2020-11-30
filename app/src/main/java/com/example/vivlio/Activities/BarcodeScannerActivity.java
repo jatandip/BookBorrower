@@ -36,6 +36,8 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int CAMERA_REQUEST_CODE = 100;
+    private static final int RESULT_INVALID = 30000;
+    private static final int RESULT_INCOMPLETE = 30001;
     private String barcodeData;
     private ValidateISBN validator;
 
@@ -65,7 +67,9 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                returnedData.putExtra("isbn", (String) null);
+                returnedData.putExtra("isbn", (String)null);
+                returnedData.putExtra("title", (String)null);
+                returnedData.putExtra("author", (String)null);
                 setResult(RESULT_CANCELED, returnedData);
                 finish();
             }
@@ -181,6 +185,10 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
                         System.out.println(detailFetcher.getTitle());
                         System.out.println(detailFetcher.getAuthor());
 
+                        returnedData.putExtra("isbn", barcodeData);
+                        returnedData.putExtra("title", detailFetcher.getTitle());
+                        returnedData.putExtra("author", detailFetcher.getAuthor());
+
                         if (!detailFetcher.isFound()) {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -189,15 +197,13 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
                                             Toast.LENGTH_SHORT).show();
                                 }
                             });
+
+                            setResult(RESULT_INCOMPLETE, returnedData);
+                        } else {
+                            setResult(RESULT_OK, returnedData);
                         }
 
-                        returnedData.putExtra("isbn", barcodeData);
-                        returnedData.putExtra("title", detailFetcher.getTitle());
-                        returnedData.putExtra("author", detailFetcher.getAuthor());
-                        setResult(RESULT_OK, returnedData);
-
                     } else {
-
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(getApplicationContext(), "Not a valid ISBN",
@@ -209,8 +215,7 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
                         returnedData.putExtra("title", (String)null);
                         returnedData.putExtra("author", (String)null);
 
-                        // TODO: might wanna return different request code
-                        setResult(RESULT_OK, returnedData);
+                        setResult(RESULT_INVALID, returnedData);
                     }
                     finish();
                 }

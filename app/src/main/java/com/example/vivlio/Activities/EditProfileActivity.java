@@ -45,7 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         Intent intent = getIntent();
-        ArrayList<String> userInfo = intent.getStringArrayListExtra("userInfo");
+        final ArrayList<String> userInfo = intent.getStringArrayListExtra("userInfo");
 
         emailEdit = findViewById(R.id.emailEdit);
         phoneEdit = findViewById(R.id.phoneNumberEdit);
@@ -60,6 +60,13 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 newEmail = emailEdit.getText().toString();
                 newPhone = phoneEdit.getText().toString();
+
+                if (emailEdit.getText().toString().length() == 0 || phoneEdit.getText().toString().length() == 0) {
+                    newEmail = userInfo.get(0);
+                    newPhone = userInfo.get(1);
+                }
+
+
                 Intent sendBack = new Intent();
                 ArrayList<String> newInfo = new ArrayList<>();
                 newInfo.add(newEmail);

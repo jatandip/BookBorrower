@@ -19,11 +19,13 @@ import android.widget.Toast;
 
 import com.example.vivlio.Models.Book;
 import com.example.vivlio.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -31,6 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -198,10 +201,24 @@ public class Mybook_Avalible extends AppCompatActivity {
                 mAuth = FirebaseAuth.getInstance();
                 final FirebaseUser Firebaseuser = mAuth.getCurrentUser();
 
-                String uid = Firebaseuser.getUid();
+                final String uid = Firebaseuser.getUid();
 
                 db.collection("users").document(uid + "/owned/" + book.getISBN())
                         .delete();
+
+                db.collection("books").document(book.getISBN()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()) {
+                            DocumentSnapshot deleteBook = task.getResult();
+                            if(deleteBook.exists()) {
+                                ArrayList<String> owners = (ArrayList<String>) deleteBook.getData().get("owners");
+                                owners.remove(uid);
+                                db.collection("books").document(book.getISBN()).update("owners", owners);
+                            }
+                        }
+                    }
+                });
                 finish();
 
             }

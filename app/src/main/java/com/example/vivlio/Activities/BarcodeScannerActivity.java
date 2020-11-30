@@ -120,25 +120,6 @@ public class BarcodeScannerActivity extends AppCompatActivity implements Activit
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-//                try {
-//                    if (checkPermission() == true) {
-//                        cameraSource.start(surfaceView.getHolder());
-//                    } else {
-//                        ActivityCompat.requestPermissions(BarcodeScannerActivity.this,
-//                                new String[] {Manifest.permission.CAMERA},
-//                                CAMERA_REQUEST_CODE);
-//
-////                        if (checkPermission() == true) {
-////                            cameraSource.start(surfaceView.getHolder());
-////                        } else {
-////                            finish();
-////                        }
-//
-//                    }
-//                } catch (IOException e){
-//                    e.printStackTrace();
-//                }
             }
 
             @Override

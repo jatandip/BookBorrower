@@ -335,32 +335,36 @@ public class AddBook extends AppCompatActivity {
         ISBN = ISBNEditText.getText().toString();
 
         if (!title.isEmpty() && !author.isEmpty() && !ISBN.isEmpty()) {
-            if (bookImageView.getDrawable() != null){
-                if (checker){
-                    ValidateISBN validator = new ValidateISBN();
-                    //Boolean bool = isISBN.verify(ISBN);
-                    //Boolean bool = true;
-                    Boolean isISBN = validator.verify(ISBN);
-                    if (isISBN) {
-                        String status = "available";
-                        Intent intent = new Intent();
-                        ArrayList<String> newInfo = new ArrayList<>();
-                        newInfo.add(title);
-                        newInfo.add(author);
-                        newInfo.add(ISBN);
-                        newInfo.add(currentPath);
-                        newInfo.add(status);
-                        intent.putStringArrayListExtra("result", newInfo);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    } else {
+            ValidateISBN validator = new ValidateISBN();
+            //Boolean bool = isISBN.verify(ISBN);
+            //Boolean bool = true;
+            Boolean isISBN = validator.verify(ISBN);
+            if (isISBN) {
+                String status = "available";
+                Intent intent = new Intent();
+                ArrayList<String> newInfo = new ArrayList<>();
+                newInfo.add(title);
+                newInfo.add(author);
+                newInfo.add(ISBN);
+                newInfo.add(currentPath);
+                newInfo.add(status);
+                intent.putStringArrayListExtra("result", newInfo);
+                setResult(RESULT_OK, intent);
+            } else {
 //                Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
+                Toast.makeText(this, "Not a valid ISBN", Toast.LENGTH_SHORT).show();
+            }
+
+            if (bookImageView.getDrawable() != null) {
+                if (checker) {
+                    finish();
+                } else {
                     Toast.makeText(this, "Photo not finished uploading yet", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                finish();
             }
+
         } else {
             Toast.makeText(this, "Missing fields required", Toast.LENGTH_SHORT).show();
         }

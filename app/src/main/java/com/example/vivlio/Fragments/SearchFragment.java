@@ -179,7 +179,7 @@ public class SearchFragment extends Fragment {
                                             if(!owner.equals(mAuth.getUid())) {
                                                 Task<DocumentSnapshot> userDoc = userCollection.document(owner).get();
                                                 CollectionReference ownedCollection = db.collection("users/" + owner + "/owned");
-                                                Log.e("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
+                                                Log.d("TASK COLLECTION", ownedCollection.getPath() + doc.getId());
                                                 ownedCollection.document(doc.getId().toString()).get()
                                                         .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                             @Override
@@ -196,7 +196,7 @@ public class SearchFragment extends Fragment {
                                                                             ISBNList.add(doc.getId().toString());
                                                                             available = false;
                                                                         }
-                                                                        Log.e("TASK RESULT", document.get("status").toString() + available.toString());
+                                                                        Log.d("TASK RESULT", document.get("status").toString() + available.toString());
                                                                         resultAdapter.notifyDataSetChanged();
                                                                     }
                                                                 }

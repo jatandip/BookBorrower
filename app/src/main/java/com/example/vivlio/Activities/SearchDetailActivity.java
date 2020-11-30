@@ -110,7 +110,7 @@ public class SearchDetailActivity extends AppCompatActivity {
                                                                             try {
                                                                                 goodUserPhotoUrl = document.getData().get("path").toString();
                                                                             } catch (Exception e) {
-                                                                                Log.e("PHOTOURL ERROR", e.toString());
+                                                                                Log.d("PHOTOURL ERROR", e.toString());
                                                                                 goodUserPhotoUrl = null;
                                                                             }
                                                                             if (requestedSnapshot.exists()) {

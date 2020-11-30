@@ -1,5 +1,6 @@
 package com.example.vivlio.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ public class RecievingTaskActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private CollectionReference collectionReference;
+    private static final int RESULT_INVALID = 30000;
+    private static final int RESULT_INCOMPLETE = 30001;
     String otherUID;
 
     @Override
@@ -95,15 +98,22 @@ public class RecievingTaskActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            String result = data.getStringExtra("isbn");
 //            Log.e("scanned isbn in task", result);
-            if(selectedISBN.equals(result)){
-                Intent intent = new Intent(RecievingTaskActivity.this, SuccessExchangeActivity.class);
-                intent.putExtra("RECIEVER", result);
-                intent.putExtra("OTHER_UID", otherUID);
-                startActivity(intent);
-            }else {
-                Toast.makeText(RecievingTaskActivity.this, "ISBN did not match selected book!",
+
+            if (resultCode == Activity.RESULT_OK || resultCode == RESULT_INCOMPLETE) {
+                String result = data.getStringExtra("isbn");
+
+                if (selectedISBN.equals(result)) {
+                    Intent intent = new Intent(RecievingTaskActivity.this, SuccessExchangeActivity.class);
+                    intent.putExtra("RECIEVER", result);
+                    intent.putExtra("OTHER_UID", otherUID);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(RecievingTaskActivity.this, "ISBN did not match selected book!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } else if (resultCode == RESULT_INVALID) {
+                Toast.makeText(RecievingTaskActivity.this, "ISBN is not valid",
                         Toast.LENGTH_SHORT).show();
             }
         }

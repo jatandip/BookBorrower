@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
+import com.example.vivlio.Activities.LoginActivity;
 import com.example.vivlio.Activities.MainActivity;
 import com.example.vivlio.Activities.SearchDetailActivity;
 import com.example.vivlio.Activities.SearchUserDetailActivity;
@@ -25,8 +26,7 @@ public class SearchUserDetailTest {
     private Solo solo;
 
     @Rule
-    public ActivityTestRule<MainActivity> rule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true, true);
 
     /**
      * Sets up the Robotium object with the appropriate activity information.
@@ -51,6 +51,12 @@ public class SearchUserDetailTest {
      */
     @Test
     public void checkSearchDetail() {
+        solo.assertCurrentActivity("Didn't open to Login Activity", LoginActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+        solo.clickOnImageButton(0);
+        solo.assertCurrentActivity("Login failed", MainActivity.class);
+
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.navigation_search));
         solo.enterText((EditText) solo.getView(R.id.searchTermEditText), "t");

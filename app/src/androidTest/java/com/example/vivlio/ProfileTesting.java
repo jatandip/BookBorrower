@@ -55,15 +55,9 @@ public class ProfileTesting {
     @Test
     public void checkShow() {
         solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
-
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
-        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
-
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
-
         solo.clickOnImageButton(0);
-
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);

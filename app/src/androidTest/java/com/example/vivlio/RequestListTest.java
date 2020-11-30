@@ -47,12 +47,9 @@ public class RequestListTest {
     @Test
     public void checkMyRequestListFragment() {
         solo.assertCurrentActivity("Didn't open to Login Activity", LoginActivity.class);
-
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "vanmaren@ualberta.ca");
         solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "timvm1234");
-
         solo.clickOnImageButton(0);
-
         solo.assertCurrentActivity("Login failed", MainActivity.class);
 
         solo.clickOnView(solo.getView(R.id.navigation_my_request_list));

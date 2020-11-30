@@ -2,14 +2,17 @@ package com.example.vivlio;
 
 import android.app.Activity;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.vivlio.Activities.AddBook;
+import com.example.vivlio.Activities.LoginActivity;
 import com.example.vivlio.Activities.MainActivity;
 import com.example.vivlio.Fragments.MyBookListFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
@@ -26,8 +29,8 @@ public class AddBookTest {
     private Solo solo;
 
     @Rule
-    public ActivityTestRule<MainActivity> rule =
-            new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<LoginActivity> rule =
+            new ActivityTestRule<>(LoginActivity.class, true, true);
 
     @Before
     public void SetUp() throws Exception {
@@ -45,24 +48,37 @@ public class AddBookTest {
     }
 
     /**
-     * tests current activity to make sure it's book
-     */
-    @Test
-    public void checkActivity() {
-        solo.assertCurrentActivity("Wrong Activity", AddBook.class);
-    }
-
-    /**
      * tests to see if filling out all fields will allow the book to be uploaded (photo is optional)
      */
     @Test
     public void successAdd(){
+        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+
+        solo.clickOnImageButton(0);
+
+        solo.assertCurrentActivity("Login failed", MainActivity.class);
+
+        solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+
+        FloatingActionButton add = (FloatingActionButton)solo.getView(R.id.addBtn);
+        solo.clickOnView(add);
+
         solo.assertCurrentActivity("AddBook not open", AddBook.class);
         solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
-        solo.enterText((EditText) solo.getView(R.id.edit_isbn), "1234512345");
-        solo.clickOnButton("Upload");
-        solo.assertCurrentActivity("AddBook failed", MyBookListFragment.class);
+        solo.enterText((EditText) solo.getView(R.id.edit_isbn), "9780394800790");
+
+        ImageButton confirm = (ImageButton) solo.getView(R.id.button_upload);
+
+        solo.clickOnView(confirm);
+        solo.assertCurrentActivity("AddBook failed", MainActivity.class);
     }
 
     /**
@@ -71,54 +87,79 @@ public class AddBookTest {
      */
     @Test
     public void failureAdd(){
+        solo.assertCurrentActivity("Didnt open to Login", LoginActivity.class);
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "");
+
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETusername), "test@test.com");
+        solo.enterText((EditText) solo.getView(R.id.LOGIN_ETpassword), "test1234");
+
+        solo.clickOnImageButton(0);
+
+        solo.assertCurrentActivity("Login failed", MainActivity.class);
+
+        solo.clickOnView(solo.getView(R.id.navigation_my_book_list));
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+
+        FloatingActionButton add = (FloatingActionButton)solo.getView(R.id.addBtn);
+        solo.clickOnView(add);
+
         solo.assertCurrentActivity("AddBook not open", AddBook.class);
         solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "1234512345");
-        solo.clickOnButton("Upload");
+        ImageButton confirm = (ImageButton) solo.getView(R.id.button_upload);
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "1234512345");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "1234512345");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "");
-        solo.clickOnButton("Upload");
+        solo.clickOnView(confirm);
         solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
 
         solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
         solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
         solo.enterText((EditText) solo.getView(R.id.edit_isbn), "1234512345");
-        solo.clickOnButton("Upload");
-        solo.assertCurrentActivity("AddBook failed", MyBookListFragment.class);
+        solo.clickOnView(confirm);
+        solo.assertCurrentActivity("AddBook succeeded", AddBook.class);
+
+        solo.enterText((EditText) solo.getView(R.id.edit_title), "League of Legends");
+        solo.enterText((EditText) solo.getView(R.id.edit_author), "William");
+        solo.enterText((EditText) solo.getView(R.id.edit_isbn), "9781234567897");
+        solo.clickOnView(confirm);
+        solo.assertCurrentActivity("AddBook failed", MainActivity.class);
 
 
     }

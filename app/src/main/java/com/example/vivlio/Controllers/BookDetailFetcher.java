@@ -21,11 +21,17 @@ public class BookDetailFetcher {
     private String title;
     private String authors;
     private Boolean found;
+    private Boolean titleFilled;
+    private Boolean subtitleFilled;
+    private Boolean authorFilled;
 
     public BookDetailFetcher() {
         title = null;
         authors = null;
         found = false;
+        titleFilled = false;
+        subtitleFilled = false;
+        authorFilled = false;
     }
 
     /**
@@ -75,8 +81,11 @@ public class BookDetailFetcher {
         while (reader.hasNext()) {
             String name = reader.nextName();
             if (name.equals("items")) {
+
                 reader.beginArray();
-                readItemsArray(reader);
+                while (reader.hasNext()) {
+                    readItemsArray(reader);
+                }
                 reader.endArray();
             } else if (name.equals("totalItems")) {
                 int totalItems = reader.nextInt();
@@ -102,8 +111,8 @@ public class BookDetailFetcher {
      * @throws IOException If an I/O error occurs in {@code JsonReader} methods
      */
     private void readItemsArray(JsonReader reader) throws IOException {
-        reader.beginObject();
 
+        reader.beginObject();
         while (reader.hasNext()) {
             String name = reader.nextName();
             if (name.equals("volumeInfo")) {
@@ -126,13 +135,15 @@ public class BookDetailFetcher {
 
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if (name.equals("title")) {
+            if (name.equals("title") && !titleFilled) {
                 title = reader.nextString();
-            } else if (name.equals("subtitle")) {
+                titleFilled = true;
+            } else if (name.equals("subtitle") && !subtitleFilled) {
                 String mainTitle = title;
                 String subtitle = reader.nextString();
                 title = titleConcat(mainTitle, subtitle);
-            } else if (name.equals("authors")) {
+                subtitleFilled  = true;
+            } else if (name.equals("authors") && !authorFilled) {
                 reader.beginArray();
                 while (reader.hasNext()) {
                     if (authors == null) {
@@ -143,6 +154,7 @@ public class BookDetailFetcher {
                     }
                 }
                 reader.endArray();
+                authorFilled = true;
             } else {
                 reader.skipValue();
             }
@@ -150,13 +162,19 @@ public class BookDetailFetcher {
         reader.endObject();
     }
 
+    /**
+     * Concatenates main title and subtitle in one string
+     * @param title String
+     * @param subtitle String
+     * @return Concatenated title String
+     */
     private String titleConcat(String title, String subtitle) {
         String combinedTitle = title + ": " + subtitle;
         return combinedTitle;
     }
 
     /**
-     * Concatenates two author strings into one
+     * Concatenates two author strings into one string
      * @param concated Previously combined author strings
      * @param current Author string to be concatenated
      * @return Combined author string

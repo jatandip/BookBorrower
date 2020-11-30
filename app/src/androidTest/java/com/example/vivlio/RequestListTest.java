@@ -47,12 +47,16 @@ public class RequestListTest {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
+        solo.clickOnText("Pending");
+        solo.sleep(2000);
         solo.clickOnText("Accepted");
         solo.sleep(2000);
         solo.clickOnText("Borrowed");
         solo.sleep(2000);
         solo.clickOnText("All");
         solo.sleep(2000);
+
+
     }
 
     /**

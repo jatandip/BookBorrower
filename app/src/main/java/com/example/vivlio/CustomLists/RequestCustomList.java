@@ -33,19 +33,9 @@ import java.util.ArrayList;
  * username.
  *
  * Issues:
- * Loading the data is a little slow since it relies on database access, the user can see the
+ * Loading the owner name is a little slow since it relies on database access, the user can see the
  * TextViews say "Loading..." for a brief second. Not sure if there's a remedy for this, maybe
  * caching the usernames on the first run?
- *
- * More Issues:
- * This was crashing the whole app, if task.getResult().getData() points to something null. This
- * occurs when the app tries to load a username for a user that doesn't exist. I added a check but
- * it currently just leaves the whole thing as Loading... I think I'll change it to say "Owner not
- * found" and then the user will have to delete it.
- * Also, the call to the database is a little slow and so the content in the Listview can look a
- * little off as it recycles the new View before updating it. Not sure what to do, maybe ViewHolder?
- * Only waiting for the database for owner improved the overall experience, still takes time to load
- * though.
  *
  */
 

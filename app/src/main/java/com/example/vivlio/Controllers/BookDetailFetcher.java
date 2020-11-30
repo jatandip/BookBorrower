@@ -42,6 +42,13 @@ public class BookDetailFetcher {
      */
     public void request(String isbn) {
 
+        title = null;
+        authors = null;
+        found = false;
+        titleFilled = false;
+        subtitleFilled = false;
+        authorFilled = false;
+
         try {
             url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn);
             urlConnection = (HttpURLConnection) url.openConnection();
